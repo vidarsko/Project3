@@ -156,15 +156,43 @@ Here is all the theory needed to understand the project.
 
 
 \subsection{The numerical foundation}
-This is the section explaining the numerical theory upon which the
-the project is built. 
+This is the section explaining the numerical theory upon which the project is built. 
 
-\subsubsection{Monte Carlo methods}
+\subsubsection{Monte Carlo simulations}
+A Monte Carlo simulation is a way of solving a mathematical or physical problem by generating a random
+(or pseudorandom
+\footnote
+{No electronic random number generator of today is truly random. 
+The sequence of numbers generated will repeat itself after a long period. 
+These periods however, are increadibly long and we will for this report 
+consider the random number generators to be truly random.})
+sequence of numbers and evaluating some quantity on the assumption that our the random sequence of numbers is representative of the domain from which the quantity is evaluated.
+An example is evaluating the area of the unit circle by randomly placing points in a $[-1,1] \times [-1,1] $ grid and find the fraction points whose distance to the origin is $\leq 1$ and multiply this fraction by the area of the grid (i.e. $4$).
+Such a simple Monte Carlo simulation can give the result as shown in figure \ref{fig:Monte_Carlo_Illustration}.
+
+\begin{figure}[h!]
+        \centering 
+        \includegraphics[width=\textwidth]{Monte_Carlo_Illustration.jpg}
+        \caption{The results from a very simple Monte Carlo simulation of 
+        estimating the circle constant $\pi$. 
+        The precision increases with the number of points.}
+        \label{fig:Monte_Carlo_Illustration}
+\end{figure}
+
+However, the method is not confined to this sort of problem, but can be applied to a variety of mathematical and physical problems. 
+In this report, the method, through the Metropolis algorithm (see section \ref{sec:theory_metropolis}) has been applied to a quantum mechanical system.
 
 \subsubsection{Importance sampling}
 
-\subsubsection{Metropolis algorithm}
+Sometimes, functions are more important in certain domains.
+When we use a Monte Carlo approach to evaluate a quantity on such a function we can improve the method significantly by ensuring that the probability distribution from which we choose our random values reflect the parts where the function is important.
+We do of course have to remember that our function lives on its whole domain, so to not get a biased result, we need to weigh our result with respect to the probability function we have chosen. 
+This is called importance sampling. 
+\textbf{INSERT EXAMPLE HERE}
 
+\subsubsection{Metropolis algorithm} \label{sec:theory_metropolis}
+
+The metropolis algorithm is a Monte Carlo method discovered in \textbf{???} by \textbf{???}. 
 
 \subsection{The physical system}
 This is the section explaining the physics of the system. 
