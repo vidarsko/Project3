@@ -26,16 +26,26 @@ vec Metropolis_Expectation_Values(double (*P)(mat), double (*g)(mat), int M, dou
 
 	while(counter < M){
 		int i = rand() % 2; //Insert dimension here
-		vec delta_vec_r = delta_r * randu<vec>(2);
+		vec delta_vec_r = delta_r * (randu<vec>(2)-0.5);
 		mat r_p = r;
 		r_p.col(i) = r_p.col(i) + delta_vec_r;
-		cout << "r:" << endl << r << endl;
-		cout << "r_p:" << endl << r_p << endl;
-		counter +=1;
+		vec tmp = randu<vec>(1); double s = tmp(0);
+		double w = P(r_p)/P(r);
+		if (w >= s){
+			r = r_p;
+			double gi = g(r);
+			cumulative_function += gi;
+			cumulative_function_squared += gi*gi;
+			counter += 1;
+			cout << counter << endl;
+		}
+
 	}
 
 	//Create matrix for storing expectation values
 	vec expectation_values = zeros(2);
+	expectation_values(0) = (cumulative_function/M);
+	expectation_values(1) = cumulative_function_squared/M;
 	return expectation_values;
 }	
 
