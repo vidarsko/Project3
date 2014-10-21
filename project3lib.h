@@ -9,6 +9,14 @@
 using namespace std;
 using namespace arma;
 
+//**********Functions needed for class and elsewhere**********//
+
+//Monte Carlo Simulation function
+vec Metropolis_Expectation_Values(int M, double delta_r, mat r);
+
+
+//**********************Quantum Dots class *******************//
+
 class QuantumDots{
 	/*
 	The system.
