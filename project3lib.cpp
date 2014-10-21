@@ -19,17 +19,23 @@ vec Metropolis_Expectation_Values(double (*P)(mat), double (*g)(mat), int M, dou
 		- vec expectation_values (2)- Expectation values of g and g^2. 
 	*/
 
-	/*
-	cout << "Monte Carlo function properly initialized" << endl;
-	cout << "Input parameters:" << endl;
-	cout << "Number of monte carlo simulations M: " << M << endl;
-	cout << "delta_r: " << delta_r << endl;
-	cout << "Initial position r: " << endl << r << endl;
-	*/
+	//Initialization
+	double cumulative_function = 0; 		//Corresponds to local energy in the quantum example
+	double cumulative_function_squared = 0;
+	int counter = 0;
+
+	while(counter < M){
+		int i = rand() % 2; //Insert dimension here
+		vec delta_vec_r = delta_r * randu<vec>(2);
+		mat r_p = r;
+		r_p.col(i) = r_p.col(i) + delta_vec_r;
+		cout << "r:" << endl << r << endl;
+		cout << "r_p:" << endl << r_p << endl;
+		counter +=1;
+	}
+
+	//Create matrix for storing expectation values
 	vec expectation_values = zeros(2);
-	expectation_values(0) = Test_Evaluation_Function(r);
-	expectation_values(1) = pow(Test_Evaluation_Function(r),2);
-	cout << "Expectation values" << endl << expectation_values << endl;
 	return expectation_values;
 }	
 
