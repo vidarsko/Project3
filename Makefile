@@ -11,4 +11,4 @@ file = test
 # Targets needed to bring the executable up to date
 
 $(file).x: $(file).cpp project3lib.cpp
-	$(CXX) $(CXXFLAGS) -o $(file).x $(file).cpp project3lib.cpp
+	$(CXX)  -o $(file).x  project3lib.cpp $(file).cpp $(CXXFLAGS)
