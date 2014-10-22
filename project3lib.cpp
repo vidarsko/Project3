@@ -27,6 +27,7 @@ vec Metropolis_Expectation_Values(double (*P)(mat), double (*g)(mat), int M, dou
 	while(counter < M){
 		int i = rand() % 2; //Insert dimension here
 		vec delta_vec_r = delta_r * (randu<vec>(2)-0.5);
+		cout << delta_vec_r << endl;
 		mat r_p = r;
 		r_p.col(i) = r_p.col(i) + delta_vec_r;
 		vec tmp = randu<vec>(1); double s = tmp(0);
