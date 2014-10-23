@@ -140,13 +140,75 @@ This will serve as a verification that the state we have found when minimizing t
 
 \subsubsection{The test function $\Psi_T$}
 
-We will in this project use the trial wavefunctions of $\vec r_i = \left ( \begin{matrix} x_i \\ y_i \\ \end{matrix}\right )$
+We will in this project use the trial wavefunctions of $\vec r_i = \left ( \begin{matrix} x_i \\ y_i \\ \end{matrix}\right )$ given by 
 
 \eqs
-\Psi_T(\vec r_0, ... ,\vec r_{N-1})  = \Det(\phi_1,  ... , \phi_N) \cdot \textrm{J}(\vec r_0, ... , \vec r_{N-1} )
+\Psi_T(\vec r_0, ... ,\vec r_{N-1})  = \Det(\phi_0,  ... , \phi_{N-1}) \cdot \textrm{J}(\vec r_0, ... , \vec r_{N-1} )
 \eqf
 
-Where $\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$ is a so-called \textit{Jastrow factor}, which represents the electron repulsion part of the wavefunction, defined as
+\vspace{0.5cm}
+\textbf{The modified Slater determinant $\Det(\phi_0,  ... , \phi_{N-1})$}
+
+$\Det(\phi_0,  ... , \phi_{N-1})$ is a modified \textit{Slater determinant} defined as 
+
+\[
+\Det(\phi_0,  ... , \phi_{N-1}) = 
+\]
+\eqs
+\left |
+\begin{matrix}
+\phi_0(\vec r_0) & \phi_2(\vec r_0) & ... & \phi_{N-2}(\vec r_0) \\
+\phi_0(\vec r_2) & \phi_2(\vec r_2) & ... & \phi_{N-2}(\vec r_1) \\
+       ...          &      ...       & ... & ... \\
+\phi_0(\vec r_{N-2}) & \phi_2(\vec r_{N-2}) & ... & \phi_{N-2}(\vec r_{N-2}) \\
+\end{matrix}
+\right | \cdot 
+\left |
+\begin{matrix}
+\phi_1(\vec r_1) & \phi_3(\vec r_1) & ... & \phi_{N-1}(\vec r_1) \\
+\phi_1(\vec r_3) & \phi_3(\vec r_3) & ... & \phi_{N-1}(\vec r_3) \\
+       ...          &      ...       & ... & ... \\
+\phi_1(\vec r_{N-1}) & \phi_3(\vec r_{N-1}) & ... & \phi_{N-1}(\vec r_{N-1}) \\
+\end{matrix}
+\right |
+\eqf
+
+Where $\phi_i(\vec r_i)$ is a wavefunction resembling one of the eigenfunctions of the Hamilton operator for \textit{one} particle in a two dimensional harmonic oscillator, but parameterized by $\alpha$ in the following way:
+
+\eqs
+\phi_i(\vec r_j) = H_{n_x} (\sqrt{\alpha \omega} x_j) H_{n_y} (\sqrt{\alpha \omega} y_j) \exp(-\alpha \omega (x^2 + y^2)/2) 
+\eqf
+
+
+The reason for this modified version of the Slater determinant (whose real form can be explored elsewhere\footnote{\url{http://en.wikipedia.org/wiki/Slater_determinant}}) is that the spin parts of the wavefunctions are not incorporated in the expressions of $\phi_i(\vec r_j)$. 
+The result is that if we were to insert these into a regular Slater determinant we would get $0$, everytime. 
+The modified Slater determinant $\Det$ avoids this issue while still conserving some of the most important properties of the Slater determinant. 
+
+
+$n_x(i)$ and $n_y(i)$ corresponds to the quantum numbers needed to "fill up" the system from the lowest energy levels twice (one for each spin configuration). 
+For $i<12$, the explicit depence of $n_x, n_y$ on $i$ is given in table \ref{tab:dependence_of_nx_on_i}.
+
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{lllllllllllll}
+	\toprule 
+	$ i = $ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
+	\midrule
+	$n_x = $ & 0 & 0 & 1 & 1 & 0 & 0 & 2 & 2 & 1 & 1 & 0 & 0 \\
+	$n_y = $ & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 2 & 2 \\
+	\bottomrule
+	\end{tabular}
+	\caption{The explicit dependence of $n_x$ and $n_y$ on $i$ in the construction of the trial wavefunctions.}
+	\label{tab:dependence_of_nx_on_i}
+\end{table}
+
+
+
+\vspace{0.5cm}
+\textbf{The Jastrow factor $\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$}
+
+$\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$ is a so-called \textit{Jastrow factor}, which represents the electron repulsion part of the wavefunction, defined as
 
 \[
 \textrm{J}(\vec r_0, ... \vec r_{N-1}) = \prod_{i<j}^N \exp \left (
@@ -167,45 +229,11 @@ a_{ij} = \left \{
 \right .
 \eqf
 
+From the expression of the Jastrow factor, we see that it is zero whenever $r_{ij} = 0$ for any pair $i\neq j$. 
+This is what we want from such a factor, namely that the wavefunction is zero whenever there is no distance between two particles (i.e. $r_{ij} = 0$).
 
-$\Det(\phi_0,  ... , \phi_{N-1})$ is a modified \textit{Slater determinant} defined as 
-
-\eqs
-\Det(\phi_1,  ... , \phi_N) = \frac{1}{\sqrt{N!}} \left |
-\begin{matrix}
-\phi_0(\vec r_0) & \phi_1(\vec r_0) & ... & \phi_{N-1}(\vec r_0) \\
-\phi_0(\vec r_1) & \phi_1(\vec r_1) & ... & \phi_{N-1}(\vec r_1) \\
-       ...          &      ...       & ... & ... \\
-\phi_0(\vec r_{N-1}) & \phi_1(\vec r_{N-1}) & ... & \phi_{N-1}(\vec r_{N-1}) \\
-\end{matrix}
-\right |
-\eqf
-
-$\phi_i(\vec r_i)$ is a wavefunction resembling one of the eigenfunctions of the Hamilton operator for \textit{one} particle in a two dimensional harmonic oscillator, but parameterized by $\alpha$ in the following way:
-
-\eqs
-\phi_i(\vec r_j) = H_{n_x} (\sqrt{\alpha \omega} x_j) H_{n_y} (\sqrt{\alpha \omega} y_j) \exp(-\alpha \omega (x^2 + y^2)/2) 
-\eqf
-
-
-Where $n_x(i)$ and $n_y(i)$ corresponds to the quantum numbers needed to "fill up" the system from the lowest energy levels twice (one for each spin configuration). 
-For $i<12$, the explicit depence of $n_x, n_y$ on $i$ is given in table \ref{tab:dependence_of_nx_on_i}.
-
-
-\begin{table}[h!]
-	\centering
-	\begin{tabular}{lllllllllllll}
-	\toprule 
-	$ i = $ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\
-	\midrule
-	$n_x = $ & 0 & 0 & 1 & 1 & 0 & 0 & 2 & 2 & 1 & 1 & 0 & 0 \\
-	$n_y = $ & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 2 & 2 \\
-	\bottomrule
-	\end{tabular}
-	\caption{The explicit dependence of $n_x$ and $n_y$ on $i$ in the construction of the trial wavefunctions.}
-	\label{tab:dependence_of_nx_on_i}
-\end{table}
-
+\vspace{0.5cm}
+\textbf{Using the hamiltonian}
 
 It can be shown \cite{master} that. 
 

@@ -11,5 +11,5 @@
 \contentsline {subsubsection}{\numberline {2.2.2}Importance sampling}{6}{subsubsection.2.2.2}
 \contentsline {subsubsection}{\numberline {2.2.3}The Metropolis algorithm}{7}{subsubsection.2.2.3}
 \contentsline {section}{\numberline {3}Results and discussion}{8}{section.3}
-\contentsline {subsection}{\numberline {3.1}Subsection}{8}{subsection.3.1}
-\contentsline {section}{\numberline {4}Conclusion}{8}{section.4}
+\contentsline {subsection}{\numberline {3.1}Subsection}{9}{subsection.3.1}
+\contentsline {section}{\numberline {4}Conclusion}{9}{section.4}

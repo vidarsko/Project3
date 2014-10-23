@@ -183,7 +183,26 @@ double Unperturbed_Harmonic_Oscillator_Hamiltonian(double (*wf)(mat), mat r){
 
 
 
-
+//Hermite polynomials
+double Hermite_polynomial(double x, int degree){
+	/*
+	Function to evaluate the Hermite polynomial function.
+	Input:
+		- double x		- Point in which to evaulate the hermite polynomial
+		- int degree	- The degree of the polynomial
+	Output:
+		-H(x) 			- The value of the polynomial at x
+	*/
+	double Hm1 = 1;
+	double H = 2*x;
+	double Hp1;
+	for (int i = 0; i < degree;i++){
+		Hp1 = 2*x*H - 2*(i+1)*Hm1;
+		Hm1 = H;
+		H = Hp1;
+	}
+	return Hm1;
+}
 
 
 

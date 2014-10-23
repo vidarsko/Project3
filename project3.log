@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.12)  22 OCT 2014 15:41
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.12)  23 OCT 2014 15:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1018,18 +1018,21 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 141.
 
-[5] <Monte_Carlo_Illustration.jpg, id=136, 762.85pt x 235.88126pt>
+[5] <Monte_Carlo_Illustration.jpg, id=139, 762.85pt x 235.88126pt>
 File: Monte_Carlo_Illustration.jpg Graphic file (type jpg)
 
 <use Monte_Carlo_Illustration.jpg>
-Package pdftex.def Info: Monte_Carlo_Illustration.jpg used on input line 249.
+Package pdftex.def Info: Monte_Carlo_Illustration.jpg used on input line 277.
 (pdftex.def)             Requested size: 418.25368pt x 129.32837pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 249--252
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 277--280
  [][] 
  []
 
-[6 <./Monte_Carlo_Illustration.jpg>] [7] (./algorithm.tex
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[6] [7 <./Monte_Carlo_Illustration.jpg>] (./algorithm.tex
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -1047,13 +1050,13 @@ Package rerunfilecheck Info: File `project3.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 153.
  ) 
 Here is how much of TeX's memory you used:
- 12293 strings out of 493304
- 176093 string characters out of 6139871
- 322826 words of memory out of 5000000
- 15481 multiletter control sequences out of 15000+600000
- 15392 words of font info for 59 fonts, out of 8000000 for 9000
+ 12295 strings out of 493304
+ 176118 string characters out of 6139871
+ 324828 words of memory out of 5000000
+ 15482 multiletter control sequences out of 15000+600000
+ 15560 words of font info for 60 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 41i,23n,43p,311b,685s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,23n,43p,326b,685s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texli
@@ -1075,12 +1078,13 @@ s/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1
 /public/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmti7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/
-msbm10.pfb>
-Output written on project3.pdf (10 pages, 851702 bytes).
+/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.
+pfb>
+Output written on project3.pdf (10 pages, 860072 bytes).
 PDF statistics:
- 303 PDF objects out of 1000 (max. 8388607)
- 262 compressed objects within 3 object streams
- 78 named destinations out of 1000 (max. 500000)
+ 311 PDF objects out of 1000 (max. 8388607)
+ 269 compressed objects within 3 object streams
+ 79 named destinations out of 1000 (max. 500000)
  123 words of extra memory for PDF output out of 10000 (max. 10000000)
 

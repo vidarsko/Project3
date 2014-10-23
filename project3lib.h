@@ -15,7 +15,6 @@ using namespace arma;
 //Monte Carlo Simulation function
 vec Metropolis_Expectation_Values(double (*P)(mat), double (*g)(mat), int M, double delta_r, mat r);
 
-
 //Test functions for the metropolis algorithm 
 double Test_Probability_Density(mat r);
 double Test_Evaluation_Function(mat r);
@@ -30,6 +29,9 @@ double local_energy(double (*H)(double (*wf)(mat),mat),double (*wf)(mat),mat r);
 
 //Hamiltonian functions
 double Unperturbed_Harmonic_Oscillator_Hamiltonian(double (*wf)(mat), mat position);
+
+//Hermite polynomials
+double Hermite_polynomial(double x, int degree);
 
 
 
@@ -48,7 +50,6 @@ class QuantumDots{
 
 		//Print functions 
 		void print_N_to_terminal(void);
-
 };
 
 
@@ -65,6 +66,5 @@ class Trial_Wavefunction{
 
 		//Constructor
 		Trial_Wavefunction(double a, double b);
-
 };
 #endif
