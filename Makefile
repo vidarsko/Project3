@@ -5,7 +5,7 @@
 
 CXX = g++
 CXXFLAGS = -larmadillo -O1
-file = test
+file = test_groundstate
 
 # ****************************************************
 # Targets needed to bring the executable up to date
