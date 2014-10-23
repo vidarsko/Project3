@@ -1,6 +1,5 @@
 #include "project3lib.h"
 
-double parameter = 1;
 
 //**********Functions needed for class and elsewhere**********//
 
@@ -24,6 +23,7 @@ vec Metropolis_Expectation_Values(double (*P)(mat), double (*g)(mat), int M, dou
 	double cumulative_function = 0; 		//Corresponds to local energy in the quantum example
 	double cumulative_function_squared = 0;
 	int counter = 0;
+	int total_counter = 0;
 
 	while(counter < M){
 		int i = rand() % r.n_cols; 
@@ -39,8 +39,10 @@ vec Metropolis_Expectation_Values(double (*P)(mat), double (*g)(mat), int M, dou
 			cumulative_function_squared += gi*gi;
 			counter += 1;
 		}
+		total_counter += 1;
 	}
-
+	float ratio = counter/(float)total_counter;
+	cout << ratio << endl;
 	//Create matrix for storing expectation values
 	vec expectation_values = zeros(2);
 	expectation_values(0) = cumulative_function/M;
@@ -79,7 +81,7 @@ double two_particle_ground_state(mat r){
 	double r02 = pow(norm(r.col(0)),2);
 	double r12 = pow(norm(r.col(1)),2);
 
-	double result = exp(-parameter*omega*(r02 + r12)/2);
+	double result = exp(-omega*(r02 + r12)/2);
 	return result; 
 }
 
@@ -107,7 +109,7 @@ double sum_laplacians(double (*f)(mat),mat r,double h=1e-4){
 	/* ,
 	Numerical function that returns the sum of det laplacians 
 	in the position r = (v0 ... v_{N-1}) for each particle i acting on 
-	a multi variable function "function"(r). 
+	a multi variable function f(r). 
 	Input:
 		- double (*f) 				- Function whose laplacian should be found
 		- mat r 					- Point in which 
@@ -115,33 +117,26 @@ double sum_laplacians(double (*f)(mat),mat r,double h=1e-4){
 	Output: 
 		-double result 				-The sum of the laplacians: sum_i (nabla_i^2) function
 	*/
-	int spacial_dimension = r.n_rows;
+	int spatial_dimension = r.n_rows;
 	int number_of_particles = r.n_cols;
 	double h2 = h*h;
 
 	//Initialization
 	double result = 0; //To store result
-	mat r_xplus, r_xminus, r_yplus, r_yminus; //To store positions used in calc.
-	double dfdx2, dfdy2;  //To store double derivatives
-	mat delta_r = zeros(spacial_dimension,number_of_particles);
+	mat r_jplus, r_jminus; //To store positions used in calc.
+	double dfdj2;  //To store double derivatives
+	mat delta_r = zeros(spatial_dimension,number_of_particles);
 
 	for (int i = 0; i<number_of_particles;i++){
-
-		//df/dx^2
-		delta_r(0,i) = h;
-		r_xminus = r - delta_r;
-		r_xplus = r + delta_r;
-		dfdx2 = (f(r_xplus) - 2*f(r) + f(r_xplus))/h2;
-		delta_r(0,i) = 0;	
-
-		//df/dy^2
-		delta_r(1,i) = h;
-		r_yminus = r - delta_r;
-		r_yplus = r + delta_r;
-		dfdy2 = (f(r_yplus) - 2*f(r) + f(r_yplus))/h2;
-		delta_r(1,i) = 0;	
-
-		result += dfdx2 + dfdy2;
+		for (int j=0; j<spatial_dimension; j++){
+			//dfdj2
+			delta_r(j,i) = h;
+			r_jminus = r - delta_r;
+			r_jplus = r + delta_r;
+			dfdj2 = (f(r_jplus) - 2*f(r) + f(r_jminus))/h2;
+			delta_r(j,i) = 0;	
+			result += dfdj2;
+		}
 	}
 	return result; 
 }	
@@ -151,7 +146,7 @@ double laplacian_sum_ground_state(mat r){
 	double r12 = pow(norm(r.col(1)),2);
 	double omega = 1;
 	double result;
-	result = ((parameter*omega)*(parameter*omega)*(r02 + r12)-(4*parameter*omega))*two_particle_ground_state(r);
+	result = (omega*omega*(r02 + r12)-(4*omega))*two_particle_ground_state(r);
 	return result;
 }
 
@@ -171,7 +166,7 @@ double Unperturbed_Harmonic_Oscillator_Hamiltonian(double (*wf)(mat), mat r){
 	double omega = 1;
 
 	//Data
-	int spacial_dimension = r.n_rows;
+	int spatial_dimension = r.n_rows;
 	int number_of_particles = r.n_cols;
 
 
@@ -180,11 +175,8 @@ double Unperturbed_Harmonic_Oscillator_Hamiltonian(double (*wf)(mat), mat r){
 	for (int i = 0; i<number_of_particles;i++){
 		V += 0.5 * omega*omega*pow(norm(r.col(i)),2);
 	}
-	cout << laplacian_sum_ground_state(r) - sum_laplacians(wf,r)<< endl;
-	double result = V*wf(r) - 0.5*laplacian_sum_ground_state(r);
-	//cout << (V*wf(r) - 0.5*laplacian_sum_ground_state(r))/wf(r) << endl;
+	double result = V*wf(r) - 0.5*sum_laplacians(wf,r);
 	return result;
-
 }
 
 
