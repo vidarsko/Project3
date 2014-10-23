@@ -24,35 +24,8 @@ double laplacian_sum_ground_state(mat r);
 //Laplacian functions
 double sum_laplacian_i(double (*function),mat r,double);
 
-//The local energy function 
-double local_energy(double (*H)(double (*wf)(mat),mat),double (*wf)(mat),mat r);
-
 //Hamiltonian functions
-double Unperturbed_Harmonic_Oscillator_Hamiltonian(double (*wf)(mat), mat position);
-
-//Hermite polynomials
-double Hermite_polynomial(double x, int degree);
-
-
-
-//**********************Quantum Dots class *******************//
-
-class QuantumDots{
-	/*
-	The system.
-	*/
-	private:
-		int N; //Number of electrons in trap.
-	public:
-
-		//Constructor
-		QuantumDots(int a);
-
-		//Print functions 
-		void print_N_to_terminal(void);
-};
-
-
+double Unperturbed_Harmonic_Oscillator_Hamiltonian(double (*wf)(mat), mat r);
 
 //*******************Trial Wavefunction class *****************//
 
@@ -61,10 +34,57 @@ class Trial_Wavefunction{
 	The trial wavefunction object.
 	*/
 	private:
+		//Trial parameters
 		double alpha,beta;
-	public:
 
+		//System settings
+		double omega;
+		int number_of_particles;
+		int spatial_dimension;
+
+	public:
 		//Constructor
-		Trial_Wavefunction(double a, double b);
+		Trial_Wavefunction(double a, double b,double c,int S,int N);
+		Trial_Wavefunction();
+
+		//Call functions 
+		double call(mat r);
+		double call_squared(mat r);
+
+		//Help functions
+		double Hermite_polynomial(double x, int degree);
+		double nx(int i);
+		double ny(int i);
+		double phi(int i,mat r_i);
+
 };
+
+
+
+//**********************Quantum Dots class *******************//
+
+class QuantumDots{
+	/*
+	The system
+	*/
+	private:
+		int number_of_particles;  //Number of electrons in trap
+		double Hamiltonian (double (*wf)(mat), mat r); //Hamiltonian
+		Trial_Wavefunction Wave_function;
+
+	public:
+		//Constructor
+		QuantumDots(int N);
+
+		//Uncategorized
+		void Set_Hamiltonian(double (*H) (double (*wf)(mat), mat r));
+		void Set_Wavefunction(Trial_Wavefunction wf);
+		double Wave_function_eval(mat r);
+		double local_energy(mat r);
+		double laplacian_sum_ground_state(mat r);
+
+		//Print functions 
+		void print_numberofparticles_to_terminal(void);
+};
+
 #endif

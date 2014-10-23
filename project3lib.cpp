@@ -87,22 +87,7 @@ double two_particle_ground_state(mat r){
 
 
 
-//Local energy evaluation function
-double local_energy(double (*H)(double (*wf)(mat),mat),double (*wf)(mat),mat r){
-	/*
-	Function that returns the local energy in a point of a wavefunction wf
-	according to a hamiltonian operator H in a point r. 
-	Input: 
-		- double (*wf) 		- The wavefunction
-		- double (*H)		- The function evaluating the Hamiltonion of a wf in a point r
-		- double r 			- The point in which the local energy will be evaluated.
-	Output:
-		- double le 		- The local energy of the function. 
-	*/
-	double le = 1/wf(r) * H(wf,r);
-	//cout << le << endl;
-	return le;
-}
+
 
 //Laplacian functions
 double sum_laplacians(double (*f)(mat),mat r,double h=1e-4){
@@ -141,14 +126,7 @@ double sum_laplacians(double (*f)(mat),mat r,double h=1e-4){
 	return result; 
 }	
 
-double laplacian_sum_ground_state(mat r){
-	double r02 = pow(norm(r.col(0)),2);
-	double r12 = pow(norm(r.col(1)),2);
-	double omega = 1;
-	double result;
-	result = (omega*omega*(r02 + r12)-(4*omega))*two_particle_ground_state(r);
-	return result;
-}
+
 
 
 //Hamilton operator functions
@@ -183,10 +161,81 @@ double Unperturbed_Harmonic_Oscillator_Hamiltonian(double (*wf)(mat), mat r){
 
 
 
-//Hermite polynomials
-double Hermite_polynomial(double x, int degree){
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//******************Trial Wavefunction class ***************//
+
+//Constructor
+Trial_Wavefunction::Trial_Wavefunction(double a, double b, double c,int S,int N){
+	alpha = a;
+	beta = b;
+	omega = c;
+	spatial_dimension = S;
+	number_of_particles = N;
+}
+Trial_Wavefunction::Trial_Wavefunction(){};
+
+double Trial_Wavefunction::call(mat r){
 	/*
-	Function to evaluate the Hermite polynomial function.
+	Function that evaluates the multidimensional trial wavefunction at point r. 
+	References to left and right matrices corresponds to the left and right 
+	matrices in the evaluation of the modified slater determinant. 
+	Jastrow factor not yet configured.
+	Input:
+		- mat r 		 	- The point at which the function is to be evaluated.
+	Output: 
+		- double result 	- The value of the wavefunction at this point. 
+	*/
+	int N = number_of_particles;
+
+	mat phi_of_r_left (N/2,N/2);
+	mat phi_of_r_right (N/2,N/2);
+	for (int i = 0; i<N/2; i += 2){
+		for (int j=0; i<N/2; j+=2){
+			phi_of_r_left(j/2,i/2) = phi(i,r.col(j));
+			phi_of_r_right(j/2,i/2) = phi(i+1,r.col(j+1));
+		}
+	}
+	return det(phi_of_r_left)*det(phi_of_r_right);
+}
+
+double Trial_Wavefunction::call_squared(mat r){
+	/*
+	Function that evaluates the wavefunction squared at the point r. 
+	I.e. the probability density.
+	Input:
+		- mat r 			- The point at which the function is to be evaluated.
+	Output:
+		- double result 	- The value of the squared wavefunction at that point.
+	*/
+	return pow(this->call(r),2);
+}
+
+//Help functions
+double Trial_Wavefunction::Hermite_polynomial(double x, int degree){
+	/*
+	Function to evaluate the Hermite polynomial function based on the recursion formula.
 	Input:
 		- double x		- Point in which to evaulate the hermite polynomial
 		- int degree	- The degree of the polynomial
@@ -204,6 +253,66 @@ double Hermite_polynomial(double x, int degree){
 	return Hm1;
 }
 
+double Trial_Wavefunction::nx(int i){
+	/*
+	nx(i) dependency, see theory.
+	*/
+	int result;
+	if (i == 0 || i==1 || i==4 || i== 5 || i==10 || i== 11){result = 0;}
+	else if (i==2 || i== 3 || i== 8 || i== 9){result = 1;}
+	else if (i==6 || i== 7){result = 2;}
+	return result;
+}
+
+double Trial_Wavefunction::ny(int i){
+	/*
+	ny(i) dependency, see theory.
+	*/
+	int result;
+	if (i == 0 || i==1 || i==2 || i== 3 || i==6 || i== 7){result = 0;}
+	else if (i==4 || i== 5 || i== 8 || i== 9){result = 1;}
+	else if (i==10 || i== 11){result = 2;}
+	return result;
+}
+
+double Trial_Wavefunction::phi(int i,mat r_i){
+	/*
+	Function that evaluates the trial function components phi_i(r_i) as described in theory.
+	Input:
+		- int i 		- Degree of the function component.
+		- mat r_i 		- column matrix for which the component will be evaluated.
+	Output: 
+		- double result - The value of phi in r. 
+	*/
+	double x = r_i(0,0);
+	double y = r_i(1,0);
+
+	double fx = Hermite_polynomial(sqrt(alpha*omega)*x,nx(i))*exp(-alpha*omega*(x*x)/2);
+	double fy = Hermite_polynomial(sqrt(alpha*omega)*y,ny(i))*exp(-alpha*omega*(y*y)/2);
+
+	return fx*fy;	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -214,13 +323,49 @@ double Hermite_polynomial(double x, int degree){
 //**********************Quantum Dots class *******************//
 
 //Constructor
-QuantumDots::QuantumDots(int a){
-	N = a;
+QuantumDots::QuantumDots(int N){
+	number_of_particles = N;
+}
+
+//Uncategorized
+void QuantumDots::Set_Hamiltonian(double H(double (*wf)(mat), mat r)){
+	Hamiltonian = H;
+}
+
+void QuantumDots::Set_Wavefunction(Trial_Wavefunction wf){
+	Wave_function = wf;
+}
+
+double QuantumDots::Wave_function_eval(mat r){
+	return Wave_function.call(r);
+}
+
+double QuantumDots::local_energy(mat r){
+	/*
+	Function that returns the local energy in a point of a wavefunction wf
+	according to a hamiltonian operator H in a point r. 
+	Input: 
+		- double (*wf) 		- The wavefunction
+		- double r 			- The point in which the local energy will be evaluated.
+	Output:
+		- double le 		- The local energy of the function. 
+	*/
+	double le = 1/Wave_function_eval(r) * Hamiltonian(Wave_function_eval,r);
+	return le;
+}
+
+double QuantumDots::laplacian_sum_ground_state(mat r){
+	double r02 = pow(norm(r.col(0)),2);
+	double r12 = pow(norm(r.col(1)),2);
+	double omega = 1;
+	double result;
+	result = (omega*omega*(r02 + r12)-(4*omega))*two_particle_ground_state(r);
+	return result;
 }
 
 //Print functions 
-void QuantumDots::print_N_to_terminal(void){
-	cout << "N = " << N << endl;
+void QuantumDots::print_numberofparticles_to_terminal(void){
+	cout << "number_of_particles = " << number_of_particles << endl;
 }
 
 
@@ -232,12 +377,3 @@ void QuantumDots::print_N_to_terminal(void){
 
 
 
-
-
-//******************Trial Wavefunction class ***************//
-
-//Constructor
-Trial_Wavefunction::Trial_Wavefunction(double a, double b){
-	alpha = a;
-	beta = b;
-}

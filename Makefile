@@ -5,7 +5,7 @@
 
 CXX = g++
 CXXFLAGS = -larmadillo -O1
-file = test_hermite
+file = test_trialwavefunction
 
 # ****************************************************
 # Targets needed to bring the executable up to date

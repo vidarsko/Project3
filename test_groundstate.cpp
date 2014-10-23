@@ -8,8 +8,8 @@ double wf2(mat r){
 		return pow(two_particle_ground_state(r),2);
 }
 
-	double le(mat r){
-		return local_energy(Unperturbed_Harmonic_Oscillator_Hamiltonian,two_particle_ground_state,r);	
+double le(mat r){
+	return local_energy(Unperturbed_Harmonic_Oscillator_Hamiltonian,two_particle_ground_state,r);	
 }
 
 int main(){
