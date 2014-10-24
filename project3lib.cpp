@@ -178,21 +178,50 @@ double Trial_Wavefunction::phi(int i,mat r_i){
 //**********************Quantum Dots class *******************//
 
 //Constructor
-QuantumDots::QuantumDots(int N){
+QuantumDots::QuantumDots(double a, int N){
 	number_of_particles = N;
+	omega = a;
 }
 
-//Uncategorized
-void QuantumDots::Set_Hamiltonian(double (*H) (Trial_Wavefunction wf, mat r)){
+
+//Configuration member functions
+double QuantumDots::Hamiltonian (Trial_Wavefunction wf, mat r, int R){
 	/*
-	Sets the Hamiltonian as a function of two paramters.
+	Function that evaluates the hamiltonion of a wavefunction wf of type Trial_Wavefunction in a point r
+	with the harmonic oscillator potential wit oscillator frequency omega (parameter of the class)
+	with a electron repulsion part as well:
 	Input:
-		- double (*Hamiltonian) - Function
-			Parameters of the hamiltonian:
-				- Trial_Wavefunction Wave_function	- An wavefunction of type Trial_Wavefunction(object)
-				- mat r 							- The point in which to evaluate the Hamiltonian
+		- Trial_Wavefunction wf		- Wavefunction
+		- mat r 					- Position in which the hamiltonian is to be evaluated
+		- int R 					- Includes the electron-electron repulsion part of the Hamiltonian (1 if included, 0 else)
+	Output:
+		-double result 				-The value of the hamiltonian in the point r.
 	*/
-	Hamiltonian = H;
+
+	//Data
+	int spatial_dimension = wf.spatial_dimension;
+	int number_of_particles = wf.number_of_particles;
+
+
+	//The potential term:
+	double V = 0; 
+	for (int i = 0; i<number_of_particles;i++){
+		V += 0.5 * omega*omega*pow(norm(r.col(i)),2);
+	}
+	double result = V*wf.call(r) - 0.5*sum_laplacians(wf,r);
+	if (R == 1){
+		mat r_i, r_j;
+		double r_ij = 0;
+		for (int j = 0; j<number_of_particles; j++){
+			for (int i = 0; i<j ; i++){
+				r_i = r.col(i);
+				r_j = r.col(j);
+				r_ij = norm(r_i-r_j);
+				result += 1/r_ij;
+			}
+		} 
+	}
+	return result;
 }
 
 void QuantumDots::Set_Wavefunction(Trial_Wavefunction wf){
@@ -205,16 +234,17 @@ void QuantumDots::Set_Wavefunction(Trial_Wavefunction wf){
 }
 
 
-double QuantumDots::local_energy(mat r){
+double QuantumDots::local_energy(mat r, int R){
 	/*
 	Function that returns the local energy in a point of a wavefunction wf
 	according to a hamiltonian operator H in a point r. 
 	Input: 
-		- double r 			- The point in which the local energy will be evaluated.
+		- double r 				 - The point in which the local energy will be evaluated.
+		- int R (default =0)	 - Includes the electron-electron repulsion part of the Hamiltonian (1 if included, 0 else)
 	Output:
 		- double result 		- The local energy of the function. 
 	*/
-	double result = 1/Wave_function.call(r) * Hamiltonian(Wave_function,r);
+	double result = 1/Wave_function.call(r) * Hamiltonian(Wave_function,r,R);
 	return result;
 }
 
@@ -247,7 +277,7 @@ void QuantumDots::print_numberofparticles_to_terminal(void){
 //**********Functions needed for class and elsewhere**********//
 
 //Monte Carlo Simulation function
-vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r){
+vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r,int R){
 	/*
 	Function that uses the Monte Carlo Metropolis algorithm to 
 	find the the expectation value of the local energy and the local energy squared.
@@ -255,6 +285,7 @@ vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r){
 		- QuantumDots system 		. The system (with wavefunction) to be evaluated
 		- int M 					- Number of Monte Carlo simulations
 		- double delta_r 			- Predefined step length
+		- int R 					- 
 	Output: 
 		- vec expectation_values (2)- Expectation values of g and g^2. 
 	*/
@@ -263,7 +294,7 @@ vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r){
 	int spatial_dimension = system.Wave_function.spatial_dimension;
 
 	//Initial position
-	mat r = zeros(spatial_dimension,number_of_particles);
+	mat r = randu<mat>(spatial_dimension,number_of_particles);
 
 	//Initialization
 	double local_energy = 0;
@@ -279,14 +310,12 @@ vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r){
 		r_p.col(i) = r_p.col(i) + delta_vec_r;
 		vec tmp = randu<vec>(1); double s = tmp(0);
 		double w = system.Wave_function.call_squared(r_p)/system.Wave_function.call_squared(r);
-		cout << "w = " << w << " s = " << s << endl;
 		if (w >= s){
-			cout << "pling!" << endl;
 			r = r_p;
-			local_energy = system.local_energy(r);
+			local_energy = system.local_energy(r,R);
 			cumulative_local_energy += local_energy;
 			cumulative_local_energy_squared += local_energy*local_energy;
-			counter += 1;
+			counter += 1;	
 		}
 		total_counter += 1;
 	}
@@ -303,39 +332,6 @@ vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r){
 }	
 
 
-
-//Test functions for the metropolis algorithm 
-double Test_Probability_Density(mat r){
-	/*
-	Probability density where P(r)=e^(-radius) where radius = |mat r|:
-	*/
-	double radius = norm(r,2);
-	return exp(-radius);
-}
-double Test_Evaluation_Function(mat r){
-	/*
-	Function to be evaluated in the probability density. 
-	Here, the value is 
-	*/
-	return norm(r,2);
-}
-double two_particle_ground_state(mat r){
-	/*
-	The ground state function of the two particle system for the unperturbed 
-	hamiltonian.
-	Input:
-		- mat r 						- The position to evaluate the function in.
-		- double omega(default=1)		- The oscillator frequency
-	Output: 
-		- double result 				- The value of the wavefunction in that position
-	*/
-	double omega = 1;
-	double r02 = pow(norm(r.col(0)),2);
-	double r12 = pow(norm(r.col(1)),2);
-
-	double result = exp(-omega*(r02 + r12)/2);
-	return result; 
-}
 
 
 
@@ -379,33 +375,5 @@ double sum_laplacians(Trial_Wavefunction wf,mat r,double h ){
 }	
 
 
-
-
-//Hamilton operator functions
-double Unperturbed_Harmonic_Oscillator_Hamiltonian(Trial_Wavefunction wf, mat r){
-	/*
-	Function that evaluates the hamiltonion of a wavefunction wf of type Trial_Wavefunction in a point r
-	with an unperturbed harmonic oscillator potential wit oscillator frequency omega = 1:
-	Input:
-		- Trial_Wavefunction wf		- Wavefunction
-		- mat r 					- Position in which the hamiltonian is to be evaluated
-	Output:
-		-double result 				-The value of the hamiltonian in the point r.
-	*/
-	double omega = 1;
-
-	//Data
-	int spatial_dimension = wf.spatial_dimension;
-	int number_of_particles = wf.number_of_particles;
-
-
-	//The potential term:
-	double V = 0; 
-	for (int i = 0; i<number_of_particles;i++){
-		V += 0.5 * omega*omega*pow(norm(r.col(i)),2);
-	}
-	double result = V*wf.call(r) - 0.5*sum_laplacians(wf,r);
-	return result;
-}
 
 

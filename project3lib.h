@@ -51,19 +51,23 @@ class QuantumDots{
 	/*
 	The system
 	*/
+	private:
+		double omega;
+
 	public:
 		int number_of_particles;  //Number of electrons in trap
-		double (*Hamiltonian) (Trial_Wavefunction wf, mat r); //Hamiltonian
 		Trial_Wavefunction Wave_function;
 
 	
 		//Constructor
-		QuantumDots(int N);
+		QuantumDots(double a, int N);
 
-		//Uncategorized
-		void Set_Hamiltonian(double (*H)(Trial_Wavefunction wf, mat r));
+		//Configuration functions
+		double Hamiltonian (Trial_Wavefunction wf, mat r, int R); //Hamiltonian
 		void Set_Wavefunction(Trial_Wavefunction wf);
-		double local_energy(mat r);
+
+		//Local energy function
+		double local_energy(mat r, int R);
 
 		//Print functions 
 		void print_numberofparticles_to_terminal(void);
@@ -72,18 +76,11 @@ class QuantumDots{
 //**********Functions needed for class and elsewhere**********//
 
 //Monte Carlo Simulation function
-vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r);
-
-//Test functions for the metropolis algorithm 
-double Test_Probability_Density(mat r);
-double Test_Evaluation_Function(mat r);
-double two_particle_ground_state(mat r);
+vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r, int R=0);
 
 //Laplacian functions
 double sum_laplacians(Trial_Wavefunction wf,mat r,double h=1e-4);
 
-//Hamiltonian functions
-double Unperturbed_Harmonic_Oscillator_Hamiltonian(Trial_Wavefunction Wave_function, mat r);
 
 
 #endif

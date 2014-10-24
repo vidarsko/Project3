@@ -14,8 +14,8 @@ file = test_multiparticles
 $(file).x: $(file).o project3lib.o
 	$(CXX)  -o $(file).x  project3lib.o $(file).o $(CXXFLAGS)
 
-$(file).o: $(file).cpp 
-	$(CXX) $(file).cpp $(CXXFLAGSCOMP)
+$(file).o: $(file).cpp project3lib.o
+	$(CXX) $(file).cpp project3lib.o $(CXXFLAGSCOMP)
 
 project3lib.o: project3lib.cpp 
 	$(CXX) project3lib.cpp $(CXXFLAGSCOMP) 
