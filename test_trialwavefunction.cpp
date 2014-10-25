@@ -5,9 +5,9 @@ using namespace std;
 using namespace arma;
 
 int main(){
-	double alpha = 0.8, beta = 0, omega = 1;
-	int number_of_particles = 6, spatial_dimension=2;
-	Trial_Wavefunction wf (alpha,beta,omega,number_of_particles,spatial_dimension);
+	double alpha = 1, beta = 0, omega = 1;
+	int number_of_particles = 6, 
+	Trial_Wavefunction wf (alpha,beta,omega,number_of_particles,1);
 	QuantumDots system(number_of_particles);
 	system.Set_Hamiltonian(Unperturbed_Harmonic_Oscillator_Hamiltonian);
 	system.Set_Wavefunction(wf);

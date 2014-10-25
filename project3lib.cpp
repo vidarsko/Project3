@@ -3,33 +3,23 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //******************Trial Wavefunction class ***************//
 
-//Constructor
-Trial_Wavefunction::Trial_Wavefunction(double a, double b, double c, int S,int N){
+//Constructors
+Trial_Wavefunction::Trial_Wavefunction(double a, double b, double c,int N,int J){
+	/*
+	Trial Wavefunction constructor.
+	Input:
+		- double a, b 		- alpha, beta - variational parameters.
+		- double c 			- omega - potential oscillattion frequency 	
+		- int N 			- number of particles
+		- int J 			- Jastrow factor
+	*/
 	alpha = a;
 	beta = b;
 	omega = c;
-	spatial_dimension = S;
 	number_of_particles = N;
+	Jastrow_factor = J;
 }
 Trial_Wavefunction::Trial_Wavefunction(){};
 
@@ -45,6 +35,7 @@ double Trial_Wavefunction::call(mat r){
 		- double result 	- The value of the wavefunction at this point. 
 	*/
 	int N = number_of_particles;
+	double result;
 
 	mat phi_of_r_left =  zeros(N/2,N/2) ;
 	mat phi_of_r_right =  zeros(N/2,N/2);
@@ -54,7 +45,23 @@ double Trial_Wavefunction::call(mat r){
 			phi_of_r_right(j/2,i/2) = phi(i+1,r.col(j+1));
 		}
 	}
-	return det(phi_of_r_left)*det(phi_of_r_right);
+
+	result = det(phi_of_r_left)*det(phi_of_r_right);
+
+	if (Jastrow_factor==1){
+		mat r_i, r_j;
+		double r_ij = 0;
+		for (int j = 0; j<N; j++){
+			for (int i = 0; i<j ; i++){
+				r_i = r.col(i);
+				r_j = r.col(j);
+				r_ij = norm(r_i-r_j);
+				result *= exp(a(i,j)*r_ij/(1+beta*r_ij));
+			}
+		}
+	}
+	return result;
+
 }
 
 double Trial_Wavefunction::call_squared(mat r){
@@ -131,6 +138,28 @@ double Trial_Wavefunction::phi(int i,mat r_i){
 }
 
 
+double Trial_Wavefunction::a(int i, int j){
+	/*
+	Function that returns 1/3 if spin of i and j are parallell and 1 if they are anti-parallel
+	(see theory on the Jastrow factor)
+	Input:
+		- int i, j 		 	-Particle indices
+	Output: 
+		- double 1 or 1/3 	-Factor in the Jastrow factor
+	*/
+	int test = i + j;
+	double result;
+	if (test%2==0){ 
+		result = 1.0/3.0;
+	}
+	else {
+		result = 1;
+	}
+	return result;
+}
+
+
+
 
 
 
@@ -178,14 +207,16 @@ double Trial_Wavefunction::phi(int i,mat r_i){
 //**********************Quantum Dots class *******************//
 
 //Constructor
-QuantumDots::QuantumDots(double a, int N){
+QuantumDots::QuantumDots(double w, int N, int R){
+	omega = w;
 	number_of_particles = N;
-	omega = a;
+	repulsion = R;
 }
+QuantumDots::QuantumDots(){}
 
 
 //Configuration member functions
-double QuantumDots::Hamiltonian (Trial_Wavefunction wf, mat r, int R){
+double QuantumDots::Hamiltonian (Trial_Wavefunction wf, mat r){
 	/*
 	Function that evaluates the hamiltonion of a wavefunction wf of type Trial_Wavefunction in a point r
 	with the harmonic oscillator potential wit oscillator frequency omega (parameter of the class)
@@ -199,7 +230,6 @@ double QuantumDots::Hamiltonian (Trial_Wavefunction wf, mat r, int R){
 	*/
 
 	//Data
-	int spatial_dimension = wf.spatial_dimension;
 	int number_of_particles = wf.number_of_particles;
 
 
@@ -209,7 +239,7 @@ double QuantumDots::Hamiltonian (Trial_Wavefunction wf, mat r, int R){
 		V += 0.5 * omega*omega*pow(norm(r.col(i)),2);
 	}
 	double result = V*wf.call(r) - 0.5*sum_laplacians(wf,r);
-	if (R == 1){
+	if (repulsion == 1){
 		mat r_i, r_j;
 		double r_ij = 0;
 		for (int j = 0; j<number_of_particles; j++){
@@ -234,7 +264,7 @@ void QuantumDots::Set_Wavefunction(Trial_Wavefunction wf){
 }
 
 
-double QuantumDots::local_energy(mat r, int R){
+double QuantumDots::local_energy(mat r){
 	/*
 	Function that returns the local energy in a point of a wavefunction wf
 	according to a hamiltonian operator H in a point r. 
@@ -244,7 +274,7 @@ double QuantumDots::local_energy(mat r, int R){
 	Output:
 		- double result 		- The local energy of the function. 
 	*/
-	double result = 1/Wave_function.call(r) * Hamiltonian(Wave_function,r,R);
+	double result = 1/Wave_function.call(r) * Hamiltonian(Wave_function,r);
 	return result;
 }
 
@@ -274,10 +304,189 @@ void QuantumDots::print_numberofparticles_to_terminal(void){
 
 
 
+//********************Investigation class **************************//
+
+//Constructor
+Investigate::Investigate(double a0, double as, double am, double b0, double bs, double bm, QuantumDots sys){
+	alpha_0 = a0; alpha_step = as; alpha_max = am;
+	beta_0  = b0; beta_step  = bs; beta_max  = bm;
+
+	system = sys;
+}
+
+//Solve function
+void Investigate::solve(int MCS, double delta_r, int jastrow){
+	/*
+	Function that finds the energies as functions of the parameters alpha and beta. 
+	Stores the energies and the corresponding variances in  the matrices energies and variances.
+	Input: 
+		- int MCS	 		- Number of Monte Carlo simulations to be performed in finding each energy
+		- double delta_r 	- The step length to be used in the MC-simulation
+		- int jastrow 		- With (jastrow=1) or without (jastrow=0) the jastrow factor.
+
+	Structure of energies and variances:
+							alpha_0 	alpha_0+alpha_step  	alpha_0+2alpha_step 	... 	alpha_max-delta1
+	beta_0 					E 			E 						E 						... 	E 
+	beta_0+beta_step		E 			E 						E 						... 	E 
+	beta_0+2beta_step		...
+	...						...
+	beta_max-delta2			E 			E 						E 						...		E
+	*/
+
+	//Data
+	int N = system.number_of_particles;
+	double omega = system.omega;
+
+	//Initialization
+	double alpha, beta;
+	vec expectation_values = zeros(2);
+
+
+	//Find the dimensionality of the matrices
+	int alpha_dim = (alpha_max-alpha_0)/alpha_step;
+	int beta_dim = (beta_max-beta_0)/beta_step;
+	int tot_counter = alpha_dim*beta_dim; int counter = 0;
+	energies = zeros(beta_dim,alpha_dim);
+	variances = zeros(beta_dim,alpha_dim);
+
+	for (int ai = 0; ai<alpha_dim; ai++){
+		for (int bi = 0; bi<beta_dim; bi++){
+			counter += 1;
+			//alpha and beta
+			alpha = alpha_0 + ai*alpha_step;
+			beta = alpha_0 + bi*beta_step;
+
+			//Wavefunction
+			Trial_Wavefunction wf (alpha,beta,omega,N,jastrow);
+			system.Set_Wavefunction(wf);
+
+			//Energy and variance
+			expectation_values = Metropolis_Expectation_Values(system,MCS,delta_r);
+			energies(bi,ai) = expectation_values(0);
+			variances(bi,ai) = abs(expectation_values(1) - expectation_values(0)*expectation_values(0));
+
+		}
+	cout << counter/(double)tot_counter*100 << " %" << endl;
+	}
+}
+
+void Investigate::print_energies_to_file(string filename){
+	ofstream output;
+	const char* name = filename.c_str();
+	output.open(name);
+	int alpha_dim = energies.n_cols;
+	int beta_dim = energies.n_rows;
+	for (int ai = 0; ai<alpha_dim; ai++){
+		for (int bi = 0; bi<beta_dim; bi++){
+			output << energies(bi,ai);
+			if (bi != beta_dim-1){output << " ,";}
+			}
+		output << '\n';
+		}
+	output.close();
+}
+
+void Investigate::print_variances_to_file(string filename){
+	ofstream output;
+	const char* name = filename.c_str();
+	output.open(name);
+	int alpha_dim = variances.n_cols;
+	int beta_dim = variances.n_rows;
+	for (int ai = 0; ai<alpha_dim; ai++){
+		for (int bi = 0; bi<beta_dim; bi++){
+			output << variances(bi,ai);
+			if (bi != beta_dim-1){output << " ,";}
+			}
+		output << '\n';
+		}
+	output.close();
+}
+
+void Investigate::print_alpha_meshgrid_to_file(string filename){
+	ofstream output;
+	const char* name = filename.c_str();
+	output.open(name);
+	int alpha_dim = energies.n_cols;
+	int beta_dim = energies.n_rows;
+	for (int ai = 0; ai<alpha_dim; ai++){
+		for (int bi = 0; bi<beta_dim; bi++){
+			output << alpha_0 + ai*alpha_step;
+			if (bi != beta_dim-1){output << " ,";}
+			}
+		output << '\n';
+		}
+	output.close();
+}
+
+void Investigate::print_beta_meshgrid_to_file(string filename){
+	ofstream output;
+	const char* name = filename.c_str();
+	output.open(name);
+	int alpha_dim = energies.n_cols;
+	int beta_dim = energies.n_rows;
+	for (int ai = 0; ai<alpha_dim; ai++){
+		for (int bi = 0; bi<beta_dim; bi++){
+			output << beta_0 + bi*beta_step;
+			if (bi != beta_dim-1){output << " ,";}
+			}
+		output << '\n';
+		}
+	output.close();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //**********Functions needed for class and elsewhere**********//
 
 //Monte Carlo Simulation function
-vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r,int R){
+vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r){
 	/*
 	Function that uses the Monte Carlo Metropolis algorithm to 
 	find the the expectation value of the local energy and the local energy squared.
@@ -285,13 +494,12 @@ vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r,int 
 		- QuantumDots system 		. The system (with wavefunction) to be evaluated
 		- int M 					- Number of Monte Carlo simulations
 		- double delta_r 			- Predefined step length
-		- int R 					- 
 	Output: 
 		- vec expectation_values (2)- Expectation values of g and g^2. 
 	*/
 	//Extract relevant data 
 	int number_of_particles = system.Wave_function.number_of_particles;
-	int spatial_dimension = system.Wave_function.spatial_dimension;
+	int spatial_dimension = 2;
 
 	//Initial position
 	mat r = randu<mat>(spatial_dimension,number_of_particles);
@@ -312,7 +520,7 @@ vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r,int 
 		double w = system.Wave_function.call_squared(r_p)/system.Wave_function.call_squared(r);
 		if (w >= s){
 			r = r_p;
-			local_energy = system.local_energy(r,R);
+			local_energy = system.local_energy(r);
 			cumulative_local_energy += local_energy;
 			cumulative_local_energy_squared += local_energy*local_energy;
 			counter += 1;	
@@ -350,7 +558,7 @@ double sum_laplacians(Trial_Wavefunction wf,mat r,double h ){
 	Output: 
 		-double result 				-The sum of the laplacians: sum_i (nabla_i^2) function
 	*/
-	int spatial_dimension = wf.spatial_dimension;
+	int spatial_dimension = 2;
 	int number_of_particles = wf.number_of_particles;
 	double h2 = h*h;
 

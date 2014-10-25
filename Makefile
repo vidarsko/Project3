@@ -6,7 +6,7 @@
 CXX = g++
 CXXFLAGS = -larmadillo -O1
 CXXFLAGSCOMP = -larmadillo -O1 -c
-file = test_multiparticles
+file = test_investigate
 
 # ****************************************************
 # Targets needed to bring the executable up to date
