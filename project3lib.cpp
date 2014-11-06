@@ -35,7 +35,7 @@ double Trial_Wavefunction::call(mat r){
 		- double result 	- The value of the wavefunction at this point. 
 	*/
 	int N = number_of_particles;
-	double result;
+	double result=0;
 
 	mat phi_of_r_left =  zeros(N/2,N/2) ;
 	mat phi_of_r_right =  zeros(N/2,N/2);
@@ -222,11 +222,10 @@ double QuantumDots::Hamiltonian (Trial_Wavefunction wf, mat r){
 	with the harmonic oscillator potential wit oscillator frequency omega (parameter of the class)
 	with a electron repulsion part as well:
 	Input:
-		- Trial_Wavefunction wf		- Wavefunction
-		- mat r 					- Position in which the hamiltonian is to be evaluated
-		- int R 					- Includes the electron-electron repulsion part of the Hamiltonian (1 if included, 0 else)
+		- Trial_Wavefunction wf			- Wavefunction
+		- mat r 						- Position in which the hamiltonian is to be evaluated
 	Output:
-		-double result 				-The value of the hamiltonian in the point r.
+		-double result 					-The value of the hamiltonian in the point r.
 	*/
 
 	//Data
@@ -238,19 +237,18 @@ double QuantumDots::Hamiltonian (Trial_Wavefunction wf, mat r){
 	for (int i = 0; i<number_of_particles;i++){
 		V += 0.5 * omega*omega*pow(norm(r.col(i)),2);
 	}
-	double result = V*wf.call(r) - 0.5*sum_laplacians(wf,r);
+
+	double result = V*wf.call(r) - 0.5*numerical_sum_laplacians(wf,r);
 	if (repulsion == 1){
-		mat r_i, r_j;
 		double r_ij = 0;
 		for (int j = 0; j<number_of_particles; j++){
 			for (int i = 0; i<j ; i++){
-				r_i = r.col(i);
-				r_j = r.col(j);
-				r_ij = norm(r_i-r_j);
+				r_ij = norm(r.col(i)-r.col(j));
 				result += 1/r_ij;
 			}
 		} 
 	}
+	cout << "Scaled laplacians: " << numerical_sum_laplacians(wf,r)/wf.call(r) << endl;
 	return result;
 }
 
@@ -264,17 +262,43 @@ void QuantumDots::Set_Wavefunction(Trial_Wavefunction wf){
 }
 
 
-double QuantumDots::local_energy(mat r){
+double QuantumDots::local_energy(mat r, int analytical){
 	/*
 	Function that returns the local energy in a point of a wavefunction wf
 	according to a hamiltonian operator H in a point r. 
 	Input: 
-		- double r 				 - The point in which the local energy will be evaluated.
-		- int R (default =0)	 - Includes the electron-electron repulsion part of the Hamiltonian (1 if included, 0 else)
+		- double r 					- The point in which the local energy will be evaluated.
+		- int R (default =0)		- Includes the electron-electron repulsion part of the Hamiltonian (1 if included, 0 else)
+		- int analytical 		 	- To use or not to use analytical expressions
 	Output:
-		- double result 		- The local energy of the function. 
+		- double result 			- The local energy of the function. 
 	*/
-	double result = 1/Wave_function.call(r) * Hamiltonian(Wave_function,r);
+
+	//Initialization
+	double result=0;
+
+	if (analytical == 0){
+		result = 1/Wave_function.call(r) * Hamiltonian(Wave_function,r);
+	}
+	else if(analytical==1){
+		for (int i=0;i<number_of_particles;i++){
+			result -= 0.5*LSP(Wave_function,r,i);
+		}
+		cout << "Scaled hamiltonian: " << -2*result << endl;
+		//The potential term:
+		double V = 0; 
+		for (int i = 0; i<number_of_particles;i++){
+			V += 0.5 * omega*omega*pow(norm(r.col(i)),2);
+		}
+	}
+	else{
+		cout << "-----------" << endl;
+		cout << "Bad usage:" << endl;
+		cout << "The 'analytical' variable must be set to 1 or 0" << endl;
+		cout << "Stopping program." << endl;
+		cout << "-----------" << endl;
+		exit(1);
+	}
 	return result;
 }
 
@@ -350,6 +374,7 @@ void Investigate::solve(int MCS, double delta_r, int jastrow){
 	variances = zeros(beta_dim,alpha_dim);
 
 	for (int ai = 0; ai<alpha_dim; ai++){
+		#pragma omp parallell for
 		for (int bi = 0; bi<beta_dim; bi++){
 			counter += 1;
 			//alpha and beta
@@ -486,16 +511,17 @@ void Investigate::print_beta_meshgrid_to_file(string filename){
 //**********Functions needed for class and elsewhere**********//
 
 //Monte Carlo Simulation function
-vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r){
+vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r,int analytical){
 	/*
 	Function that uses the Monte Carlo Metropolis algorithm to 
 	find the the expectation value of the local energy and the local energy squared.
 	Input:
-		- QuantumDots system 		. The system (with wavefunction) to be evaluated
-		- int M 					- Number of Monte Carlo simulations
-		- double delta_r 			- Predefined step length
+		- QuantumDots system 			- The system (with wavefunction) to be evaluated
+		- int M 				 		- Number of Monte Carlo simulations
+		- double delta_r 		 		- Predefined step length
+		- int analytical (default 0)	- To use or not to use analytical expressions
 	Output: 
-		- vec expectation_values (2)- Expectation values of g and g^2. 
+		- vec expectation_values (2)- Expectation values of the local energy and the loc.energy squared
 	*/
 	//Extract relevant data 
 	int number_of_particles = system.Wave_function.number_of_particles;
@@ -520,7 +546,12 @@ vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r){
 		double w = system.Wave_function.call_squared(r_p)/system.Wave_function.call_squared(r);
 		if (w >= s){
 			r = r_p;
-			local_energy = system.local_energy(r);
+			for (int foo=0;foo<6;foo++){
+				for (int bar=0;bar<2;bar++){
+					r(bar,foo)=  (1+foo)*(1+bar) + 0.5;
+				}
+			}
+			local_energy = system.local_energy(r,analytical);
 			cumulative_local_energy += local_energy;
 			cumulative_local_energy_squared += local_energy*local_energy;
 			counter += 1;	
@@ -546,26 +577,25 @@ vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r){
 
 
 //Laplacian functions
-double sum_laplacians(Trial_Wavefunction wf,mat r,double h ){
+double numerical_sum_laplacians(Trial_Wavefunction wf,mat r, double h ){
 	/* ,
 	Numerical function that returns the sum of det laplacians 
 	in the position r = (v0 ... v_{N-1}) for each particle i acting on 
 	a wavefunction object of type Trial_Wavefunction. 
 	Input:
-		- Trial_Wavefunction wf 	- Wavefunction to be evaluated
-		- mat r 					- Point in which 
-		- double h (default: 1e-6)	- step length.
+		- Trial_Wavefunction wf 		- Wavefunction to be evaluated
+		- mat r 						- Point in which 
+		- double h (default: 1e-4) 		- step length.
 	Output: 
 		-double result 				-The sum of the laplacians: sum_i (nabla_i^2) function
 	*/
 	int spatial_dimension = 2;
 	int number_of_particles = wf.number_of_particles;
-	double h2 = h*h;
-
-	//Initialization
 	double result = 0; //To store result
+
+
 	mat r_jplus, r_jminus; //To store positions used in calc.
-	double dfdj2;  //To store double derivatives
+	double dfdj2_unscaled;  //To store double derivatives
 	mat delta_r = zeros(spatial_dimension,number_of_particles);
 
 	for (int i = 0; i<number_of_particles;i++){
@@ -574,14 +604,166 @@ double sum_laplacians(Trial_Wavefunction wf,mat r,double h ){
 			delta_r(j,i) = h;
 			r_jminus = r - delta_r;
 			r_jplus = r + delta_r;
-			dfdj2 = (wf.call(r_jplus) - 2*wf.call(r) + wf.call(r_jminus))/h2;
+			dfdj2_unscaled = wf.call(r_jplus) - 2*wf.call(r) + wf.call(r_jminus);
 			delta_r(j,i) = 0;	
-			result += dfdj2;
+			result += dfdj2_unscaled;
 		}
 	}
+	result /= (h*h);
 	return result; 
 }	
 
 
+//Analytical local energy help functions
+double LSP(Trial_Wavefunction wf, mat r, int i){
+	/*
+	Function finding the analytical expressions NSS and N2SS (See theory) and returns the sum of these.
+	Input:
+		- Trial_Wavefunction wf 	- The wavefunction
+		- mat r 					- The position in which to evaluate
+		- int i 					- The particle number
+	Output:
+		- double result 			- N2SS + N2JJ + 2*NSS*NJJ 
+	*/
 
+	//Initialization	
+	int N = wf.number_of_particles;
+	double result=0;
+	double r2 = pow(norm(r.col(i)),2);
+	mat S_i;
+	
+	//Constructing Si
+	if (i%2==0){
+		S_i =  zeros(N/2,N/2) ;
+		for (int it = 0; it<=N-2; it += 2){
+			for (int j=0; j<=N-2; j+=2){
+				S_i(j/2,it/2) = wf.phi(it,r.col(j));
+			}
+		}
+	}
+	else {
+		S_i =  zeros(N/2,N/2);
+		for (int it = 0; it<=N-2; it += 2){
+			for (int j=0; j<=N-2; j+=2){
+				S_i(j/2,it/2) = wf.phi(it+1,r.col(j+1));
+			}
+		}
+	}
+	mat S_i_inverse = inv(S_i);
+
+	double N2SS=0;
+	mat NSS = zeros(2,1);
+	double l = sqrt(wf.omega*wf.alpha);
+	for (int k=0;k<N/2;k++){
+		NSS += S_i_inverse(k,i/2) * nabla_phi(l,2*k,r.col(i)); 
+		N2SS += S_i_inverse(k,i/2) * nabla2_phi(l,2*k,r.col(i));
+	}
+	double exp_factor = exp(-0.5*l*l*r2);
+	NSS *= exp_factor;
+	N2SS *= exp_factor;
+
+	mat NJJ = zeros(2,1);
+	double N2JJ=0;
+	double r_ij = 0, a_ij = 0, beta=0, a_ij_r_ij=0, denom=0;
+	for (int j=0;j<N;j++){
+		if (j!=i){
+			r_ij = norm(r.col(i)-r.col(j));
+			a_ij = wf.a(i,j);
+			a_ij_r_ij = a_ij/r_ij;
+			denom =(1+beta*r_ij);
+			beta = wf.beta;
+
+			NJJ += a_ij_r_ij*(r.col(i)-r.col(j))/(denom*denom);
+			N2JJ += a_ij_r_ij*(1-beta*r_ij)/(denom*denom*denom);
+		}
+	}
+	N2JJ += pow(norm(NJJ),2);
+
+	result = N2SS;
+	if (wf.Jastrow_factor==1){
+		result += N2JJ + 2 * sum(sum(NJJ*NSS));
+	}
+	return result;
+}
+
+mat nabla_phi(double l, int k, mat r_i){
+	/*
+	Function that returns nabla phi_k(r_i)/e^(-0.5*l2*r2) according to table 2.1.2.
+	Input:
+		- double l 			- The argument factor 
+		- int k 	 		- funtion index
+		- mat r_i 			- (2,1)-matrix, the position to evaluate the function. 
+	Output:
+		- mat result 		- A (2,1)-matrix with nabla phi_k(r_i)/e^(-0.5*l2*r2)
+	*/
+	mat result = zeros(2,1);
+
+	double x = r_i(0,0), y = r_i(1,0);
+	double x2 = x*x, y2 = y*y;
+	double l2 = l*l;
+
+	if (k==0){
+		result(0,0) = -l2*x;
+		result(1,0) = -l2*y;
+	}
+	else if (k==2){
+		result(0,0) = -(l*x -1)*(l*x+1);
+		result(1,0) = -l2*x*y;
+	}
+	else if(k==4){
+		result(0,0) = -l2*x*y;
+		result(1,0) = -(l*y - 1)*(l*y + 1);
+	}
+	else if (k==6){
+		result(0,0) = -l2*x*(2*l2*x2 - 5);
+		result(1,0) = -l2*y*(2*l2*x2 - 1);
+	}
+	else if (k==8){
+		result(0,0) = -y*(l*x-1)*(l*x+1);
+		result(1,0) = -x*(l*y-1)*(l*y+1);
+	}
+	else if (k==10){
+		result(0,0) = -l2*x*(2*l2*y2-1);
+		result(1,0) = -l2*y*(2*l2*y2-5);
+	}
+	return result;
+}
+
+double nabla2_phi(double l,int k, mat r_i){
+	/*
+	Function that returns nabla phi^2_k(r_i) according to table 2.1.2.
+	Input:
+		- double l 			- The argument factor
+		- int k 	 		- funtion index
+		- mat r_i 			- (2,1)-matrix, the position to evaluate the function. 
+	Output:
+		- double result 	- nabla^2 phi_k(r_i)
+	*/
+	double result = 0;
+
+	double x = r_i(0,0), y = r_i(1,0);
+	double x2 = x*x, y2 = y*y;
+	double l2 = l*l;
+	double r2 = pow(norm(r_i),2);
+
+	if (k==0){
+		result = l2*(l2*r2-2);
+	}
+	else if (k==2){
+		result = l2*x*(l2*r2-4);
+	}
+	else if(k==4){
+		result = l2*y*(l2*r2-4);
+	}
+	else if (k==6){
+		result = l2*(l2*r2-6)*(2*l2*x2-1);
+	}
+	else if (k==8){
+		result = l2*x*y*(l2*r2-6); 
+	}
+	else if (k==10){
+		result = l2*(l2*r2 - 6)*(2*l2*y2-1);
+	}
+	return result;
+}
 

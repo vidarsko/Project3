@@ -17,12 +17,11 @@ class Trial_Wavefunction{
 	/*
 	The trial wavefunction object.
 	*/
-	private:
+	public:
 		//Trial parameters
 		double alpha,beta;
 		double omega;
 
-	public:
 		//System settings
 		int number_of_particles;
 		int Jastrow_factor;
@@ -68,7 +67,7 @@ class QuantumDots{
 		void Set_Wavefunction(Trial_Wavefunction wf);
 
 		//Local energy function
-		double local_energy(mat r);
+		double local_energy(mat r,int analytical);
 
 		//Print functions 
 		void print_numberofparticles_to_terminal(void);
@@ -116,11 +115,16 @@ class Investigate{
 //**********Functions needed for class and elsewhere**********//
 
 //Monte Carlo Simulation function
-vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r);
+vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r,int analytical=0);
 
 //Laplacian functions
-double sum_laplacians(Trial_Wavefunction wf,mat r,double h=1e-4);
+double numerical_sum_laplacians(Trial_Wavefunction wf,mat r,double h=1e-4);
 
+
+//Analytical local energy help functions
+double LSP(Trial_Wavefunction wf, mat r, int i);
+mat nabla_phi(double l, int k, mat r_i);
+double nabla2_phi(double l, int k, mat r_i);
 
 
 #endif
