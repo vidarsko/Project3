@@ -39,6 +39,8 @@ class Trial_Wavefunction{
 		double nx(int i);
 		double ny(int i);
 		double phi(int i,mat r_i);
+		mat nabla_phi(double l, int k, mat r_i);
+		double nabla2_phi(double l, int k, mat r_i);
 		double a(int i, int j);
 
 };
@@ -63,11 +65,16 @@ class QuantumDots{
 		QuantumDots();
 
 		//Configuration functions
-		double Hamiltonian (Trial_Wavefunction wf, mat r); //Hamiltonian
 		void Set_Wavefunction(Trial_Wavefunction wf);
 
 		//Local energy function
-		double local_energy(mat r,int analytical);
+		double local_energy_function(mat r,int analytical);
+
+		//Help functions for the local energy
+		double Potential(mat r);
+		double numerical_sum_laplacians(Trial_Wavefunction wf,mat r,double h=1e-4);
+		double LSP(Trial_Wavefunction wf, mat r, int i);
+		vec Brute_Force_Metropolis_Expectation_Values(int M, double delta_r,int analytical=0);
 
 		//Print functions 
 		void print_numberofparticles_to_terminal(void);
@@ -84,24 +91,26 @@ class Investigate{
 	private:
 		double alpha_0,alpha_step,alpha_max;
 		double beta_0,beta_step,beta_max;
+		int alpha_dim, beta_dim;
 
 		QuantumDots system;
 
-		mat energies, variances;
+		mat energies,variances, relative_energy_difference;
 	public:
 
 		//Constructor
-		Investigate(double aa, double as, double am, double b0, double bs, double bm, QuantumDots sys);
+		Investigate(double a0, double as, double am, double b0, double bs, double bm, QuantumDots sys);
 
-		//Solve function
-		void solve(int MCS, double delta_r, int jastrow);
+		//Solve functions
+		void find_minimum(int MCS, double delta_r, int jastrow);
+		void compare_analytical_numerical(int MCS, double delta_r,int jastrow);
 
 		//Print functions
 		void print_energies_to_file(string filename);
 		void print_variances_to_file(string filename);
+		void print_relative_energy_difference_to_file(string filename);
 		void print_alpha_meshgrid_to_file(string filename);
 		void print_beta_meshgrid_to_file(string filename);
-
 };
 
 
@@ -114,17 +123,8 @@ class Investigate{
 
 //**********Functions needed for class and elsewhere**********//
 
-//Monte Carlo Simulation function
-vec Metropolis_Expectation_Values(QuantumDots system, int M, double delta_r,int analytical=0);
 
-//Laplacian functions
-double numerical_sum_laplacians(Trial_Wavefunction wf,mat r,double h=1e-4);
-
-
-//Analytical local energy help functions
-double LSP(Trial_Wavefunction wf, mat r, int i);
-mat nabla_phi(double l, int k, mat r_i);
-double nabla2_phi(double l, int k, mat r_i);
-
+//Test functions
+mat twobysix(void);
 
 #endif

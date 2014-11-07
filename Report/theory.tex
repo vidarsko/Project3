@@ -31,33 +31,29 @@ Our goal in this project is to find the ground eigenstate and energy of this mul
 \paragraph{The variational principle}
 
 We will approach this by constructing a real test function $\Psi_T(\vec r_0, \vec r_1, ... , \vec r_{N-1}, \alpha,\beta )$ dependent on two parameters $\alpha$ and $\beta$ and calculate the expextation value of the hamilton operator $\langle \hat{H} \rangle $. 
-As we know, the eigenstates $\Psi_i$ of the Hamiltonian forms a complete basis, so any state, including our test state $\Psi_T$, can be written as a linear combination of the eigenstates 
+As we know, the orthonormal eigenstates $\Psi_i$ of the Hamiltonian forms a complete basis, so any state, including our test state $\Psi_T$, can be written as a linear combination of the eigenstates 
 
 \eqs
 \Psi_T = \sum_i c_i \Psi_i
 \eqf
 
-Inserting this expression into the equation for the expectation value of $\hat{H}$ (remembering that $\Psi_T$ is real) gives
+Inserting this expression into the equation for the expectation value of $\hat{H}$ gives
 
-\eqs
-\langle \hat{H} \rangle = \frac{\int \Psi_T \hat{H} \Psi_T d\vec r}{ \int \Psi_T \Psi_T d\vec r} = \frac{\int \left ( \sum_i c_i \Psi_i \right ) \hat{H} \left ( \sum_i c_i \Psi_i \right ) d\vec r}{ \int \left ( \sum_i c_i \Psi_i \right ) \left ( \sum_i c_i \Psi_i \right ) d\vec r}
+\[
+\langle \hat{H} \rangle = \frac{\int \Psi_T \hat{H} \Psi_T d\vec r}{ \int \Psi_T \Psi_T d\vec r} 
+= \frac{\int \left ( \sum_i c_i^* \Psi_i^* \right ) \hat{H} \left ( \sum_i c_i \Psi_i \right ) d\vec r}{ \int \left ( \sum_i c_i^* \Psi_i^*  \right ) \left ( \sum_i c_i \Psi_i \right ) d\vec r}
 =
-\frac{\int \left ( \sum_i c_i \Psi_i \right ) \left ( \sum_i c_i  E_i \Psi_i \right ) d\vec r}{ \int \left ( \sum_i c_i \Psi_i \right ) \left ( \sum_i c_i \Psi_i \right ) d\vec r}
+\frac{\int \left ( \sum_i c_i^* \Psi_i^* \right ) \left ( \sum_i c_i  E_i \Psi_i \right ) d\vec r}{ \int \left ( \sum_i c_i^* \Psi_i^* \right ) \left ( \sum_i c_i \Psi_i \right ) d\vec r}
+\]
+\eqs
+=
+\frac{\sum_i |c_i|^2 E_i }{\sum_i |c_i|}
 \eqf
 
 The energy of the ground state $E_0$ is smaller than all other $E_i$'s so 
 
-\[
-\langle \hat{H} \rangle
-=
-\frac{\int \left ( \sum_i c_i \Psi_i \right ) \left ( \sum_i c_i  E_i \Psi_i \right ) d\vec r}{ \int \left ( \sum_i c_i \Psi_i \right ) \left ( \sum_i c_i \Psi_i \right ) d\vec r}
-\]
 \eqs
-\geq
-\frac{\int \left ( \sum_i c_i \Psi_i \right ) \left ( \sum_i c_i  E_0 \Psi_i \right ) d\vec r}{ \int \left ( \sum_i c_i \Psi_i \right ) \left ( \sum_i c_i \Psi_i \right ) d\vec r}
-=
-E_0
-\frac{\int \left ( \sum_i c_i \Psi_i \right ) \left ( \sum_i c_i  \Psi_i \right ) d\vec r}{ \int \left ( \sum_i c_i \Psi_i \right ) \left ( \sum_i c_i \Psi_i \right ) d\vec r} = E_0
+\frac{\sum_i |c_i|^2 E_i }{\sum_i |c_i|} \geq \frac{\sum_i |c_i|^2 E_0 }{\sum_i |c_i|} = E_0 \frac{\sum_i |c_i|^2 }{\sum_i |c_i|} = E_0
 \eqf
 \eqs
 \langle H \rangle \geq E_0
@@ -98,42 +94,70 @@ V_{E_L} = \langle E_L^2 \rangle - \langle E_L \rangle^2
 \left (\int P(\vec r) \frac{1}{\Psi_T} \hat{H} \Psi_T d\vec r \right )^2
 \eqf 
 
-If the state $\Psi_T$ is an eigenstate of $\hat{H}$ with eigenvalue $E$ then 
+Since
 
 \[
-V_{E_L} = \int P(\vec r) \left (\frac{1}{\Psi_T} E \Psi_T \right )^2 d\vec r -
-\left (\int P(\vec r) \frac{1}{\Psi_T} E \Psi_T d\vec r \right )^2
-\]
-\[
-=E^2
-\left ( 
-\int P(\vec r) \left (\frac{1}{\Psi_T} \Psi_T \right )^2 d\vec r -
-\left (\int P(\vec r) \frac{1}{\Psi_T} \Psi_T d\vec r \right )^2
-\right ) = 
-E^2 
-\left ( 
-\int P(\vec r) (1)^2 d\vec r -
-\left ( \int P(\vec r) \cdot 1 d\vec r \right )^2
-\right )
+\langle (E_L -\langle E_L \rangle)^2 \rangle = \langle E_L^2 - 2 E_L \langle E_L \rangle + \langle E_L \rangle^2 \rangle 
+=  
+\langle E_L^2 \rangle - 2 \langle E_L \rangle \langle E_L \rangle + \langle E_L \rangle^2
 \]
 \eqs
+= \langle E_L^2 \rangle - \langle E_L \rangle^2 
 =
-E^2 
-\left ( 
-\int P(\vec r) d\vec r -
-\left ( \int P(\vec r) d\vec r \right )^2
-\right ) = E^2 (1-1^2) = 0
+V_{E_L}
 \eqf
 
-So if $\Psi_T$ is an eigenstate of $\hat{H}$ then the variance $V_{E_L}$ of $E_L$ is $0$
+We have that if $V_{E_L} = 0$, then 
 
 \eqs
-V_{E_L} = \langle E_L^2 \rangle - \langle E_L \rangle^2 = 0
-\eqf 
+\langle (E_L -\langle E_L \rangle)^2 \rangle = 0
+\eqf
+\eqs
+0 = \int  \left (  P(\vec r) E_L(\vec r) -  \int P(\vec r) E_L (\vec r) d\vec r \right )^2 d\vec r = 
+\int \left (
+\frac{1}{\Psi_T} \hat{H} \Psi_T  - \int \Psi_T \hat{H} \Psi_T d\vec r 
+\right )^2 d\vec r
+\label{eq:Variance0_1}
+\eqf
 
-This will serve as a verification that the state we have found when minimizing the expectation value of $E_L$ is indeed an eigenstate of the hamilton operator. 
+When the Hamiltonian acts on a real function, it gives a real function. 
+And since $\Psi_T$ is real $\frac{1}{\Psi_T} \hat{H} \Psi_T  - \int \Psi_T \hat{H} \Psi_T d\vec r$ is real. 
+By consequence
 
+\eqs 
+\left (
+\frac{1}{\Psi_T} \hat{H} \Psi_T  - \int \Psi_T \hat{H} \Psi_T d\vec r 
+\right )^2 > 0
+\eqf
 
+Which means that for the integral in equation \ref{eq:Variance0_1} to be zero, the following must be true for all $\vec r$
+
+\eqs
+\frac{1}{\Psi_T} \hat{H} \Psi_T  - \int \Psi_T \hat{H} \Psi_T d\vec r  = 0
+\eqf
+\eqs
+\Psi_T \hat{H} \Psi_T = \int \Psi_T \hat{H} \Psi_T d\vec r 
+\eqf
+
+The right hand side of this equation is just a real number. 
+Naming this number $E$ gives 
+
+\eqs
+\frac{1}{\Psi_T} \hat{H} \Psi_T = E 
+\eqf
+\eqs \hat{H}\Psi_T  = E \Psi_T  \eqf
+
+Which is nothing but the eigenvalue equation stating that $\Psi_T$ is an eigenstate of $\hat{H}$.
+This will serve as a test to see if the state we have found when minimizing the expectation value of $E_L$ is an eigenstate of the Hamilton operator. 
+It is just as easily (perhaps easier) shown that if $\Psi_T$ \textit{is} and eigenstate of $\hat{H}$, then the variance of the local energy is $0$. 
+This means that if the variance of our test function is \textit{not} $0$, then it is \textit{not} an eigenfunction of $\hat{H}$. 
+We can summarize this discussion as follows
+
+\eqs
+\boxed{
+V_{E_L} = 0 \quad \textrm{if and only if} \quad \Psi_T \textrm{ is an eigenstate of } \hat{H}
+}
+\eqf
 
 
 
@@ -217,14 +241,15 @@ For $i<12$, the explicit depence of $n_x, n_y$ on $i$ is given in table \ref{tab
 
 $\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$ is a so-called \textit{Jastrow factor}, which represents the electron repulsion part of the wavefunction, defined as
 
-\[
-\textrm{J}(\vec r_0, ... \vec r_{N-1}) = \prod_{i<j}^N \exp \left (
-\frac{a_{ij}r_{ij}}{1 + \beta r_{ij}}
-\right ) 
-\quad
-\textrm{where}
-\]
 \eqs
+\boxed{
+\begin{matrix} 
+\textrm{J}(\vec r_0, ... \vec r_{N-1}) = \prod_{i<j}^N \exp \left (
+\dfrac{a_{ij}r_{ij}}{1 + \beta r_{ij}}
+\right ) 
+\quad \\
+\\
+\textrm{where} 
 \quad
 r_{ij} = |\vec r_i - \vec r_j|  \quad \textrm{and} 
 \quad 
@@ -234,6 +259,8 @@ a_{ij} = \left \{
 1  & \textrm{if spin(i) and spin(j) are anti-parallell} \\
 \end{matrix}
 \right .
+\end{matrix}
+}
 \eqf
 
 From the expression of the Jastrow factor, we see that it is zero whenever $r_{ij} = 0$ for any pair $i\neq j$. 
@@ -295,19 +322,14 @@ It is possible to find analytical expression for all these terms, and that has b
 The arguments will not be repeated but the results are as follows 
 (with names added for code reference)
 
-
-\eqs
-NSS = \frac{\nabla_i |S_i|}{|S_i|} = \sum_{k=0}^{N/2} \left [ (S^{-1})_{ki} \cdot \nabla_i \phi_{2k} (\vec r_i) \right ]
-\eqf
-\eqs
-N2SS =\frac{\nabla_i^2 |S_i|}{|S_i|} = \sum_{k=0}^{N/2} \left [ (S^{-1})_{ki} \cdot  \nabla_i^2 \phi_{2k}(\vec r_i) \right ]
-\eqf
-\eqs
-NJJ = \frac{\nabla_i \J}{\J} =   \sum_{i\neq j} \frac{a_{ij}}{r_{ij}} \frac{\vec r_i - \vec r_k}{(1 + \beta r_{ij})^2}
-\eqf
-\eqs
-N2JJ = \frac{\nabla_i^2 \J}{\J} = \left ( \left | \frac{\nabla_i J}{J} \right |^2 + \sum_{i\neq j} a_{ij} \frac{1-\beta r_{ij}}{r_{ij}(1+\beta r_{ij})^3} \right ) 
-\eqf
+\begin{subequations}
+\begin{empheq}[box=\widefbox]{gather}
+NSS = \frac{\nabla_i |S_i|}{|S_i|} = \sum_{k=0}^{N/2} \left [ (S^{-1})_{ki} \cdot \nabla_i \phi_{2k} (\vec r_i) \right ] \\
+N2SS =\frac{\nabla_i^2 |S_i|}{|S_i|} = \sum_{k=0}^{N/2} \left [ (S^{-1})_{ki} \cdot  \nabla_i^2 \phi_{2k}(\vec r_i) \right ] \\ 
+NJJ = \frac{\nabla_i \J}{\J} =   \sum_{i\neq j} \frac{a_{ij}}{r_{ij}} \frac{\vec r_i - \vec r_k}{(1 + \beta r_{ij})^2} \\
+N2JJ = \frac{\nabla_i^2 \J}{\J} = \left | \frac{\nabla_i J}{J} \right |^2 + \sum_{i\neq j} a_{ij} \frac{1-\beta r_{ij}}{r_{ij}(1+\beta r_{ij})^3} 
+\end{empheq}
+\end{subequations}
 
 $ \nabla_i \phi_k (\vec r_i)$ and  $ \nabla_i^2 \phi_k(\vec r_i)$ can be found simply by inserting and taking the derivative of the Hermite polynomials.
 The explicit formulas for $\phi_k$ for $k$ in the range $0$ to $11$ is given in table \ref{tab:phi_nabla} and are also taken from the master thesis by Jørgen Høgberget. 
@@ -318,11 +340,11 @@ The explicit formulas for $\phi_k$ for $k$ in the range $0$ to $11$ is given in 
 	k & $(n_x,n_y)$ & $\phi_k(\vec r)$ & $\nabla_i \phi_k(\vec r_i) = \left [ \nabla_x, \nabla_y\right ]$ & $ \nabla_i^2 \phi_k(\vec r_i)$ \\
 	\midrule
 	0 & (0,0) & $1$ &  $-\left [ l^2 x ,  l^2 y\right ]$ & $l^2(l^2 r^2 - 2)$  \\ \addlinespace[0.5em]
-	2 & (1,0) & $x$ &  $-\left [ (lx-1)(lx+1),l^2 xy\right ]$ & $l^2 x (l^2 r^2  - 4)$ \\ \addlinespace[0.5em]
-	4 & (0,1) & $y$ &  $-\left [ l^2 xy,(ly-1)(ly+1)\right ]$ & $l^2 y (l^2 r^2 - 4) $ \\ \addlinespace[0.5em]
-	6 & (2,0) & $2l^2 x^2 - 1$ & $-\left [ l^2 x (2l^2 x^2 -5), l^2 y (2l^2 x^2 - 1)\right ]$ & $l^2(l^2 r^2 - 6 )(2 l^2 x^2 -1)$ \\ \addlinespace[0.5em]
-	8 & (1,1) & $xy$ & $-\left [ y(lx-1)(lx+1),x(ly-1)(ly+1)\right ]$ & $l^2 xy (l^2r^2 -6)$ \\ \addlinespace[0.5em]
-	10 & (0,2) &  $2l^2 y^2 - 1$ & $-\left [ l^2 x (2l^2 y^2 - 1),l^2 y (2l^2 y^2 -5)\right ]$ & $l^2(l^2 r^2 - 6 )(2 l^2 y^2 -1)$ \\ 
+	2 & (1,0) & $2lx$ &  $-2l \left [ (lx-1)(lx+1),l^2 xy\right ]$ & $2 l^3 x (l^2 r^2  - 4)$ \\ \addlinespace[0.5em]
+	4 & (0,1) & $2ly$ &  $-2l\left [ l^2 xy,(ly-1)(ly+1)\right ]$ & $2 l^3 y (l^2 r^2 - 4) $ \\ \addlinespace[0.5em]
+	6 & (2,0) & $4 l^2 x^2 - 2$ & $-2 \left [ l^2 x (2l^2 x^2 -5), l^2 y (2l^2 x^2 - 1)\right ]$ & $2 l^2(l^2 r^2 - 6 )(2 l^2 x^2 -1)$ \\ \addlinespace[0.5em]
+	8 & (1,1) & $4 l^2 xy$ & $-4 l^2 \left [ y(lx-1)(lx+1),x(ly-1)(ly+1)\right ]$ & $4 l^4 xy (l^2r^2 -6)$ \\ \addlinespace[0.5em]
+	10 & (0,2) &  $4 l^2 y^2 - 1$ & $- 2 \left [ l^2 x (2l^2 y^2 - 1),l^2 y (2l^2 y^2 -5)\right ]$ & $2 l^2(l^2 r^2 - 6 )(2 l^2 y^2 -1)$ \\ 
 	\bottomrule
 \end{tabular}
 \caption{Table of derivatives of $\phi_k (\vec r_i)$ where $l=\sqrt{\alpha \omega}$.
