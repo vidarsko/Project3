@@ -326,12 +326,13 @@ The arguments will not be repeated but the results are as follows
 \begin{empheq}[box=\widefbox]{gather}
 NSS = \frac{\nabla_i |S_i|}{|S_i|} = \sum_{k=0}^{N/2} \left [ (S^{-1})_{ki} \cdot \nabla_i \phi_{2k} (\vec r_i) \right ] \\
 N2SS =\frac{\nabla_i^2 |S_i|}{|S_i|} = \sum_{k=0}^{N/2} \left [ (S^{-1})_{ki} \cdot  \nabla_i^2 \phi_{2k}(\vec r_i) \right ] \\ 
-NJJ = \frac{\nabla_i \J}{\J} =   \sum_{i\neq j} \frac{a_{ij}}{r_{ij}} \frac{\vec r_i - \vec r_k}{(1 + \beta r_{ij})^2} \\
-N2JJ = \frac{\nabla_i^2 \J}{\J} = \left | \frac{\nabla_i J}{J} \right |^2 + \sum_{i\neq j} a_{ij} \frac{1-\beta r_{ij}}{r_{ij}(1+\beta r_{ij})^3} 
+NJJ = \frac{\nabla_i \J}{\J} =   \sum_{k\neq i} \frac{a_{ik}}{r_{ik}} \frac{\vec r_i - \vec r_k}{(1 + \beta r_{ik})^2} \\
+N2JJ = \frac{\nabla_i^2 \J}{\J} = \left | \frac{\nabla_i J}{J} \right |^2 + 
+\sum_{k\neq i} \frac{a_{ik}}{r_{ik}} \frac{2-\beta r_{ik}}{(1+\beta r_{ik})^3 }
 \end{empheq}
 \end{subequations}
 
-$ \nabla_i \phi_k (\vec r_i)$ and  $ \nabla_i^2 \phi_k(\vec r_i)$ can be found simply by inserting and taking the derivative of the Hermite polynomials.
+$ \nabla_i \phi_k (\vec r_i)$ and  $ \nabla_i^2 \phi_k(\vec r_i)$ scan be found simply by inserting and taking the derivative of the Hermite polynomials.
 The explicit formulas for $\phi_k$ for $k$ in the range $0$ to $11$ is given in table \ref{tab:phi_nabla} and are also taken from the master thesis by Jørgen Høgberget. 
 
 \begin{table}[h!]

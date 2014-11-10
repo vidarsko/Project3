@@ -376,6 +376,7 @@ double QuantumDots::Potential (mat r){
 
 double QuantumDots::LSP(Trial_Wavefunction wf, mat r, int i){
 	/*
+	LSP - Laplacian sum part
 	Function finding the analytical expressions NSS and N2SS (See theory) and returns the sum of these.
 	Input:
 		- Trial_Wavefunction wf 	- The wavefunction
@@ -384,6 +385,7 @@ double QuantumDots::LSP(Trial_Wavefunction wf, mat r, int i){
 	Output:
 		- double result 			- N2SS + N2JJ + 2*NSS*NJJ 
 	*/
+	
 
 	//Initialization	
 	int N = wf.number_of_particles;
@@ -424,25 +426,58 @@ double QuantumDots::LSP(Trial_Wavefunction wf, mat r, int i){
 
 	mat NJJ = zeros(2,1);
 	double N2JJ=0;
-	double r_ij = 0, a_ij = 0, beta=0, a_ij_r_ij=0, denom=0;
-	for (int j=0;j<N;j++){
-		if (j!=i){
-			r_ij = norm(r.col(i)-r.col(j));
-			a_ij = wf.a(i,j);
-			a_ij_r_ij = a_ij/r_ij;
-			denom =(1+beta*r_ij);
-			beta = wf.beta;
+	double r_ik = 0, a_ik = 0, beta=0, a_ik_r_ik=0, denom=0;
+	beta = wf.beta;
+	for (int k=0;k<N;k++){
+		if (k!=i){
+			r_ik = norm(r.col(i)-r.col(k));
+			a_ik = wf.a(i,k);
+			a_ik_r_ik = a_ik/r_ik;
+			denom =(1+beta*r_ik);
 
-			NJJ += a_ij_r_ij*(r.col(i)-r.col(j))/(denom*denom);
-			N2JJ += a_ij_r_ij*(1-beta*r_ij)/(denom*denom*denom);
+			NJJ += a_ik_r_ik*(r.col(i)-r.col(k))/(denom*denom);
+			N2JJ += a_ik_r_ik*(1-beta*r_ik)/(denom*denom*denom);
 		}
 	}
 	N2JJ += pow(norm(NJJ),2);
 
 	result = N2SS;
 	if (wf.Jastrow_factor==1){
-		result += N2JJ + 2 * dot(NJJ,NSS);
+		result += N2JJ + 2*dot(NJJ,NSS);
 	}
+	
+	
+	/*
+
+	//Two-particle analytical:
+	int k;
+	double l = sqrt(wf.omega*wf.alpha);
+	double l2 = l*l;
+	double result = 0;
+	mat ri = r.col(i);
+	double ri_norm = norm(ri);
+	double r2 = ri_norm*ri_norm;
+	double exp_factor = exp(-0.5*l*l*r2);
+	double beta = wf.beta;
+
+	double S_i = exp_factor;
+	double S_i_inverse = 1/S_i;
+
+	mat NSS = zeros(2,1);
+	NSS(0,0) = -1.6*l2*ri(0,0);
+	NSS(1,0) = -1.6*l2*ri(1,0);
+
+	double N2SS = l2*(l2*r2-2);
+
+	if (i==0){k = 1;}
+	else if (i==1){k = 0;}
+	mat r_ik = r.col(i)-r.col(k);
+	double r_ik_norm = norm(r_ik);
+	mat NJJ = 1/r_ik_norm * (r_ik)/pow(1+beta*r_ik_norm,2);
+
+	double N2JJ = norm(NJJ)*norm(NJJ) + 1/r_ik_norm*(2-beta*r_ik_norm)/pow(1+beta*r_ik_norm,3);
+	result = N2SS + N2JJ + 2*dot(NJJ,NSS);
+	*/
 	return result;
 }
 
@@ -611,9 +646,9 @@ void Investigate::find_minimum(int MCS, double delta_r, int jastrow){
 	variances = zeros(beta_dim,alpha_dim);
 
 	for (int ai = 0; ai<alpha_dim; ai++){
-		#pragma omp parallel for num_threads(3)
+		counter += 1;
+		#pragma omp parallel for num_threads(4)
 		for (int bi = 0; bi<beta_dim; bi++){
-			counter += 1;
 			//alpha and beta
 			alpha = alpha_0 + ai*alpha_step;
 			beta = alpha_0 + bi*beta_step;
@@ -628,7 +663,7 @@ void Investigate::find_minimum(int MCS, double delta_r, int jastrow){
 			variances(bi,ai) = abs(expectation_values(1) - expectation_values(0)*expectation_values(0));
 
 		}
-	cout << counter/(double)tot_counter*100 << " %" << endl;
+	cout << 100*counter/(double)alpha_dim << " %" << endl;
 	}
 }
 
