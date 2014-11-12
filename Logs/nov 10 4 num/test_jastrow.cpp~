@@ -15,6 +15,3 @@ int main(){
 	inv.print_alpha_meshgrid_to_file("jas_rep_alpha.csv");
 	inv.print_beta_meshgrid_to_file("jas_rep_beta.csv");
 }
-
-
-The numerical method at this point was trustworthy. 

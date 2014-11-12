@@ -446,38 +446,6 @@ double QuantumDots::LSP(Trial_Wavefunction wf, mat r, int i){
 		result += N2JJ + 2*dot(NJJ,NSS);
 	}
 	
-	
-	/*
-
-	//Two-particle analytical:
-	int k;
-	double l = sqrt(wf.omega*wf.alpha);
-	double l2 = l*l;
-	double result = 0;
-	mat ri = r.col(i);
-	double ri_norm = norm(ri);
-	double r2 = ri_norm*ri_norm;
-	double exp_factor = exp(-0.5*l*l*r2);
-	double beta = wf.beta;
-
-	double S_i = exp_factor;
-	double S_i_inverse = 1/S_i;
-
-	mat NSS = zeros(2,1);
-	NSS(0,0) = -1.6*l2*ri(0,0);
-	NSS(1,0) = -1.6*l2*ri(1,0);
-
-	double N2SS = l2*(l2*r2-2);
-
-	if (i==0){k = 1;}
-	else if (i==1){k = 0;}
-	mat r_ik = r.col(i)-r.col(k);
-	double r_ik_norm = norm(r_ik);
-	mat NJJ = 1/r_ik_norm * (r_ik)/pow(1+beta*r_ik_norm,2);
-
-	double N2JJ = norm(NJJ)*norm(NJJ) + 1/r_ik_norm*(2-beta*r_ik_norm)/pow(1+beta*r_ik_norm,3);
-	result = N2SS + N2JJ + 2*dot(NJJ,NSS);
-	*/
 	return result;
 }
 
@@ -552,6 +520,7 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, double delta_r
 		double w = Wave_function.call_squared(r_p)/Wave_function.call_squared(r);
 		if (w >= s){
 			r = r_p;
+			//r = twobytwo() + 0.1;
 			//r = twobysix() + 0.1;
 			//cout << "position R:" << endl << r << endl;
 			local_energy = local_energy_function(r,analytical);
@@ -561,10 +530,10 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, double delta_r
 		}
 		total_counter += 1;
 	}
-	float ratio = counter/(float)total_counter;
-
+	
 	//Uncomment if investigating ratio vs delta_r
-	//cout << ratio << endl;
+	double ratio = counter/(double)total_counter;
+	cout << ratio << endl;
 
 	//Create matrix for storing expectation values
 	vec expectation_values = zeros(2);
@@ -613,7 +582,7 @@ Investigate::Investigate(double a0, double as, double am, double b0, double bs, 
 }
 
 //Solve functions
-void Investigate::find_minimum(int MCS, double delta_r, int jastrow){
+void Investigate::find_minimum(int MCS, double delta_r, int jastrow, int analytical){
 	/*
 	Function that finds the energies as functions of the parameters alpha and beta. 
 	Stores the energies and the corresponding variances in  the matrices energies and variances.
@@ -621,6 +590,7 @@ void Investigate::find_minimum(int MCS, double delta_r, int jastrow){
 		- int MCS	 		- Number of Monte Carlo simulations to be performed in finding each energy
 		- double delta_r 	- The step length to be used in the MC-simulation
 		- int jastrow 		- With (jastrow=1) or without (jastrow=0) the jastrow factor.
+		- int analytical 	- Numerical or analytical local energy expression
 
 	Structure of energies and variances:
 							alpha_0 	alpha_0+alpha_step  	alpha_0+2alpha_step 	... 	alpha_max-delta1
@@ -635,33 +605,32 @@ void Investigate::find_minimum(int MCS, double delta_r, int jastrow){
 	int N = system.number_of_particles;
 	double omega = system.omega;
 
-	//Initialization
-	double alpha, beta;
-	vec expectation_values = zeros(2);
-
 
 	//Find the dimensionality of the matrices
-	int tot_counter = alpha_dim*beta_dim; int counter = 0;
+	int counter = 0;
+	int total_counter = 0;
 	energies = zeros(beta_dim,alpha_dim);
 	variances = zeros(beta_dim,alpha_dim);
 
 	for (int ai = 0; ai<alpha_dim; ai++){
 		counter += 1;
-		#pragma omp parallel for num_threads(4)
+		//#pragma omp parallel for num_threads(4)
 		for (int bi = 0; bi<beta_dim; bi++){
+			total_counter += 1;
 			//alpha and beta
-			alpha = alpha_0 + ai*alpha_step;
-			beta = alpha_0 + bi*beta_step;
+
+			double alpha = alpha_0 + ai*alpha_step;
+			double beta = beta_0 + bi*beta_step;
 
 			//Wavefunction
 			Trial_Wavefunction wf (alpha,beta,omega,N,jastrow);
 			system.Set_Wavefunction(wf);
 
 			//Energy and variance
-			expectation_values = system.Brute_Force_Metropolis_Expectation_Values(MCS,delta_r);
+			vec expectation_values = system.Brute_Force_Metropolis_Expectation_Values(MCS,delta_r, analytical);
 			energies(bi,ai) = expectation_values(0);
 			variances(bi,ai) = abs(expectation_values(1) - expectation_values(0)*expectation_values(0));
-
+			//cout << 100*total_counter/((double)alpha_dim*beta_dim) << "%" << endl;
 		}
 	cout << 100*counter/(double)alpha_dim << " %" << endl;
 	}
@@ -698,7 +667,7 @@ void Investigate::compare_analytical_numerical(int MCS, double delta_r,int jastr
 			counter += 1;
 			//alpha and beta
 			alpha = alpha_0 + ai*alpha_step;
-			beta = alpha_0 + bi*beta_step;
+			beta = beta_0 + bi*beta_step;
 
 			//Wavefunction
 			Trial_Wavefunction wf (alpha,beta,omega,N,jastrow);
@@ -846,6 +815,15 @@ void Investigate::print_beta_meshgrid_to_file(string filename){
 
 
 //Test functions
+
+mat twobytwo(void){
+	mat A = zeros(2,2);
+	A(0,0) = 0.84;
+	A(1,0) = 0.39;
+	A(0,1) = 0.78;
+	A(1,1) = 0.79;
+	return A;
+}
 
 mat twobysix(void){
 	mat A = zeros(2,6);

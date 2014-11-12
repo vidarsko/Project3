@@ -74,7 +74,7 @@ class QuantumDots{
 		double Potential(mat r);
 		double numerical_sum_laplacians(Trial_Wavefunction wf,mat r,double h=1e-4);
 		double LSP(Trial_Wavefunction wf, mat r, int i);
-		vec Brute_Force_Metropolis_Expectation_Values(int M, double delta_r,int analytical=0);
+		vec Brute_Force_Metropolis_Expectation_Values(int M, double delta_r,int analytical);
 
 		//Print functions 
 		void print_numberofparticles_to_terminal(void);
@@ -102,7 +102,7 @@ class Investigate{
 		Investigate(double a0, double as, double am, double b0, double bs, double bm, QuantumDots sys);
 
 		//Solve functions
-		void find_minimum(int MCS, double delta_r, int jastrow);
+		void find_minimum(int MCS, double delta_r, int jastrow, int analytical = 0);
 		void compare_analytical_numerical(int MCS, double delta_r,int jastrow);
 
 		//Print functions
@@ -125,6 +125,7 @@ class Investigate{
 
 
 //Test functions
+mat twobytwo(void);
 mat twobysix(void);
 
 #endif

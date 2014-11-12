@@ -328,7 +328,7 @@ NSS = \frac{\nabla_i |S_i|}{|S_i|} = \sum_{k=0}^{N/2} \left [ (S^{-1})_{ki} \cdo
 N2SS =\frac{\nabla_i^2 |S_i|}{|S_i|} = \sum_{k=0}^{N/2} \left [ (S^{-1})_{ki} \cdot  \nabla_i^2 \phi_{2k}(\vec r_i) \right ] \\ 
 NJJ = \frac{\nabla_i \J}{\J} =   \sum_{k\neq i} \frac{a_{ik}}{r_{ik}} \frac{\vec r_i - \vec r_k}{(1 + \beta r_{ik})^2} \\
 N2JJ = \frac{\nabla_i^2 \J}{\J} = \left | \frac{\nabla_i J}{J} \right |^2 + 
-\sum_{k\neq i} \frac{a_{ik}}{r_{ik}} \frac{2-\beta r_{ik}}{(1+\beta r_{ik})^3 }
+\sum_{k\neq i} \frac{a_{ik}}{r_{ik}} \frac{1-\beta r_{ik}}{(1+\beta r_{ik})^3 }
 \end{empheq}
 \end{subequations}
 
@@ -422,13 +422,6 @@ Such a simple Monte Carlo simulation can give the result as shown in figure \ref
 However, the method is not confined to this sort of problem, but can be applied to a variety of mathematical and physical problems. 
 In this report, the method, through the Metropolis algorithm (see section \ref{sec:theory_metropolis}) has been applied to a quantum mechanical system.
 
-\subsubsection{Importance sampling}
-
-Sometimes, functions are more important in certain domains.
-When we use a Monte Carlo approach to evaluate a quantity on such a function we can improve the method significantly by ensuring that the probability distribution from which we choose our random values reflect the parts where the function is important.
-We do of course have to remember that our function lives on its whole domain, so to not get a biased result, we need to weigh our result with respect to the probability function we have chosen. 
-This is called importance sampling. 
-\textbf{INSERT EXAMPLE HERE}
 
 \subsubsection{The Metropolis algorithm} \label{sec:theory_metropolis}
 
@@ -463,11 +456,11 @@ With the Metropolis algorithm however, we can use this approach \textit{without}
 The algorithm requires that we are able to calculate $\tilde{P}(x)$, an unnormalized version of $P(x)$ (i.e. some function $aP(x)$ proportional to $P(x)$). 
 This may seem like a very strong requirement, but in many applications, as in this project, this is a much easier task than to calculate the precise PDF. 
 The algorithm goes as follows. 
-Starting with a position $x$ choose a new trial position 
+Starting with a position $x$ choose a new trial position  $x_p$ by
 
-\eqs x_p = x + r \Delta x \eqf
+\eqs x_p = x + \Delta x \eqf
 
-Where $\Delta x$ is a predefined step length and $r$ is a random number between zero and one. 
+Where $\Delta x$ is a random step according to some rule (see subsections).
 Then generate a probability criteria $s$, a random number between zero and one. 
 If 
 
@@ -485,6 +478,50 @@ This allows new values of $x_i$ to be chosen from where $P(x)$ is big, but at th
 Which is what we expect from a PDF. 
 The fact that for a large number $M$ of such steps, the values $x_i$ picked actually reflects the PDF requires some more mathematics, and once again we refer to the lecture notes of the course \cite{lecturenotes}.
 
+
+
+\paragraph{Brute force Metropolis}
+
+If we have no information about the physical nature of the system a reasonable way to model $\Delta x$ is the following
+
+\eqs
+\Delta x = r \Delta x_0
+\eqf
+
+Where $r$ is a random number between $0$ and $1$ and $\Delta x_0$ is a predefined step length. 
+The step length $\Delta x_0$ is affecting the effectiveness of the algorithm in two contradicting ways. 
+A small step length increases the probability of each suggested move $x_p$ being accepted, but weakens the ergodicity\footnote{The way in which the walker is able to reach all positions within a finite number of steps.}
+of the method. 
+Increasing the acceptance probability reduces the amount of times we need to evaluate the probability ratio $w$, but also increses the amount of Monte Carlo simulations needed in order to get a representative collection of $x_i$'s. 
+It can be argued that a good balance between these two aspects is to achieve an acceptance ratio 
+(i.e. the ratio between accepted and rejected moves) of around $0.5$. 
+
+This is called the "Brute Force Metropolis algorithm". 
+
+\paragraph{Importance sampling}
+
+If our current position $x$ is in a region where the probability distribution is important, i.e. has a large value, a small step $\Delta x$ would be favorable. 
+This is because we want to sample many points in this region, which is what a small step allows. 
+In contrast, if the current position $x$ is in an unimportant region, we want a large step $\Delta x$ since we don't mind moving a bit farther from the region we're in. 
+The brute force approach produced a step independent of the PDF value in each point, which resulted in an optimal acceptance ratio of around $0.5$. 
+If we could introduce some sort of rule which adjusts the step $\Delta x$ according to the value of the PDF in the point we currently are, this could allow us to achieve an acceptance rate of around $0.9$ with the same ergodicity. 
+
+To make such a rule, we need to use our physical understanding of the system. 
+One way of doing so is to consider the points to move as a random walker would where the resulting probability is equal to the PDF we're treating.
+Doing this, and invoking the Fokker-Planck and Langevin equations
+\footnote{Once again we refer to the lecture notes \cite{lecturenotes} for a more detailed explanation.}
+, it can be shown that the choice of $\Delta x$ is as follows
+
+\eqs
+\Delta x = DF(x) \delta t  + \eta 
+\eqf
+
+Where $D$ is the diffusion term, $F(x)$ is a drift term which is responsible for pulling the particle towards regions where the PDF is important.
+
+Using this approach is what we will call the "Metropolis algorithm with importance sampling".
+
+
+\paragraph{The metropolis algorithm for our wavefunction}
 As discussed in section \ref{sec:quantum_mechanics} we need to solve the integral 
 
 \eqs \langle E_L \rangle = \int P(\vec r) E_L(\vec r) d\vec r \eqf
@@ -498,7 +535,3 @@ where $\vec r_i = \left ( \begin{matrix} x_i \\ y_i \\ \end{matrix} \right )$.
 This is exactly the kind of problem the Metropolis algorithm can solve and the explicit algorithm for calculating $\langle E_L \rangle$ and $\langle E_L^2 \rangle$ is given in algorithm \ref{alg:metropolis}.
 
 \input{algorithm}
-
-
-
-

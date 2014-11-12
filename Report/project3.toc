@@ -14,8 +14,10 @@
 \contentsline {subsubsection}{\numberline {2.1.4}The virial theorem}{8}{subsubsection.2.1.4}
 \contentsline {subsection}{\numberline {2.2}The numerical foundation}{8}{subsection.2.2}
 \contentsline {subsubsection}{\numberline {2.2.1}Monte Carlo simulations}{8}{subsubsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.2}Importance sampling}{9}{subsubsection.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.3}The Metropolis algorithm}{9}{subsubsection.2.2.3}
-\contentsline {section}{\numberline {3}Results and discussion}{10}{section.3}
-\contentsline {subsection}{\numberline {3.1}Subsection}{10}{subsection.3.1}
-\contentsline {section}{\numberline {4}Conclusion}{10}{section.4}
+\contentsline {subsubsection}{\numberline {2.2.2}The Metropolis algorithm}{9}{subsubsection.2.2.2}
+\contentsline {paragraph}{\numberline {2.2.2.1}Brute force Metropolis}{10}{paragraph.2.2.2.1}
+\contentsline {paragraph}{\numberline {2.2.2.2}Importance sampling}{10}{paragraph.2.2.2.2}
+\contentsline {paragraph}{\numberline {2.2.2.3}The metropolis algorithm for our wavefunction}{11}{paragraph.2.2.2.3}
+\contentsline {section}{\numberline {3}Results and discussion}{11}{section.3}
+\contentsline {subsection}{\numberline {3.1}Subsection}{11}{subsection.3.1}
+\contentsline {section}{\numberline {4}Conclusion}{11}{section.4}

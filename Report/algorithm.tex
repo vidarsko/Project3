@@ -1,12 +1,15 @@
 \begin{algorithm}[h!]
 \DontPrintSemicolon
-\KwData{ \;
-A number $M$ of Monte Carlo simulations to be performed \;
-A predefined steplength $\Delta r$\;
-An initial position matrix $\mathbf{r} = \left ( \begin{matrix}
-        x_0 & x_2 & ... & x_{N-1}  \\
-        y_0 & y_2 & ... & y_{N-1} \\
-        \end{matrix} \right )$ }
+\KwData{\;
+An initial position matrix $\mathbf{r} = (\vec r_0, \vec r_1 ... \vec r_{N-1})
+=
+\left (
+\begin{matrix}
+x_0 & x_1 & ... & x_{N-1}\\
+y_0 & y_1  & ... & y_{N-1}\\
+\end{matrix}
+\right )$ \;
+A method of chosing the step $ \quad \textrm{Method}(\textbf{r}) = \Delta \vec r = \left ( \begin{matrix} \Delta x \\ \Delta y \\ \end{matrix}  \right ) $ \;}
 \KwResult{\;
 The expectation value of the local energy: $\langle E_L \rangle$ \;
 The expectation value of the local energy squared: $\langle E_L^2 \rangle$ \;}
@@ -17,10 +20,7 @@ $\textit{cumulative\_local\_energy\_squared} = 0$ \;
 $\textit{counter} = 0$\;
 \While{$\textit{counter} < M$ }{
         $i = \textrm{randint(} 0,1,...,N-1)$ \tcp*{Choose random element index}
-        $\Delta \vec r = \Delta r \cdot 
-        \left(\begin{matrix}
-        \textrm{rand(0,1)} \\ \textrm{rand(0,1)}\\ 
-        \end{matrix}\right)$
+        $\Delta \vec r = \textrm{Method}(\mathbf{r})$
         \tcp*{Create a random two-dimensional step}
         $\mathbf{r_p} = \left ( 
         \begin{matrix} x_0 \\ y_0  \end{matrix} ~
