@@ -4,10 +4,10 @@
 # Variables to control Makefile operation
 
 CXX = g++
-CXXFLAGS = -larmadillo -O2   -fopenmp 
-CXXFLAGSCOMP = -larmadillo -O2 -c -fopenmp 
-file = test_multiparticles
-#file = test_investigate
+CXXFLAGS = -larmadillo -O3   -fopenmp 
+CXXFLAGSCOMP = -larmadillo -O3 -c -fopenmp 
+#file = test_multiparticles
+file = test_investigate
 
 # ****************************************************
 # Targets needed to bring the executable up to date

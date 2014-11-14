@@ -7,8 +7,10 @@
 #include <ctime>
 #include <fstream>
 #include <string>
+#include <ctime>
 using namespace std;
 using namespace arma;
+
 
 
 //*******************Trial Wavefunction class *****************//
