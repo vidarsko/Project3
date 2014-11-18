@@ -70,13 +70,19 @@ class QuantumDots{
 		void Set_Wavefunction(Trial_Wavefunction wf);
 
 		//Local energy function
-		double local_energy_function(mat r,int analytical);
+		double local_energy_function(mat r,int analytical_local_energy);
 
 		//Help functions for the local energy
 		double Potential(mat r);
 		double numerical_sum_laplacians(Trial_Wavefunction wf,mat r,double h=1e-4);
 		double LSP(Trial_Wavefunction wf, mat r, int i);
-		vec Brute_Force_Metropolis_Expectation_Values(int M, double delta_r,int analytical);
+
+		//Metropolis functions
+		vec Brute_Force_Metropolis_Expectation_Values(int M, int analytical_local_energy);
+		vec Importance_Sampling_Metropolis_Expectation_Values(int M, double delta_t, int analytical_local_energy, int analytical_quantum_force);
+
+		//Importance sampling help function
+		vec quantum_force(mat r, int i,int analytical_quantum_force, double h=1e-6);
 
 		//Print functions 
 		void print_numberofparticles_to_terminal(void);
@@ -104,8 +110,8 @@ class Investigate{
 		Investigate(double a0, double as, double am, double b0, double bs, double bm, QuantumDots sys);
 
 		//Solve functions
-		void find_minimum(int MCS, double delta_r, int jastrow, int analytical = 0);
-		void compare_analytical_numerical(int MCS, double delta_r,int jastrow);
+		void find_minimum(int MCS, int jastrow, int analytical_local_energy = 0);
+		void compare_analytical_numerical(int MCS, int jastrow);
 
 		//Print functions
 		void print_energies_to_file(string filename);

@@ -266,7 +266,7 @@ a_{ij} = \left \{
 From the expression of the Jastrow factor, we see that it is zero whenever $r_{ij} = 0$ for any pair $i\neq j$. 
 This is what we want from such a factor, namely that the wavefunction is zero whenever there is no distance between two particles (i.e. $r_{ij} = 0$).
 
-\paragraph{Closed form expression of the local energy}
+\paragraph{Closed form expression of the local energy} \label{sec:closed_form_local_energy}
 
 To evaluate the local energy 
 
@@ -301,11 +301,11 @@ Particle $i$ has either spin up or down, so let $|S_i|$ denote the matrix determ
 
 \eqs
 \frac{1}{\Psi_T} \nabla_i^2  \Psi_T = 
-\frac{1}{|S_i| |S_{j\neq i}| \J} \nabla(|S_i| |S_{j\neq i}| \J)
+\frac{1}{|S_i| |S_{j\neq i}| \J} \nabla_i^2(|S_i| |S_{j\neq i}| \J)
 =
-\frac{1}{|S_i| |S_{j\neq i}| \J} |S_{j \neq i}|  \nabla(|S_i| \J)
+\frac{1}{|S_i| |S_{j\neq i}| \J} |S_{j \neq i}|  \nabla_i^2(|S_i| \J)
 = 
-\frac{1}{|S_i| \J}  \nabla(|S_i| \J)
+\frac{1}{|S_i| \J}  \nabla_i^2(|S_i| \J)
 \eqf
 
 Using the product rule of the laplacian operator gives 
@@ -330,6 +330,7 @@ NJJ = \frac{\nabla_i \J}{\J} =   \sum_{k\neq i} \frac{a_{ik}}{r_{ik}} \frac{\vec
 N2JJ = \frac{\nabla_i^2 \J}{\J} = \left | \frac{\nabla_i J}{J} \right |^2 + 
 \sum_{k\neq i} \frac{a_{ik}}{r_{ik}} \frac{1-\beta r_{ik}}{(1+\beta r_{ik})^3 }
 \end{empheq}
+\label{eq:nabla_formulas}
 \end{subequations}
 
 $ \nabla_i \phi_k (\vec r_i)$ and  $ \nabla_i^2 \phi_k(\vec r_i)$ scan be found simply by inserting and taking the derivative of the Hermite polynomials.
@@ -514,9 +515,10 @@ Doing this, and invoking the Fokker-Planck and Langevin equations
 
 \eqs
 \Delta x = DF(x) \delta t  + \eta 
+\label{eq:importance_raw}
 \eqf
 
-Where $D$ is the diffusion term, $F(x)$ is a drift term which is responsible for pulling the particle towards regions where the PDF is important.
+Where $D$ is the diffusion term, $F(x)$ is a drift term which is responsible for pulling the particle towards regions where the PDF is important and $\eta$ is a gaussian random number.
 
 Using this approach is what we will call the "Metropolis algorithm with importance sampling".
 
@@ -535,3 +537,67 @@ where $\vec r_i = \left ( \begin{matrix} x_i \\ y_i \\ \end{matrix} \right )$.
 This is exactly the kind of problem the Metropolis algorithm can solve and the explicit algorithm for calculating $\langle E_L \rangle$ and $\langle E_L^2 \rangle$ is given in algorithm \ref{alg:metropolis}.
 
 \input{algorithm}
+
+If we move only one particle at a time, each new trial position will be given by 
+
+\eqs
+\boxed{
+\mathbf{r_p} = \left ( 
+        \begin{matrix} x_0 \\ y_0  \end{matrix} ~
+        \begin{matrix} x_1 \\ y_1  \end{matrix} ~
+        ... ~~
+        \begin{matrix} x_i \\ y_i  \end{matrix} + \Delta \vec r ~~
+        ... ~
+        \begin{matrix} x_{N-1} \\ y_{N-1}  \end{matrix} ~
+        \right ) 
+}
+\eqf
+
+Where $\mathbf{r} = \left ( \begin{matrix} x_0  & x_1 & ... & x_{N-1} \\ y_0  & y_1 & ... & y_{N-1} \\ \end{matrix}\right ) $. If we are using the brute force approach, then $\Delta \vec r$ is simply given by 
+
+\eqs
+\boxed{
+\Delta \vec r = \Delta r \cdot \vec {\textrm{rand}}
+}
+\eqf
+
+Where $\Delta r$ is a predefined step length and $\vec {\textrm{rand}}$ is a random 2-vector with elements between $-1$ and $1$. 
+
+If we want to implement importance sampling however, we need expressions for the terms in equation \ref{eq:importance_raw}.
+These terms can be shown \cite{slides} to be 
+
+\eqs
+D = \frac{1}{2}
+\eqf 
+
+Which stems from the fact that the drift is caused by kinetic energy in front of which is a factor $\frac{1}{2}$ and 
+
+\eqs
+F = 2 \frac{1}{\Psi_T}{\nabla_i \Psi_T}
+\eqf
+
+The formula for using importance sampling when choosing the trial position $\mathbf{r_p}$ for our wavefunction is thus
+
+\eqs
+\boxed{
+\Delta \vec r =  \left (\frac{1}{\Psi_T } \nabla_i \Psi_T \right ) \delta t  + \eta 
+}
+\eqf
+
+We can rewrite this, as in section \ref{sec:closed_form_local_energy}
+
+\eqs
+\frac{1}{\Psi_T } \nabla_i \Psi_T   = \frac{1}{|S_i| \J } \nabla_i (|S_i| \J)
+=\frac{1}{|S_i| \J } \left ( |S_i| \nabla_i \J + \J \nabla_i |S_i|  \right ) 
+\eqf
+\eqs
+\boxed{
+\frac{1}{\Psi_T } \nabla_i \Psi_T  
+=
+\frac{\nabla_i |S_i| }{|S_i|} + \frac{\nabla_i \J}{\J}
+}
+\eqf
+
+Expressions we can find both from numerical differenciation and the close form expressions in equations \ref{eq:nabla_formulas}.
+In this report, we will use both these approaches and compare the CPU time needed. 
+

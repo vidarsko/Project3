@@ -1,0 +1,325 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  ns/call  ns/call  name    
+ 20.88      1.15     1.15                             QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int)
+ 18.70      2.18     1.03 20000000    51.51   134.71  Trial_Wavefunction::call(arma::Mat<double>)
+ 13.98      2.95     0.77 43930662    17.53    18.44  Trial_Wavefunction::phi(int, arma::Mat<double>)
+  8.35      3.41     0.46  3930662   117.05   221.62  QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int)
+  7.35      3.82     0.41 69826656     5.80     5.80  arma::Mat<double>::init_warm(unsigned int, unsigned int)
+  5.54      4.12     0.31 47861324     6.37     6.37  arma::Mat<double>::Mat<arma::Mat<double>, arma::gen_zeros>(arma::Gen<arma::Mat<double>, arma::gen_zeros> const&)
+  4.54      4.37     0.25 71791986     3.48     3.48  arma::subview<double>::extract(arma::Mat<double>&, arma::subview<double> const&)
+  3.45      4.56     0.19 137687980     1.38     1.38  arma::Mat<double>::~Mat()
+  3.27      4.74     0.18 33930662     5.31     5.31  arma::Mat<double>::Mat(arma::Mat<double> const&)
+  2.72      4.89     0.15  3930662    38.17    38.17  Trial_Wavefunction::nabla2_phi(double, int, arma::Mat<double>)
+  2.18      5.01     0.12 20000000     6.00   140.72  Trial_Wavefunction::call_squared(arma::Mat<double>)
+  2.18      5.13     0.12 40000000     3.00     3.00  double arma::auxlib::det<double, arma::Mat<double> >(arma::Base<double, arma::Mat<double> > const&, bool)
+  1.82      5.23     0.10 10000000    10.00    16.38  void arma::subview<double>::operator=<arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> >(arma::Base<double, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> > const&)
+  1.45      5.31     0.08  1965331    40.71    40.71  QuantumDots::Potential(arma::Mat<double>)
+  0.91      5.36     0.05 10000001     5.00     5.00  arma::Mat<double>::init_cold()
+  0.54      5.39     0.03  1965330    15.27    21.07  arma::Mat<double>::operator=(arma::Mat<double> const&)
+  0.45      5.42     0.03 43930662     0.57     0.57  Trial_Wavefunction::ny(int)
+  0.36      5.44     0.02  7861324     2.54     5.45  Trial_Wavefunction::nabla_phi(double, int, arma::Mat<double>)
+  0.36      5.46     0.02  1965331    10.18   499.43  QuantumDots::local_energy_function(arma::Mat<double>, int)
+  0.36      5.48     0.02                             arma::arma_rng_cxx98::randn_val()
+  0.27      5.49     0.02 43930662     0.34     0.34  Trial_Wavefunction::nx(int)
+  0.18      5.50     0.01  3930662     2.54     2.54  bool arma::auxlib::inv_noalias_tinymat<double>(arma::Mat<double>&, arma::Mat<double> const&, unsigned int)
+  0.18      5.51     0.01                             double arma::auxlib::det_lapack<double>(arma::Mat<double> const&, bool)
+  0.00      5.51     0.00 101791986     0.00     0.00  void arma::arrayops::copy_small<double>(double*, double const*, unsigned int)
+  0.00      5.51     0.00 10000000     0.00     0.00  void arma::eglue_core<arma::eglue_plus>::apply<arma::subview_col<double>, arma::Col<double> >(arma::Mat<arma::subview_col<double>::elem_type>&, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> const&)
+  0.00      5.51     0.00  3930662     0.00     8.35  bool arma::auxlib::inv<double>(arma::Mat<double>&, arma::Mat<double> const&, bool)
+  0.00      5.51     0.00  3930662     0.00     0.00  void arma::arrayops::inplace_mul_base<double>(double*, double, unsigned int)
+  0.00      5.51     0.00  3930662     0.00     0.00  void arma::eop_core<arma::eop_scalar_div_post>::apply_inplace_plus<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times> >(arma::Mat<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times>::elem_type>&, arma::eOp<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times>, arma::eop_scalar_div_post> const&)
+  0.00      5.51     0.00        1     0.00     0.00  _GLOBAL__sub_I__ZN18Trial_WavefunctionC2Edddii
+  0.00      5.51     0.00        1     0.00     0.00  _GLOBAL__sub_I_main
+  0.00      5.51     0.00        1     0.00     0.00  void arma::arma_check<char [37]>(bool, char const (&) [37])
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.18% of 5.51 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     99.5    1.15    4.33                 QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+                0.12    2.69 20000000/20000000     Trial_Wavefunction::call_squared(arma::Mat<double>) [2]
+                0.02    0.96 1965331/1965331     QuantumDots::local_energy_function(arma::Mat<double>, int) [4]
+                0.17    0.00 31965331/33930662     arma::Mat<double>::Mat(arma::Mat<double> const&) [11]
+                0.10    0.06 10000000/10000000     void arma::subview<double>::operator=<arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> >(arma::Base<double, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> > const&) [12]
+                0.12    0.00 20000001/69826656     arma::Mat<double>::init_warm(unsigned int, unsigned int) [7]
+                0.04    0.00 31965332/137687980     arma::Mat<double>::~Mat() [10]
+                0.03    0.01 1965330/1965330     arma::Mat<double>::operator=(arma::Mat<double> const&) [18]
+                0.00    0.00       1/10000001     arma::Mat<double>::init_cold() [16]
+                0.00    0.00       1/1           void arma::arma_check<char [37]>(bool, char const (&) [37]) [38]
+-----------------------------------------------
+                0.12    2.69 20000000/20000000     QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+[2]     51.1    0.12    2.69 20000000         Trial_Wavefunction::call_squared(arma::Mat<double>) [2]
+                1.03    1.66 20000000/20000000     Trial_Wavefunction::call(arma::Mat<double>) [3]
+-----------------------------------------------
+                1.03    1.66 20000000/20000000     Trial_Wavefunction::call_squared(arma::Mat<double>) [2]
+[3]     48.9    1.03    1.66 20000000         Trial_Wavefunction::call(arma::Mat<double>) [3]
+                0.70    0.04 40000000/43930662     Trial_Wavefunction::phi(int, arma::Mat<double>) [6]
+                0.25    0.00 40000000/47861324     arma::Mat<double>::Mat<arma::Mat<double>, arma::gen_zeros>(arma::Gen<arma::Mat<double>, arma::gen_zeros> const&) [8]
+                0.23    0.00 40000000/69826656     arma::Mat<double>::init_warm(unsigned int, unsigned int) [7]
+                0.21    0.00 60000000/71791986     arma::subview<double>::extract(arma::Mat<double>&, arma::subview<double> const&) [9]
+                0.12    0.00 40000000/40000000     double arma::auxlib::det<double, arma::Mat<double> >(arma::Base<double, arma::Mat<double> > const&, bool) [14]
+                0.11    0.00 80000000/137687980     arma::Mat<double>::~Mat() [10]
+                0.00    0.00 80000000/101791986     void arma::arrayops::copy_small<double>(double*, double const*, unsigned int) [32]
+-----------------------------------------------
+                0.02    0.96 1965331/1965331     QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+[4]     17.8    0.02    0.96 1965331         QuantumDots::local_energy_function(arma::Mat<double>, int) [4]
+                0.46    0.41 3930662/3930662     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+                0.08    0.00 1965331/1965331     QuantumDots::Potential(arma::Mat<double>) [15]
+                0.01    0.00 1965331/33930662     arma::Mat<double>::Mat(arma::Mat<double> const&) [11]
+-----------------------------------------------
+                0.46    0.41 3930662/3930662     QuantumDots::local_energy_function(arma::Mat<double>, int) [4]
+[5]     15.8    0.46    0.41 3930662         QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+                0.15    0.00 3930662/3930662     Trial_Wavefunction::nabla2_phi(double, int, arma::Mat<double>) [13]
+                0.07    0.00 3930662/43930662     Trial_Wavefunction::phi(int, arma::Mat<double>) [6]
+                0.05    0.00 7861324/47861324     arma::Mat<double>::Mat<arma::Mat<double>, arma::gen_zeros>(arma::Gen<arma::Mat<double>, arma::gen_zeros> const&) [8]
+                0.02    0.02 7861324/7861324     Trial_Wavefunction::nabla_phi(double, int, arma::Mat<double>) [17]
+                0.04    0.00 11791986/71791986     arma::subview<double>::extract(arma::Mat<double>&, arma::subview<double> const&) [9]
+                0.00    0.03 3930662/3930662     bool arma::auxlib::inv<double>(arma::Mat<double>&, arma::Mat<double> const&, bool) [19]
+                0.02    0.00 15722648/137687980     arma::Mat<double>::~Mat() [10]
+                0.00    0.00 11791986/101791986     void arma::arrayops::copy_small<double>(double*, double const*, unsigned int) [32]
+                0.00    0.00 3930662/3930662     void arma::arrayops::inplace_mul_base<double>(double*, double, unsigned int) [34]
+                0.00    0.00 3930662/3930662     void arma::eop_core<arma::eop_scalar_div_post>::apply_inplace_plus<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times> >(arma::Mat<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times>::elem_type>&, arma::eOp<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times>, arma::eop_scalar_div_post> const&) [35]
+-----------------------------------------------
+                0.07    0.00 3930662/43930662     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+                0.70    0.04 40000000/43930662     Trial_Wavefunction::call(arma::Mat<double>) [3]
+[6]     14.7    0.77    0.04 43930662         Trial_Wavefunction::phi(int, arma::Mat<double>) [6]
+                0.03    0.00 43930662/43930662     Trial_Wavefunction::ny(int) [20]
+                0.02    0.00 43930662/43930662     Trial_Wavefunction::nx(int) [22]
+-----------------------------------------------
+                0.01    0.00 1965331/69826656     arma::Mat<double>::operator=(arma::Mat<double> const&) [18]
+                0.02    0.00 3930662/69826656     Trial_Wavefunction::nabla_phi(double, int, arma::Mat<double>) [17]
+                0.02    0.00 3930662/69826656     bool arma::auxlib::inv<double>(arma::Mat<double>&, arma::Mat<double> const&, bool) [19]
+                0.12    0.00 20000001/69826656     QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+                0.23    0.00 40000000/69826656     Trial_Wavefunction::call(arma::Mat<double>) [3]
+[7]      7.4    0.41    0.00 69826656         arma::Mat<double>::init_warm(unsigned int, unsigned int) [7]
+-----------------------------------------------
+                0.05    0.00 7861324/47861324     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+                0.25    0.00 40000000/47861324     Trial_Wavefunction::call(arma::Mat<double>) [3]
+[8]      5.5    0.31    0.00 47861324         arma::Mat<double>::Mat<arma::Mat<double>, arma::gen_zeros>(arma::Gen<arma::Mat<double>, arma::gen_zeros> const&) [8]
+-----------------------------------------------
+                0.04    0.00 11791986/71791986     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+                0.21    0.00 60000000/71791986     Trial_Wavefunction::call(arma::Mat<double>) [3]
+[9]      4.5    0.25    0.00 71791986         arma::subview<double>::extract(arma::Mat<double>&, arma::subview<double> const&) [9]
+-----------------------------------------------
+                0.01    0.00 10000000/137687980     void arma::subview<double>::operator=<arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> >(arma::Base<double, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> > const&) [12]
+                0.02    0.00 15722648/137687980     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+                0.04    0.00 31965332/137687980     QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+                0.11    0.00 80000000/137687980     Trial_Wavefunction::call(arma::Mat<double>) [3]
+[10]     3.4    0.19    0.00 137687980         arma::Mat<double>::~Mat() [10]
+-----------------------------------------------
+                0.01    0.00 1965331/33930662     QuantumDots::local_energy_function(arma::Mat<double>, int) [4]
+                0.17    0.00 31965331/33930662     QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+[11]     3.3    0.18    0.00 33930662         arma::Mat<double>::Mat(arma::Mat<double> const&) [11]
+-----------------------------------------------
+                0.10    0.06 10000000/10000000     QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+[12]     3.0    0.10    0.06 10000000         void arma::subview<double>::operator=<arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> >(arma::Base<double, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> > const&) [12]
+                0.05    0.00 10000000/10000001     arma::Mat<double>::init_cold() [16]
+                0.01    0.00 10000000/137687980     arma::Mat<double>::~Mat() [10]
+                0.00    0.00 10000000/10000000     void arma::eglue_core<arma::eglue_plus>::apply<arma::subview_col<double>, arma::Col<double> >(arma::Mat<arma::subview_col<double>::elem_type>&, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> const&) [33]
+                0.00    0.00 10000000/101791986     void arma::arrayops::copy_small<double>(double*, double const*, unsigned int) [32]
+-----------------------------------------------
+                0.15    0.00 3930662/3930662     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+[13]     2.7    0.15    0.00 3930662         Trial_Wavefunction::nabla2_phi(double, int, arma::Mat<double>) [13]
+-----------------------------------------------
+                0.12    0.00 40000000/40000000     Trial_Wavefunction::call(arma::Mat<double>) [3]
+[14]     2.2    0.12    0.00 40000000         double arma::auxlib::det<double, arma::Mat<double> >(arma::Base<double, arma::Mat<double> > const&, bool) [14]
+-----------------------------------------------
+                0.08    0.00 1965331/1965331     QuantumDots::local_energy_function(arma::Mat<double>, int) [4]
+[15]     1.5    0.08    0.00 1965331         QuantumDots::Potential(arma::Mat<double>) [15]
+-----------------------------------------------
+                0.00    0.00       1/10000001     QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+                0.05    0.00 10000000/10000001     void arma::subview<double>::operator=<arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> >(arma::Base<double, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> > const&) [12]
+[16]     0.9    0.05    0.00 10000001         arma::Mat<double>::init_cold() [16]
+-----------------------------------------------
+                0.02    0.02 7861324/7861324     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+[17]     0.8    0.02    0.02 7861324         Trial_Wavefunction::nabla_phi(double, int, arma::Mat<double>) [17]
+                0.02    0.00 3930662/69826656     arma::Mat<double>::init_warm(unsigned int, unsigned int) [7]
+-----------------------------------------------
+                0.03    0.01 1965330/1965330     QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+[18]     0.8    0.03    0.01 1965330         arma::Mat<double>::operator=(arma::Mat<double> const&) [18]
+                0.01    0.00 1965331/69826656     arma::Mat<double>::init_warm(unsigned int, unsigned int) [7]
+-----------------------------------------------
+                0.00    0.03 3930662/3930662     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+[19]     0.6    0.00    0.03 3930662         bool arma::auxlib::inv<double>(arma::Mat<double>&, arma::Mat<double> const&, bool) [19]
+                0.02    0.00 3930662/69826656     arma::Mat<double>::init_warm(unsigned int, unsigned int) [7]
+                0.01    0.00 3930662/3930662     bool arma::auxlib::inv_noalias_tinymat<double>(arma::Mat<double>&, arma::Mat<double> const&, unsigned int) [23]
+-----------------------------------------------
+                0.03    0.00 43930662/43930662     Trial_Wavefunction::phi(int, arma::Mat<double>) [6]
+[20]     0.5    0.03    0.00 43930662         Trial_Wavefunction::ny(int) [20]
+-----------------------------------------------
+                                                 <spontaneous>
+[21]     0.4    0.02    0.00                 arma::arma_rng_cxx98::randn_val() [21]
+-----------------------------------------------
+                0.02    0.00 43930662/43930662     Trial_Wavefunction::phi(int, arma::Mat<double>) [6]
+[22]     0.3    0.02    0.00 43930662         Trial_Wavefunction::nx(int) [22]
+-----------------------------------------------
+                0.01    0.00 3930662/3930662     bool arma::auxlib::inv<double>(arma::Mat<double>&, arma::Mat<double> const&, bool) [19]
+[23]     0.2    0.01    0.00 3930662         bool arma::auxlib::inv_noalias_tinymat<double>(arma::Mat<double>&, arma::Mat<double> const&, unsigned int) [23]
+-----------------------------------------------
+                                                 <spontaneous>
+[24]     0.2    0.01    0.00                 double arma::auxlib::det_lapack<double>(arma::Mat<double> const&, bool) [24]
+-----------------------------------------------
+                0.00    0.00 10000000/101791986     void arma::subview<double>::operator=<arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> >(arma::Base<double, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> > const&) [12]
+                0.00    0.00 11791986/101791986     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+                0.00    0.00 80000000/101791986     Trial_Wavefunction::call(arma::Mat<double>) [3]
+[32]     0.0    0.00    0.00 101791986         void arma::arrayops::copy_small<double>(double*, double const*, unsigned int) [32]
+-----------------------------------------------
+                0.00    0.00 10000000/10000000     void arma::subview<double>::operator=<arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> >(arma::Base<double, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> > const&) [12]
+[33]     0.0    0.00    0.00 10000000         void arma::eglue_core<arma::eglue_plus>::apply<arma::subview_col<double>, arma::Col<double> >(arma::Mat<arma::subview_col<double>::elem_type>&, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> const&) [33]
+-----------------------------------------------
+                0.00    0.00 3930662/3930662     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+[34]     0.0    0.00    0.00 3930662         void arma::arrayops::inplace_mul_base<double>(double*, double, unsigned int) [34]
+-----------------------------------------------
+                0.00    0.00 3930662/3930662     QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [5]
+[35]     0.0    0.00    0.00 3930662         void arma::eop_core<arma::eop_scalar_div_post>::apply_inplace_plus<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times> >(arma::Mat<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times>::elem_type>&, arma::eOp<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times>, arma::eop_scalar_div_post> const&) [35]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [74]
+[36]     0.0    0.00    0.00       1         _GLOBAL__sub_I__ZN18Trial_WavefunctionC2Edddii [36]
+-----------------------------------------------
+                0.00    0.00       1/1           __libc_csu_init [74]
+[37]     0.0    0.00    0.00       1         _GLOBAL__sub_I_main [37]
+-----------------------------------------------
+                0.00    0.00       1/1           QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [1]
+[38]     0.0    0.00    0.00       1         void arma::arma_check<char [37]>(bool, char const (&) [37]) [38]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [36] _GLOBAL__sub_I__ZN18Trial_WavefunctionC2Edddii [3] Trial_Wavefunction::call(arma::Mat<double>) [24] double arma::auxlib::det_lapack<double>(arma::Mat<double> const&, bool)
+  [37] _GLOBAL__sub_I_main    [17] Trial_Wavefunction::nabla_phi(double, int, arma::Mat<double>) [23] bool arma::auxlib::inv_noalias_tinymat<double>(arma::Mat<double>&, arma::Mat<double> const&, unsigned int)
+   [4] QuantumDots::local_energy_function(arma::Mat<double>, int) [38] void arma::arma_check<char [37]>(bool, char const (&) [37]) [14] double arma::auxlib::det<double, arma::Mat<double> >(arma::Base<double, arma::Mat<double> > const&, bool)
+   [5] QuantumDots::LSP(Trial_Wavefunction, arma::Mat<double>, int) [33] void arma::eglue_core<arma::eglue_plus>::apply<arma::subview_col<double>, arma::Col<double> >(arma::Mat<arma::subview_col<double>::elem_type>&, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> const&) [19] bool arma::auxlib::inv<double>(arma::Mat<double>&, arma::Mat<double> const&, bool)
+   [1] QuantumDots::Brute_Force_Metropolis_Expectation_Values(int, double, int) [21] arma::arma_rng_cxx98::randn_val() [9] arma::subview<double>::extract(arma::Mat<double>&, arma::subview<double> const&)
+  [15] QuantumDots::Potential(arma::Mat<double>) [16] arma::Mat<double>::init_cold() [12] void arma::subview<double>::operator=<arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> >(arma::Base<double, arma::eGlue<arma::subview_col<double>, arma::Col<double>, arma::eglue_plus> > const&)
+  [13] Trial_Wavefunction::nabla2_phi(double, int, arma::Mat<double>) [7] arma::Mat<double>::init_warm(unsigned int, unsigned int) [32] void arma::arrayops::copy_small<double>(double*, double const*, unsigned int)
+   [2] Trial_Wavefunction::call_squared(arma::Mat<double>) [11] arma::Mat<double>::Mat(arma::Mat<double> const&) [34] void arma::arrayops::inplace_mul_base<double>(double*, double, unsigned int)
+  [22] Trial_Wavefunction::nx(int) [8] arma::Mat<double>::Mat<arma::Mat<double>, arma::gen_zeros>(arma::Gen<arma::Mat<double>, arma::gen_zeros> const&) [35] void arma::eop_core<arma::eop_scalar_div_post>::apply_inplace_plus<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times> >(arma::Mat<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times>::elem_type>&, arma::eOp<arma::eOp<arma::eGlue<arma::subview_col<double>, arma::subview_col<double>, arma::eglue_minus>, arma::eop_scalar_times>, arma::eop_scalar_div_post> const&)
+  [20] Trial_Wavefunction::ny(int) [10] arma::Mat<double>::~Mat()
+   [6] Trial_Wavefunction::phi(int, arma::Mat<double>) [18] arma::Mat<double>::operator=(arma::Mat<double> const&)

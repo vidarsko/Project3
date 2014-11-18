@@ -47,7 +47,7 @@ double Trial_Wavefunction::call(mat r){
 	}
 
 	result = det(phi_of_r_left)*det(phi_of_r_right);
-
+	double exponation_argument = 0;
 	if (Jastrow_factor==1){
 		mat r_i, r_j;
 		double r_ij = 0;
@@ -56,10 +56,11 @@ double Trial_Wavefunction::call(mat r){
 				r_i = r.col(i);
 				r_j = r.col(j);
 				r_ij = norm(r_i-r_j);
-				result *= exp(a(i,j)*r_ij/(1+beta*r_ij));
+				exponation_argument += a(i,j)*r_ij/(1+beta*r_ij);
 			}
 		}
 	}
+	result *= exp(exponation_argument);
 	
 
 
@@ -139,11 +140,12 @@ double Trial_Wavefunction::phi(int i,mat r_i){
 	*/
 	double x = r_i(0,0);
 	double y = r_i(1,0);
+	double alpha_omega = alpha*omega;
 
-	double fx = Hermite_polynomial(sqrt(alpha*omega)*x,nx(i))*exp(-alpha*omega*(x*x)/2);
-	double fy = Hermite_polynomial(sqrt(alpha*omega)*y,ny(i))*exp(-alpha*omega*(y*y)/2);
+	double fx = Hermite_polynomial(sqrt(alpha_omega)*x,nx(i));
+	double fy = Hermite_polynomial(sqrt(alpha_omega)*y,ny(i));
 
-	return fx*fy;	
+	return fx*fy*exp(-alpha_omega*(x*x + y*y)/2);	
 }
 
 mat Trial_Wavefunction::nabla_phi(double l, int k, mat r_i){
@@ -316,7 +318,7 @@ void QuantumDots::Set_Wavefunction(Trial_Wavefunction wf){
 }
 
 
-double QuantumDots::local_energy_function(mat r, int analytical){
+double QuantumDots::local_energy_function(mat r, int analytical_local_energy){
 	/*
 	Function that returns the local energy in a point of a wavefunction wf
 	according to a hamiltonian operator H in a point r. 
@@ -332,10 +334,10 @@ double QuantumDots::local_energy_function(mat r, int analytical){
 	double result=0;
 	double V = Potential(r);
 	
-	if (analytical == 0){
+	if (analytical_local_energy == 0){
 		result = V - 0.5/Wave_function.call(r) *numerical_sum_laplacians(Wave_function,r);
 	}
-	else if(analytical==1){
+	else if(analytical_local_energy==1){
 		//Laplacian term
 		double scaled_laplacians = 0;
 		for (int i=0;i<number_of_particles;i++){
@@ -347,7 +349,7 @@ double QuantumDots::local_energy_function(mat r, int analytical){
 	else{
 		cout << "-----------" << endl;
 		cout << "Bad usage:" << endl;
-		cout << "The 'analytical' variable must be set to 1 or 0" << endl;
+		cout << "The 'analytical_local_energy' variable must be set to 1 or 0" << endl;
 		cout << "Stopping program." << endl;
 		cout << "-----------" << endl;
 		exit(1);
@@ -498,53 +500,92 @@ double QuantumDots::numerical_sum_laplacians(Trial_Wavefunction wf,mat r, double
 	return result; 
 }	
 
-//Monte Carlo Simulation function
-vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, double delta_r,int analytical){
+//Monte Carlo Simulation functions
+vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical_local_energy){
 	/*
 	Function that uses the Monte Carlo Metropolis algorithm to 
 	find the the expectation value of the local energy and the local energy squared.
 	Input:
-		- int M 				 		- Number of Monte Carlo simulations
-		- double delta_r 		 		- Predefined step length
-		- int analytical (default 0)	- To use or not to use analytical expressions
+		- int M 				 					- Number of Monte Carlo simulations
+		- int analytical_local_energy (default 0)	- To use or not to use analytical expressions
 	Output: 
 		- vec expectation_values (2)- Expectation values of the local energy and the loc.energy squared
 	*/
 	//Extract relevant data 
 	int number_of_particles = Wave_function.number_of_particles;
-	int spatial_dimension = 2;
 
 	//Initial position
-	mat r = randn<mat>(spatial_dimension,number_of_particles);
+	mat r = randn<mat>(2,number_of_particles);
 
 	//Initialization
-	double local_energy = local_energy_function(r,analytical);;
+	int counter;
+	int total_counter;
+	double ratio;
+
+	//Initial delta_r, will be modified to achieve 0.5 acceptance rate
+	double delta_r;
+	double acceptance_rate=2;
+
+
+	//Find delta_r which gives around 0.5 acceptance rate: limits and number of test can be discussed. But 1000 works fine for now
+	double wavefunction_squared = Wave_function.call_squared(r);
+	for (double delta_ri = 0.2; delta_ri < 5; delta_ri += 0.1){
+		counter = 0;
+		total_counter = 0;
+		for (int iter = 0; iter < 1000; iter ++){
+			//Choose particle to be moved
+			int i = rand() % number_of_particles; 
+			//Update step
+			vec delta_vec_r = delta_ri * (randn<vec>(2));
+			mat r_p = r;
+			r_p.col(i) = r_p.col(i) + delta_vec_r;
+			double w = Wave_function.call_squared(r_p)/wavefunction_squared;
+			double s = randu();
+			if (w >= s){
+				r = r_p;
+				wavefunction_squared = Wave_function.call_squared(r);
+				counter += 1;	
+			}
+			total_counter += 1;
+		}
+		double acceptance_rate_test = counter/(double)total_counter;
+		if (abs(acceptance_rate_test-0.5) < abs(acceptance_rate-0.5)){
+			acceptance_rate = acceptance_rate_test;
+			delta_r = delta_ri;
+		}
+	}
+
+	//Re-initialization before the real MCS
+	counter = 0;
+	total_counter = 0;
+	r = randn<mat>(2,number_of_particles);
+	double local_energy = local_energy_function(r,analytical_local_energy);;
 	double cumulative_local_energy = 0; 
 	double cumulative_local_energy_squared = 0;
-	int counter = 0;
-	int total_counter = 0;
+
 
 	while(total_counter < M){
+		//Choose particle to be moved:
 		int i = rand() % number_of_particles; 
+
+		//Update step
 		vec delta_vec_r = delta_r * (randn<vec>(2));
 
 		/*
-		//Oonly one step
+		//Only coordenate move, x or y
 		int xory = rand() % 2;
 		delta_vec_r(xory,0) = 0;
 		*/
 	
 		mat r_p = r;
 		r_p.col(i) = r_p.col(i) + delta_vec_r;
-		vec tmp = randu<vec>(1); double s = tmp(0);
-		double w = Wave_function.call_squared(r_p)/Wave_function.call_squared(r);
+		double w = Wave_function.call_squared(r_p)/wavefunction_squared;
+		double s = randu();
 		if (w >= s){
 			r = r_p;
-			//r = twobytwo() + 0.1;
-			//r = twobysix() + 0.1;
-			//cout << "position R:" << endl << r << endl;
+			wavefunction_squared = Wave_function.call_squared(r);
 			counter += 1;	
-			local_energy = local_energy_function(r,analytical);
+			local_energy = local_energy_function(r,analytical_local_energy);
 		}
 
 		cumulative_local_energy += local_energy;
@@ -553,8 +594,9 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, double delta_r
 	}
 	
 	//Uncomment if investigating ratio vs delta_r
-	//double ratio = counter/(double)total_counter;
-	//cout << "Acceptance rate: " << ratio << endl;
+	ratio = counter/(double)total_counter;
+	cout << endl << "Acceptance rate: " << ratio << endl ;
+	cout << "Step length: " << delta_r << endl << endl;
 
 	//Create matrix for storing expectation values
 	vec expectation_values = zeros(2);
@@ -562,6 +604,159 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, double delta_r
 	expectation_values(1) = cumulative_local_energy_squared/M;
 	return expectation_values;
 }	
+
+vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double delta_t, int analytical_local_energy, int analytical_quantum_force){
+	/*
+	Function that uses the Monte Carlo Metropolis algorithm to 
+	find the the expectation value of the local energy and the local energy squared.
+	Input:
+		- int M 				 				- Number of Monte Carlo simulations
+		- double delta_t 		 				- The time step
+		- int analytical_local_energy 			- To use or not to use analytical expressions for the local energy
+		- int analytical_quantum_force 			- To use or not to use analytical expressions for the quantum force
+	Output: 
+		- vec expectation_values (2)- Expectation values of the local energy and the loc.energy squared
+	*/
+	//Extract relevant data 
+	int number_of_particles = Wave_function.number_of_particles;
+
+	//Initial position
+	mat r = randn<mat>(2,number_of_particles);
+
+	//Initialization
+	double local_energy = local_energy_function(r,analytical_local_energy);;
+	double cumulative_local_energy = 0; 
+	double cumulative_local_energy_squared = 0;
+	int counter = 0;
+	int total_counter = 0;
+	double ratio;
+
+	double wavefunction_squared = Wave_function.call_squared(r);
+	while(total_counter < M){
+		//Choose particle to be moved:
+		int i = rand() % number_of_particles; 
+
+		//Update step
+		vec delta_vec_r = quantum_force(r,i,analytical_quantum_force)*delta_t + delta_t*randn();
+
+		/*
+		//Only coordenate move, x or y
+		int xory = rand() % 2;
+		delta_vec_r(xory,0) = 0;
+		*/
+	
+		mat r_p = r;
+		r_p.col(i) = r_p.col(i) + delta_vec_r;
+		double s = randu();
+		double w = Wave_function.call_squared(r_p)/wavefunction_squared;
+
+		if (w >= s){
+			r = r_p;
+			wavefunction_squared = Wave_function.call_squared(r);
+			counter += 1;	
+			local_energy = local_energy_function(r,analytical_local_energy);
+		}
+
+		cumulative_local_energy += local_energy;
+		cumulative_local_energy_squared += local_energy*local_energy;
+		total_counter += 1;
+	}
+	
+	//Uncomment if investigating ratio vs delta_r
+	ratio = counter/(double)total_counter;
+	cout << "Acceptance rate: " << ratio << endl;
+
+	//Create matrix for storing expectation values
+	vec expectation_values = zeros(2);
+	expectation_values(0) = cumulative_local_energy/M;
+	expectation_values(1) = cumulative_local_energy_squared/M;
+	return expectation_values;
+}	
+
+//Importance sampling help function
+vec QuantumDots::quantum_force(mat r, int i,int analytical_quantum_force, double h){
+	/*
+	Returns the quantum force as described in the section on importance sampling. 
+	Input:
+		- mat r 						- The point in which the quantum force shall be returned
+		- int i 						- The particle moved
+		- int analytical_quantum_force 	- To use or not to use the analytical expressions
+		- double h (Default = 1e-6)		- The step length in the nummerical evaluation
+	Output:
+		- vec result 					- The quantum force 1/psi del_i psi
+	*/
+	vec result = zeros(2);
+
+	if (analytical_quantum_force == 0){
+		mat rplusx = r;
+		rplusx(0,i) += h;
+		double dfdx = (Wave_function.call(rplusx)-Wave_function.call(r))/h;
+		result(0) = dfdx;
+
+		mat rplusy = r;
+		rplusy(1,i) += h;
+		double dfdy = (Wave_function.call(rplusy)-Wave_function.call(r))/h;
+		result(1) = dfdy;
+	}
+	else if (analytical_quantum_force == 1){
+		mat S_i;
+		int N = number_of_particles;
+	
+		//Constructing Si
+		if (i%2==0){
+			S_i =  zeros(N/2,N/2) ;
+			for (int it = 0; it<=N-2; it += 2){
+				for (int j=0; j<=N-2; j+=2){
+				S_i(j/2,it/2) = Wave_function.phi(it,r.col(j));
+				}
+			}
+		}
+		else {
+			S_i =  zeros(N/2,N/2);
+			for (int it = 0; it<=N-2; it += 2){
+				for (int j=0; j<=N-2; j+=2){
+					S_i(j/2,it/2) = Wave_function.phi(it+1,r.col(j+1));
+				}
+			}
+		}
+		mat S_i_inverse = inv(S_i);
+		//S_i matrix is as wanted and so is the the inverse
+
+		mat NSS = zeros(2,1);
+		double l = sqrt(Wave_function.omega*Wave_function.alpha);
+		for (int k=0;k<N/2;k++){
+			NSS += S_i_inverse(k,i/2) * Wave_function.nabla_phi(l,2*k,r.col(i)); 
+		}
+		double exp_factor = exp(-0.5*l*l*r2);
+		NSS *= exp_factor;
+
+		mat NJJ = zeros(2,1);
+		double r_ik = 0, a_ik = 0, beta=0, a_ik_r_ik=0, denom=0;
+		beta = Wave_function.beta;
+		for (int k=0;k<N;k++){
+			if (k!=i){
+				r_ik = norm(r.col(i)-r.col(k));
+				a_ik = Wave_function.a(i,k);
+				a_ik_r_ik = a_ik/r_ik;
+				denom =(1+beta*r_ik);
+
+				NJJ += a_ik_r_ik*(r.col(i)-r.col(k))/(denom*denom);
+			}
+		}
+		result = NSS + NJJ;
+	}
+	else{
+	cout << "-----------" << endl;
+	cout << "Bad usage:" << endl;	
+	cout << "The 'analytical_quantum_force' variable must be set to 1 or 0" << endl;
+	cout << "Stopping program." << endl;
+	cout << "-----------" << endl;
+	exit(1);
+	}
+	return result;
+}
+
+
 
 //Print functions 
 void QuantumDots::print_numberofparticles_to_terminal(void){
@@ -603,13 +798,12 @@ Investigate::Investigate(double a0, double as, double am, double b0, double bs, 
 }
 
 //Solve functions
-void Investigate::find_minimum(int MCS, double delta_r, int jastrow, int analytical){
+void Investigate::find_minimum(int MCS,  int jastrow, int analytical_local_energy){
 	/*
 	Function that finds the energies as functions of the parameters alpha and beta. 
 	Stores the energies and the corresponding variances in  the matrices energies and variances.
 	Input: 
 		- int MCS	 		- Number of Monte Carlo simulations to be performed in finding each energy
-		- double delta_r 	- The step length to be used in the MC-simulation
 		- int jastrow 		- With (jastrow=1) or without (jastrow=0) the jastrow factor.
 		- int analytical 	- Numerical or analytical local energy expression
 
@@ -653,7 +847,7 @@ void Investigate::find_minimum(int MCS, double delta_r, int jastrow, int analyti
 			copy.Set_Wavefunction(wf);
 
 			//Energy and variance
-			vec expectation_values = copy.Brute_Force_Metropolis_Expectation_Values(MCS,delta_r, analytical);
+			vec expectation_values = copy.Brute_Force_Metropolis_Expectation_Values(MCS, analytical_local_energy);
 			energies(bi,ai) = expectation_values(0);
 			variances(bi,ai) = abs(expectation_values(1) - expectation_values(0)*expectation_values(0));
 			//cout << 100*total_counter/((double)alpha_dim*beta_dim) << "%" << endl;
@@ -669,7 +863,7 @@ void Investigate::find_minimum(int MCS, double delta_r, int jastrow, int analyti
 	}
 }
 
-void Investigate::compare_analytical_numerical(int MCS, double delta_r,int jastrow){
+void Investigate::compare_analytical_numerical(int MCS, int jastrow){
 	/*
 	Function that investigates the difference between the analytical and numerical solutions as functions of alpha and beta. 
 	Input: 
@@ -707,8 +901,8 @@ void Investigate::compare_analytical_numerical(int MCS, double delta_r,int jastr
 			system.Set_Wavefunction(wf);
 
 			//Energy and variance
-			expectation_values_analytical = system.Brute_Force_Metropolis_Expectation_Values(MCS,delta_r,1);
-			expectation_values_numerical = system.Brute_Force_Metropolis_Expectation_Values(MCS,delta_r,0);
+			expectation_values_analytical = system.Brute_Force_Metropolis_Expectation_Values(MCS,1);
+			expectation_values_numerical = system.Brute_Force_Metropolis_Expectation_Values(MCS,0);
 			relative_energy_difference(bi,ai) = (expectation_values_analytical(0)-expectation_values_numerical(0))/expectation_values_analytical(0);
 		}
 	cout << counter/(double)tot_counter*100 << " %" << endl;

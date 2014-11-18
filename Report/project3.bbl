@@ -1,5 +1,12 @@
 \begin{thebibliography}{1}
 
+\bibitem{slides}
+Morten Hjorth-Jensen.
+\newblock Additional slides for monte carlo project.
+\newblock
+  \href{http://www.uio.no/studier/emner/matnat/fys/FYS3150/h14/undervisningsmateriale/projects/project-5-deadline-december-1/montecarloaddition.pdf}{http://www.uio.no/.../montecarloaddition.pdf},
+  2014.
+
 \bibitem{lecturenotes}
 Morten Hjorth-Jensen.
 \newblock {\em Computational Physics - Lecture Notes Fall 2014}.

@@ -15,7 +15,7 @@ The expectation value of the local energy: $\langle E_L \rangle$ \;
 The expectation value of the local energy squared: $\langle E_L^2 \rangle$ \;}
 \Begin{
 \
-$\textit{cumulative\_local\_energy} = 0$ \tcp*{Initialization}
+$\textit{cumulative\_local\_energy} = E_L(\mathbf{r}, \alpha, \beta)$ \tcp*{Initialization}
 $\textit{cumulative\_local\_energy\_squared} = 0$ \;
 $\textit{counter} = 0$\;
 \While{$\textit{counter} < M$ }{
@@ -38,15 +38,17 @@ $\textit{counter} = 0$\;
                 $E_L(\mathbf{r}, \alpha, \beta) = 
                 \frac{1}{\Psi_T(\mathbf{r}, \alpha, \beta)} 
                 \hat{H} \psi_T(\mathbf{r},\alpha,\beta)$ \tcp*{Calculate the local energy }
-                $\textit{cumulative\_local\_energy}~~ ^+_= ~~E_L(\mathbf{r}, \alpha, \beta)$ \tcp*{Update $\textit{cumulative\_local\_energy}$}
-                $\textit{cumulative\_local\_energy\_squared}~~ ^+_= ~~E_L(\mathbf{r}, \alpha, \beta)^2$ \\ \tcp*{Update $\textit{cumulative\_local\_energy\_squared}$}
-                $\textit{counter}~ ^+_= ~1$ \tcp*{Update \textit{counter}} 
+                
         }       
+        $\textit{cumulative\_local\_energy}~~ ^+_= ~~E_L(\mathbf{r}, \alpha, \beta)$ \tcp*{Update $\textit{cumulative\_local\_energy}$}
+         $\textit{cumulative\_local\_energy\_squared}~~ ^+_= ~~E_L(\mathbf{r}, \alpha, \beta)^2$ \\ \tcp*{Update $\textit{cumulative\_local\_energy\_squared}$}
+         $\textit{counter}~ ^+_= ~1$ \tcp*{Update \textit{counter}} 
  }
 Calculate $\langle E_L \rangle = \frac{\textit{cumulative\_local\_energy}}{M}$ \;
 Calculate $\langle E_L^2 \rangle = \frac{\textit{cumulative\_local\_energy\_squared}}{M}$ \;
 }
 \caption{The metropolis algorithm used for finding the expecation value of the
-local energy and the expecation value of the local energy squared.}
+local energy and the expecation value of the local energy squared.
+"Method" refers to either the brute force approach or importance sampling.}
 \label{alg:metropolis}
 \end{algorithm}
