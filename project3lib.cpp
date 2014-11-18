@@ -536,7 +536,7 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 			//Choose particle to be moved
 			int i = rand() % number_of_particles; 
 			//Update step
-			vec delta_vec_r = delta_ri * (randn<vec>(2));
+			vec delta_vec_r = delta_ri * randn<vec>(2);
 			mat r_p = r;
 			r_p.col(i) = r_p.col(i) + delta_vec_r;
 			double w = Wave_function.call_squared(r_p)/wavefunction_squared;
@@ -559,6 +559,7 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 	counter = 0;
 	total_counter = 0;
 	r = randn<mat>(2,number_of_particles);
+	wavefunction_squared = Wave_function.call_squared(r);
 	double local_energy = local_energy_function(r,analytical_local_energy);;
 	double cumulative_local_energy = 0; 
 	double cumulative_local_energy_squared = 0;
@@ -569,7 +570,7 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 		int i = rand() % number_of_particles; 
 
 		//Update step
-		vec delta_vec_r = delta_r * (randn<vec>(2));
+		vec delta_vec_r = delta_r * randn<vec>(2);
 
 		/*
 		//Only coordenate move, x or y
@@ -595,8 +596,8 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 	
 	//Uncomment if investigating ratio vs delta_r
 	ratio = counter/(double)total_counter;
-	cout << endl << "Acceptance rate: " << ratio << endl ;
-	cout << "Step length: " << delta_r << endl << endl;
+	cout << endl << "---- Acceptance rate: " << ratio;
+	cout << ", Step length: " << delta_r <<  "----" << endl;
 
 	//Create matrix for storing expectation values
 	vec expectation_values = zeros(2);
@@ -629,37 +630,58 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 	double cumulative_local_energy_squared = 0;
 	int counter = 0;
 	int total_counter = 0;
+	double D = 0.5;
 	double ratio;
 
+
+	//Choose particle to be moved next:
+	int i = rand() % number_of_particles; 
+
+	vec quantum_force_old = quantum_force(r,i,analytical_quantum_force);
 	double wavefunction_squared = Wave_function.call_squared(r);
+	vec greensfunction_elements;
+	double greensfunction;
+
 	while(total_counter < M){
-		//Choose particle to be moved:
-		int i = rand() % number_of_particles; 
+
+		
 
 		//Update step
-		vec delta_vec_r = quantum_force(r,i,analytical_quantum_force)*delta_t + delta_t*randn();
 
+		vec delta_vec_r = D*quantum_force_old*delta_t + sqrt(2*D*delta_t)*randn(2,1);
 		/*
 		//Only coordenate move, x or y
 		int xory = rand() % 2;
 		delta_vec_r(xory,0) = 0;
 		*/
-	
 		mat r_p = r;
 		r_p.col(i) = r_p.col(i) + delta_vec_r;
-		double s = randu();
-		double w = Wave_function.call_squared(r_p)/wavefunction_squared;
 
-		if (w >= s){
+		vec quantum_force_new = quantum_force(r_p,i,analytical_quantum_force);
+		double w = Wave_function.call_squared(r_p)/wavefunction_squared;
+		double s = randu();
+
+
+		//Greensfunction
+		greensfunction_elements = 0.5*(quantum_force_old+quantum_force_new)%(D*delta_t*0.5*(quantum_force_old-quantum_force_new)-r_p.col(i) + r.col(i));
+		greensfunction = exp(sum(greensfunction_elements)); 
+
+
+		if (w*greensfunction >= s){
 			r = r_p;
 			wavefunction_squared = Wave_function.call_squared(r);
 			counter += 1;	
 			local_energy = local_energy_function(r,analytical_local_energy);
+
+			quantum_force_old = quantum_force_new;
 		}
 
 		cumulative_local_energy += local_energy;
 		cumulative_local_energy_squared += local_energy*local_energy;
 		total_counter += 1;
+
+		//Choose particle to be moved next:
+		i = rand() % number_of_particles; 
 	}
 	
 	//Uncomment if investigating ratio vs delta_r
@@ -670,6 +692,9 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 	vec expectation_values = zeros(2);
 	expectation_values(0) = cumulative_local_energy/M;
 	expectation_values(1) = cumulative_local_energy_squared/M;
+
+	
+
 	return expectation_values;
 }	
 
@@ -688,15 +713,18 @@ vec QuantumDots::quantum_force(mat r, int i,int analytical_quantum_force, double
 	vec result = zeros(2);
 
 	if (analytical_quantum_force == 0){
+		double Wave_function_here = Wave_function.call(r);
 		mat rplusx = r;
+		mat rminusx = r;
 		rplusx(0,i) += h;
-		double dfdx = (Wave_function.call(rplusx)-Wave_function.call(r))/h;
+		double dfdx = (Wave_function.call(rplusx)-Wave_function_here)/h;
 		result(0) = dfdx;
 
 		mat rplusy = r;
 		rplusy(1,i) += h;
-		double dfdy = (Wave_function.call(rplusy)-Wave_function.call(r))/h;
+		double dfdy = (Wave_function.call(rplusy)-Wave_function_here)/h;
 		result(1) = dfdy;
+		result *= 2/Wave_function_here;
 	}
 	else if (analytical_quantum_force == 1){
 		mat S_i;
@@ -727,6 +755,7 @@ vec QuantumDots::quantum_force(mat r, int i,int analytical_quantum_force, double
 		for (int k=0;k<N/2;k++){
 			NSS += S_i_inverse(k,i/2) * Wave_function.nabla_phi(l,2*k,r.col(i)); 
 		}
+		double r2 = pow(norm(r.col(1)),2);
 		double exp_factor = exp(-0.5*l*l*r2);
 		NSS *= exp_factor;
 
@@ -743,15 +772,15 @@ vec QuantumDots::quantum_force(mat r, int i,int analytical_quantum_force, double
 				NJJ += a_ik_r_ik*(r.col(i)-r.col(k))/(denom*denom);
 			}
 		}
-		result = NSS + NJJ;
+		result = 2*(NSS + NJJ);
 	}
 	else{
-	cout << "-----------" << endl;
-	cout << "Bad usage:" << endl;	
-	cout << "The 'analytical_quantum_force' variable must be set to 1 or 0" << endl;
-	cout << "Stopping program." << endl;
-	cout << "-----------" << endl;
-	exit(1);
+		cout << "-----------" << endl;
+		cout << "Bad usage:" << endl;	
+		cout << "The 'analytical_quantum_force' variable must be set to 1 or 0" << endl;
+		cout << "Stopping program." << endl;
+		cout << "-----------" << endl;
+		exit(1);
 	}
 	return result;
 }
