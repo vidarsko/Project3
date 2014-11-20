@@ -82,7 +82,7 @@ class QuantumDots{
 		vec Importance_Sampling_Metropolis_Expectation_Values(int M, double delta_t, int analytical_local_energy, int analytical_quantum_force);
 
 		//Importance sampling help function
-		vec quantum_force(mat r, int i,int analytical_quantum_force, double h=1e-6);
+		mat quantum_force(mat r, int analytical_quantum_force, double h=1e-6);
 
 		//Print functions 
 		void print_numberofparticles_to_terminal(void);
@@ -110,7 +110,7 @@ class Investigate{
 		Investigate(double a0, double as, double am, double b0, double bs, double bm, QuantumDots sys);
 
 		//Solve functions
-		void find_minimum(int MCS, int jastrow, int analytical_local_energy = 0);
+		void find_minimum(int MCS, int jastrow, int analytical_local_energy,int brute_force, int analytical_quantum_force, double delta_t=0.1);
 		void compare_analytical_numerical(int MCS, int jastrow);
 
 		//Print functions

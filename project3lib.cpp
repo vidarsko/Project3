@@ -561,11 +561,11 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 	total_counter = 0;
 	r = randn<mat>(2,number_of_particles);
 	wavefunction_squared = Wave_function.call_squared(r);
-	double local_energy = local_energy_function(r,analytical_local_energy);;
+	double local_energy = local_energy_function(r,analytical_local_energy);
 	double cumulative_local_energy = 0; 
 	double cumulative_local_energy_squared = 0;
-
-
+	
+	
 	while(total_counter < M){
 		//Choose particle to be moved:
 		int i = rand() % number_of_particles; 
@@ -573,11 +573,11 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 		//Update step
 		vec delta_vec_r = delta_r * randn<vec>(2);
 
-		/*
+		
 		//Only coordenate move, x or y
-		int xory = rand() % 2;
-		delta_vec_r(xory,0) = 0;
-		*/
+		//int xory = rand() % 2;
+		//delta_vec_r(xory,0) = 0;
+		
 	
 		mat r_p = r;
 		r_p.col(i) = r_p.col(i) + delta_vec_r;
@@ -595,11 +595,11 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 		cumulative_local_energy_squared += local_energy*local_energy;
 		total_counter += 1;
 	}
-	
+
 	//Uncomment if investigating ratio vs delta_r
-	ratio = counter/(double)total_counter;
-	cout << endl << "---- Acceptance rate: " << ratio;
-	cout << ", Step length: " << delta_r <<  "----" << endl;
+	ratio = counter/(double)(M-1);
+	//cout << endl << "---- Acceptance rate: " << ratio;
+	//cout << ", Step length: " << delta_r <<  "----" << endl;
 
 	//Create matrix for storing expectation values
 	vec expectation_values = zeros(2);
@@ -639,15 +639,17 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 	//Choose particle to be moved next:
 	int i = rand() % number_of_particles; 
 
-	vec quantum_force_old = quantum_force(r,i,analytical_quantum_force);
+	mat quantum_force_old = quantum_force(r,analytical_quantum_force);
 	double wavefunction_squared = Wave_function.call_squared(r);
-	vec greensfunction_elements;
+	mat greensfunction_elements;
 	double greensfunction;
 
 	while(total_counter < M){
 		
 		//Update step
-		vec delta_vec_r = D*quantum_force_old*delta_t + sqrt(2*D*delta_t)*randn(2,1);
+
+		vec delta_vec_r = D*quantum_force_old.col(i)*delta_t + sqrt(2*D*delta_t)*randn(2,1);
+
 
 		/*
 		//Only coordenate move, x or y
@@ -658,7 +660,7 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 		mat r_p = r;
 		r_p.col(i) = r_p.col(i) + delta_vec_r;
 
-		vec quantum_force_new = quantum_force(r_p,i,analytical_quantum_force);
+		mat quantum_force_new = quantum_force(r_p,analytical_quantum_force);
 		double w = Wave_function.call_squared(r_p)/wavefunction_squared;
 		double s = randu();
 
@@ -669,9 +671,10 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 		//(2*(r_p.col(i)-r.col(i))/(D*delta_t) + quantum_force_new - quantum_force_old);
 
 		//From the slides
-		greensfunction_elements = 0.5*(quantum_force_old+quantum_force_new)%(D*delta_t*0.5*(quantum_force_old-quantum_force_new)-r_p.col(i) + r.col(i));
+		greensfunction_elements = 0.5*(quantum_force_old+quantum_force_new)%
+		                          (D*delta_t*0.5*(quantum_force_old-quantum_force_new)-r_p + r);
 
-		greensfunction = exp(sum(greensfunction_elements)); 
+		greensfunction = exp(sum(sum(greensfunction_elements))); 
 
 
 		if (w*greensfunction >= s){
@@ -692,7 +695,7 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 	
 	//Uncomment if investigating ratio vs delta_r
 	ratio = counter/(double)total_counter;
-	cout << "Acceptance rate: " << ratio << endl;
+	//cout << "Acceptance rate: " << ratio << endl;
 
 	//Create matrix for storing expectation values
 	vec expectation_values = zeros(2);
@@ -705,7 +708,7 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 }	
 
 //Importance sampling help function
-vec QuantumDots::quantum_force(mat r, int i,int analytical_quantum_force, double h){
+mat QuantumDots::quantum_force(mat r, int analytical_quantum_force, double h){
 	/*
 	Returns the quantum force as described in the section on importance sampling. 
 	Input:
@@ -716,72 +719,79 @@ vec QuantumDots::quantum_force(mat r, int i,int analytical_quantum_force, double
 	Output:
 		- vec result 					- The quantum force 1/psi del_i psi
 	*/
-	vec result = zeros(2);
+
+	mat result = zeros(2,number_of_particles);
 
 	if (analytical_quantum_force == 0){
-		double Wave_function_here = Wave_function.call(r);
-		mat rplusx = r;
-		mat rminusx = r;
-		rplusx(0,i) += h;
-		rminusx(0,i) -= h;
-		double dfdx = (Wave_function.call(rplusx)-Wave_function.call(rminusx))/(2*h);
-		result(0) = dfdx;
+		for (int i=0;i<number_of_particles;i++){
+			mat rplusx = r;
+			mat rminusx = r;
+			rplusx(0,i) += h;
+			rminusx(0,i) -= h;
+			double dfdx = (Wave_function.call(rplusx)-Wave_function.call(rminusx))/(2*h);
+			result(0,i) = dfdx;
 
-		mat rplusy = r;
-		mat rminusy = r;
-		rplusy(1,i) += h;
-		rminusy(1,i) -= h;
-		double dfdy = (Wave_function.call(rplusy)-Wave_function.call(rminusy))/(2*h);
-		result(1) = dfdy;
-		result *= 2/Wave_function_here;
+			mat rplusy = r;
+			mat rminusy = r;
+			rplusy(1,i) += h;
+			rminusy(1,i) -= h;
+			double dfdy = (Wave_function.call(rplusy)-Wave_function.call(rminusy))/(2*h);
+			result(1,i) = dfdy;
+		}
+		result *= 2/Wave_function.call(r);
 	}
 	else if (analytical_quantum_force == 1){
-		mat S_i;
-		int N = number_of_particles;
-	
-		//Constructing Si
-		if (i%2==0){
-			S_i =  zeros(N/2,N/2) ;
-			for (int it = 0; it<=N-2; it += 2){
-				for (int j=0; j<=N-2; j+=2){
-				S_i(j/2,it/2) = Wave_function.phi(it,r.col(j));
+		for (int i=0;i<number_of_particles;i++){
+			mat S_i;
+			int N = number_of_particles;
+		
+			//Constructing Si
+			if (i%2==0){
+				S_i =  zeros(N/2,N/2) ;
+				for (int it = 0; it<=N-2; it += 2){
+					for (int j=0; j<=N-2; j+=2){
+					S_i(j/2,it/2) = Wave_function.phi(it,r.col(j));
+					}
 				}
 			}
-		}
-		else {
-			S_i =  zeros(N/2,N/2);
-			for (int it = 0; it<=N-2; it += 2){
-				for (int j=0; j<=N-2; j+=2){
-					S_i(j/2,it/2) = Wave_function.phi(it+1,r.col(j+1));
+			else {
+				S_i =  zeros(N/2,N/2);
+				for (int it = 0; it<=N-2; it += 2){
+					for (int j=0; j<=N-2; j+=2){
+						S_i(j/2,it/2) = Wave_function.phi(it+1,r.col(j+1));
+					}
 				}
 			}
-		}
-		mat S_i_inverse = inv(S_i);
-		//S_i matrix is as wanted and so is the the inverse
+			mat S_i_inverse = inv(S_i);
+			//S_i matrix is as wanted and so is the the inverse
 
-		mat NSS = zeros(2,1);
-		double l = sqrt(Wave_function.omega*Wave_function.alpha);
-		for (int k=0;k<N/2;k++){
-			NSS += S_i_inverse(k,i/2) * Wave_function.nabla_phi(l,2*k,r.col(i)); 
-		}
-		double r2 = pow(norm(r.col(1)),2);
-		double exp_factor = exp(-0.5*l*l*r2);
-		NSS *= exp_factor;
-
-		mat NJJ = zeros(2,1);
-		double r_ik = 0, a_ik = 0, beta=0, a_ik_r_ik=0, denom=0;
-		beta = Wave_function.beta;
-		for (int k=0;k<N;k++){
-			if (k!=i){
-				r_ik = norm(r.col(i)-r.col(k));
-				a_ik = Wave_function.a(i,k);
-				a_ik_r_ik = a_ik/r_ik;
-				denom =(1+beta*r_ik);
-
-				NJJ += a_ik_r_ik*(r.col(i)-r.col(k))/(denom*denom);
+			mat NSS = zeros(2,1);
+			double l = sqrt(Wave_function.omega*Wave_function.alpha);
+			for (int k=0;k<N/2;k++){
+				NSS += S_i_inverse(k,i/2) * Wave_function.nabla_phi(l,2*k,r.col(i)); 
 			}
+			double r2 = pow(norm(r.col(i)),2);
+			double exp_factor = exp(-0.5*l*l*r2);
+			NSS *= exp_factor;
+
+			mat NJJ = zeros(2,1);
+			if (Wave_function.Jastrow_factor == 1){
+				double r_ik = 0, a_ik = 0, beta=0, a_ik_r_ik=0, denom=0;
+				beta = Wave_function.beta;
+				for (int k=0;k<N;k++){
+					if (k!=i){
+						r_ik = norm(r.col(i)-r.col(k));
+						a_ik = Wave_function.a(i,k);
+						a_ik_r_ik = a_ik/r_ik;
+
+						denom =(1+beta*r_ik);
+
+						NJJ += a_ik_r_ik*(r.col(i)-r.col(k))/(denom*denom);
+					}
+				}
+			}
+			result.col(i) = 2*(NSS + NJJ);
 		}
-		result = 2*(NSS + NJJ);
 	}
 	else{
 		cout << "-----------" << endl;
@@ -836,14 +846,17 @@ Investigate::Investigate(double a0, double as, double am, double b0, double bs, 
 }
 
 //Solve functions
-void Investigate::find_minimum(int MCS,  int jastrow, int analytical_local_energy){
+void Investigate::find_minimum(int MCS,  int jastrow, int analytical_local_energy, int importance_sampling, int analytical_quantum_force, double delta_t){
 	/*
 	Function that finds the energies as functions of the parameters alpha and beta. 
 	Stores the energies and the corresponding variances in  the matrices energies and variances.
 	Input: 
-		- int MCS	 		- Number of Monte Carlo simulations to be performed in finding each energy
-		- int jastrow 		- With (jastrow=1) or without (jastrow=0) the jastrow factor.
-		- int analytical 	- Numerical or analytical local energy expression
+		- int MCS				 		- Number of Monte Carlo simulations to be performed in finding each energy
+		- int jastrow 					- With (jastrow=1) or without (jastrow=0) the jastrow factor.
+		- int analytical_local energy 	- Numerical or analytical local energy expression
+		- int importance sampling		- Using importance sampling (1) or brute force (0)
+		- int analytical_quantum_force	- Using (1) the anlytical expression for the quantum force or not
+		- double delta_t (default: 0.1)	- The time step in the importance sampling method. 
 
 	Structure of energies and variances:
 							alpha_0 	alpha_0+alpha_step  	alpha_0+2alpha_step 	... 	alpha_max-delta1
@@ -884,8 +897,14 @@ void Investigate::find_minimum(int MCS,  int jastrow, int analytical_local_energ
 			QuantumDots copy (system.omega,system.number_of_particles,system.repulsion);
 			copy.Set_Wavefunction(wf);
 
+			vec expectation_values;
 			//Energy and variance
-			vec expectation_values = copy.Brute_Force_Metropolis_Expectation_Values(MCS, analytical_local_energy);
+			if (importance_sampling==0){
+				expectation_values = copy.Brute_Force_Metropolis_Expectation_Values(MCS, analytical_local_energy);
+			}
+			else if (importance_sampling == 1){
+				expectation_values = copy.Importance_Sampling_Metropolis_Expectation_Values(MCS,delta_t,analytical_local_energy,analytical_quantum_force);
+			}
 			energies(bi,ai) = expectation_values(0);
 			variances(bi,ai) = abs(expectation_values(1) - expectation_values(0)*expectation_values(0));
 			//cout << 100*total_counter/((double)alpha_dim*beta_dim) << "%" << endl;
