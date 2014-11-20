@@ -83,7 +83,8 @@ double Trial_Wavefunction::call_squared(mat r){
 	Output:
 		- double result 	- The value of the squared wavefunction at that point.
 	*/
-	return pow(this->call(r),2);
+	double tmp_wf = this->call(r);
+	return pow(tmp_wf,2);
 }
 
 //Help functions
@@ -587,6 +588,7 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 			wavefunction_squared = Wave_function.call_squared(r);
 			counter += 1;	
 			local_energy = local_energy_function(r,analytical_local_energy);
+
 		}
 
 		cumulative_local_energy += local_energy;
@@ -643,17 +645,16 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 	double greensfunction;
 
 	while(total_counter < M){
-
 		
-
 		//Update step
-
 		vec delta_vec_r = D*quantum_force_old*delta_t + sqrt(2*D*delta_t)*randn(2,1);
+
 		/*
 		//Only coordenate move, x or y
 		int xory = rand() % 2;
 		delta_vec_r(xory,0) = 0;
 		*/
+
 		mat r_p = r;
 		r_p.col(i) = r_p.col(i) + delta_vec_r;
 
@@ -663,7 +664,13 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 
 
 		//Greensfunction
+		//My understanding 
+		//greensfunction_elements = -0.25*(quantum_force_old + quantum_force_new)%
+		//(2*(r_p.col(i)-r.col(i))/(D*delta_t) + quantum_force_new - quantum_force_old);
+
+		//From the slides
 		greensfunction_elements = 0.5*(quantum_force_old+quantum_force_new)%(D*delta_t*0.5*(quantum_force_old-quantum_force_new)-r_p.col(i) + r.col(i));
+
 		greensfunction = exp(sum(greensfunction_elements)); 
 
 
@@ -672,7 +679,6 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 			wavefunction_squared = Wave_function.call_squared(r);
 			counter += 1;	
 			local_energy = local_energy_function(r,analytical_local_energy);
-
 			quantum_force_old = quantum_force_new;
 		}
 
@@ -717,12 +723,15 @@ vec QuantumDots::quantum_force(mat r, int i,int analytical_quantum_force, double
 		mat rplusx = r;
 		mat rminusx = r;
 		rplusx(0,i) += h;
-		double dfdx = (Wave_function.call(rplusx)-Wave_function_here)/h;
+		rminusx(0,i) -= h;
+		double dfdx = (Wave_function.call(rplusx)-Wave_function.call(rminusx))/(2*h);
 		result(0) = dfdx;
 
 		mat rplusy = r;
+		mat rminusy = r;
 		rplusy(1,i) += h;
-		double dfdy = (Wave_function.call(rplusy)-Wave_function_here)/h;
+		rminusy(1,i) -= h;
+		double dfdy = (Wave_function.call(rplusy)-Wave_function.call(rminusy))/(2*h);
 		result(1) = dfdy;
 		result *= 2/Wave_function_here;
 	}
