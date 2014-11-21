@@ -28,7 +28,7 @@ This potential gives rise to a multi-particle Hamiltonian $\hat{H}$ given as the
 Where $r_{ij} = |\vec r_i - \vec r_j| $ is the distance between the electrons $i$ and $j$ and $r_i = |\vec r_i | = \sqrt{x_i^2 + y_i^2}$ when $\vec r_i = \left ( \begin{matrix} x_i \\ y_i \end{matrix} \right ) $. 
 Our goal in this project is to find the ground eigenstate and energy of this multi-particle Hamiltonian numerically. 
 
-\paragraph{The variational principle}
+\paragraph{The variational principle}\label{sec:variational_principle}
 
 We will approach this by constructing a real test function $\Psi_T(\vec r_0, \vec r_1, ... , \vec r_{N-1}, \alpha,\beta )$ dependent on two parameters $\alpha$ and $\beta$ and calculate the expextation value of the hamilton operator $\langle \hat{H} \rangle $. 
 As we know, the orthonormal eigenstates $\Psi_i$ of the Hamiltonian forms a complete basis, so any state, including our test state $\Psi_T$, can be written as a linear combination of the eigenstates 
@@ -60,7 +60,7 @@ The energy of the ground state $E_0$ is smaller than all other $E_i$'s so
 \eqf
 
 This simple observation is called \textit{the variational principle} and is what we will use to narrow our search for the optimal parameters $\alpha$ and $\beta$.
-We will look for the parameters $\alpha$ and $\beta$ that gives us the smallest value of $\langle \hat{H} \rangle$ and this will be our estimate for the ground state.
+We will look for the parameters $\alpha$ and $\beta$ that gives us the smallest value of $\langle \hat{H} \rangle$ and this will be our estimate for the ground state energy.
 
 
 
@@ -78,13 +78,31 @@ We have
 \int ~\frac{\Psi_T \Psi_T}{\int \Psi_T \Psi_T d\vec r}~ \frac{1}{\Psi_T} \hat{H} \Psi_T d\vec r
 \eqf
 
-If we rename probability density function of the particles $\frac{\Psi_T \Psi_T}{\int \Psi_T \Psi_T d\vec r} = P(\vec r)$ and $E_L(\vec r) = \frac{1}{\Psi_T} \hat{H} \Psi_T$, then the integral becomes 
+If we rename probability density function of the particles 
+
+\eqs 
+\frac{\Psi_T \Psi_T}{\int \Psi_T \Psi_T d\vec r} = P(\vec r)
+\eqf
+
+And introduce the local energy 
+
+\eqs
+E_L(\vec r) = \frac{1}{\Psi_T} \hat{H} \Psi_T
+\eqf
+
+The integral becomes 
 
 \eqs
 \langle \hat{H} \rangle = \int P(\vec r) E_L(\vec r) d\vec r = \langle E_L \rangle
 \eqf
 
-But we could very well find a minimum of $\langle \hat{H} \rangle$ that is not an eigen energy of the system, i.e. still larger than $E_0$.
+Thus, to calculate the expectation value of $\hat{H}$ we can just calculate the expectation value of the local energy.
+
+
+
+\paragraph{Verifying that we have found an eigenstate}
+
+We could very well find a minimum of $\langle \hat{H} \rangle$ that is not an eigen energy of the system, i.e. still larger than $E_0$.
 To address this problem, let's look at the variance $V_{E_L}$ of $\langle E_L \rangle$. 
 
 \eqs
@@ -169,6 +187,8 @@ V_{E_L} = 0 \quad \textrm{if and only if} \quad \Psi_T \textrm{ is an eigenstate
 
 
 
+
+
 \subsubsection{The test function $\Psi_T$}
 
 We will in this project use the trial wavefunctions of $\vec r_i = \left ( \begin{matrix} x_i \\ y_i \\ \end{matrix}\right )$ given by 
@@ -177,6 +197,9 @@ We will in this project use the trial wavefunctions of $\vec r_i = \left ( \begi
 \Psi_T(\vec r_0, ... ,\vec r_{N-1})  = \Det(\phi_0,  ... , \phi_{N-1}) \cdot \textrm{J}(\vec r_0, ... , \vec r_{N-1} )
 \label{eq:Trial_Wavefunction}
 \eqf
+
+
+
 
 \paragraph{The modified Slater determinant $\Det(\phi_0,  ... , \phi_{N-1})$}
 
@@ -237,7 +260,14 @@ For $i<12$, the explicit depence of $n_x, n_y$ on $i$ is given in table \ref{tab
 
 
 
-\paragraph{The Jastrow factor $\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$}
+
+
+
+
+
+
+
+\paragraph{The Jastrow factor $\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$} \label{sec:jastrow}
 
 $\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$ is a so-called \textit{Jastrow factor}, which represents the electron repulsion part of the wavefunction, defined as
 
@@ -265,6 +295,81 @@ a_{ij} = \left \{
 
 From the expression of the Jastrow factor, we see that it is zero whenever $r_{ij} = 0$ for any pair $i\neq j$. 
 This is what we want from such a factor, namely that the wavefunction is zero whenever there is no distance between two particles (i.e. $r_{ij} = 0$).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\paragraph{Motivation} \label{sec:motivation}
+
+The motivation of such a trial wavefunction is that it is partly made of the unperturbed harmonic oscillator ground states. 
+See figure \ref{fig:psi_levels}. 
+
+\begin{figure}[h!]
+	\centering 
+	\includegraphics[width=\textwidth]{theory/psi_levels.jpg}
+	\caption{The wave function levels. The blue dots represent electrons filling up the states from $n_x = n_y = 0$ to the third lowest states. 
+	2 electrons fill up the lowest level, 6 electrons the two lowest levels and 12 electrons all three first energy levels.
+	The net spin of each level must be $0$ due to the Pauli Exclusion principle. }
+	\label{fig:psi_levels}
+\end{figure}
+
+
+The energies of these levels are given by the well known 2D-harmonic oscillator energy formula
+
+\eqs
+E_{n_x, n_y} = \hbar \omega (1 + n_x + n_y)
+\eqf
+
+So if we have two electrons in the lowest state ($n_x = n_y = 0$), we would expect the energy of this state to be 
+
+\eqs
+2 \cdot \hbar \omega (1 + 0 + 0) = 2 \hbar \omega = 2 \omega 
+\eqf
+
+When using natural units.
+
+To have two electrons in the same state, their spin must be opposite due to the Pauli exclusion principle. 
+This means that the total spin of the $n_x = n_y = 0$ state is $0$. 
+It can be shown that the wavefunction given by equation \ref{eq:Trial_Wavefunction} when $N=2$ (i.e. two electrons) is given by the following equation
+
+\eqs
+\Psi_T (\vec r_0, \vec r_1) = \exp(-\alpha \omega (r_0^2 +r_1^2)/2) \cdot \J
+\eqf
+
+If we do not include the repulsion part of the system, there is no need to include the Jastrow Factor (for details, see section \ref{sec:jastrow}). 
+It can be shown that this state is an eigenstate of the unperturbed harmonic oscillator with energy $2\omega $ when $\alpha = 1$. 
+This analogy can be extended to the $N=6$ and $N=12$ electron case as well. 
+When $N=6$ the unperturbed energy should be the sum of the energies in the first level (i.e. $2 \omega$) and the collective energies of the electrons in the second level states ($n_x=1,~n_y =0 \vee n_x=0,~n_y=1$) which is $4\cdot 2 \omega = 8\omega $, resulting in a total energy of $10 \omega$. 
+Equivalently, the energy for the $N=12$ electron case should be $28 \omega$.
+These energies will all serve as benchmarks and we should get the exact results when there is no repulsion, $\alpha = 1$ and the jastrow factor is omitted.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \paragraph{Closed form expression of the local energy} \label{sec:closed_form_local_energy}
 
@@ -363,37 +468,43 @@ The explicit formulas for $\phi_k$ for $k$ in the range $0$ to $11$ is given in 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\subsubsection{Discretization}
-
 \subsubsection{The virial theorem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \subsection{The numerical foundation}

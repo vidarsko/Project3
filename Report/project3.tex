@@ -12,6 +12,9 @@
 \usepackage{fancyhdr}
 \usepackage[colorlinks]{hyperref}
 
+\usepackage[titletoc]{appendix}
+\usepackage{multirow}
+
 
 \usepackage{empheq}
 \newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
@@ -162,6 +165,7 @@ Here is a short summary of the project.
 
 \input{introduction}
 \input{theory}
+\input{experimental}
 \input{resultsanddiscussion}
 
 
@@ -170,6 +174,58 @@ Here is a short summary of the project.
 \clearpage
 \bibliography{bibliography}{}
 \bibliographystyle{plain}
-\end{document}
 
+\clearpage
+\begin{appendices}
+
+\section{Reference to the questions posed in the project instructions}
+
+Since the format of this report does not correspond to the structure of the project instructions, a reference list over the posed questions and where to find the answer is given below. 
+
+
+\begin{table}[h!]
+        \begin{tabular}{lll}
+        \toprule
+        Section         & Instruction           & Reference \\
+        \midrule
+        a )             & Convince yourself that ... is simply 2$\omega$. & Section \ref{sec:motivation} \\
+                        & What is the total spin ...? Find arguments for why... & Section \ref{sec:motivation} \\
+        \midrule
+        b )             & Perform a Variational Monte Carlo calculation...    & Sections \ref{sec:exp_benchmarks} and \ref{sec:res_benchmarks} \\
+        \midrule
+        c) \\
+        \midrule 
+        d) \\
+        \midrule
+        e) &  Reproduce the unperturbed ... is switched off.  & Sections \ref{sec:exp_benchmarks} and \ref{sec:res_benchmarks} \\
+         &      Convince yourself ... for N = 6 is 10$\omega$ & Section \ref{sec:motivation} \\
+        \midrule 
+        f) \\
+        \midrule
+        g) \\
+        \bottomrule
+        \end{tabular}
+        \caption{Reference list over the posed questions and where to find the answer.}
+\end{table}
+
+
+
+\clearpage
+
+
+\section{Codes} \label{sec:codes}
+All codes used in this exercise can be found at GitHub: \newline
+\url{https://github.com/vidarsko/Project3}. 
+
+The class structure of the code is given in the bullet points below
+
+\begin{itemize}
+    \item TrialWavefunction
+    \item QuantumDots
+    \item Investigate
+\end{itemize}
+
+Througout this report, reference to different codes are made as footnotes together with the date at which they were run. 
+
+\end{appendices}
 \end{document}

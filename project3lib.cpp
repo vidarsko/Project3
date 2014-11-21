@@ -888,7 +888,6 @@ void Investigate::find_minimum(int MCS,  int jastrow, int analytical_local_energ
 		for (int bi = 0; bi<beta_dim; bi++){
 			total_counter += 1;
 			//alpha and beta
-
 			double alpha = alpha_0 + ai*alpha_step;
 			double beta = beta_0 + bi*beta_step;
 
@@ -904,18 +903,22 @@ void Investigate::find_minimum(int MCS,  int jastrow, int analytical_local_energ
 			}
 			else if (importance_sampling == 1){
 				expectation_values = copy.Importance_Sampling_Metropolis_Expectation_Values(MCS,delta_t,analytical_local_energy,analytical_quantum_force);
-			}
+			}	
 			energies(bi,ai) = expectation_values(0);
 			variances(bi,ai) = abs(expectation_values(1) - expectation_values(0)*expectation_values(0));
-			//cout << 100*total_counter/((double)alpha_dim*beta_dim) << "%" << endl;
+			
 		}
 	progress = counter/(double)alpha_dim;
 
 	//Time stamp
 	clock_t now = clock();
+	int factor = beta_dim;
+	if (beta_dim>4){
+		factor = 4;
+	}
 
-	cout << 100*progress << " %, " << "\t Time elapsed: " << (now-start)/(3600*4*(double)CLOCKS_PER_SEC) << " hours ";
-	double rate = (now-start)/((double)CLOCKS_PER_SEC*4*progress);
+	cout << 100*progress << " %, " << "\t Time elapsed: " << (now-start)/(3600*factor*(double)CLOCKS_PER_SEC) << " hours ";
+	double rate = (now-start)/((double)CLOCKS_PER_SEC*factor*progress);
 	cout << "\t Time remaining: " << rate*(1-progress)/(double)3600 << " hours " << endl;
 	}
 }

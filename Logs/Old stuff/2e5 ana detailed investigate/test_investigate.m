@@ -3,7 +3,7 @@ V = csvread('test_variances.csv');
 alpha = csvread('test_alpha.csv');
 beta = csvread('test_beta.csv');
 figure(1)
-surf(beta,alpha,log(V));
+surf(beta,alpha,log10(V));
 xlabel('beta')
 ylabel('alpha')
 zlabel('log(Variance)')

@@ -6,9 +6,9 @@ using namespace arma;
 
 int main(){
 	arma_rng::set_seed(12);
-	double alpha = 0.5, beta = 0.0, omega = 1.5;
-	int number_of_particles = 12;
-	int Jastrow = 0, Repulsion = 1;
+	double alpha = 0.82, beta = 0.22, omega = 3;
+	int number_of_particles = 6;
+	int Jastrow = 1, Repulsion = 1;
 	double delta_t = 0.1;
 	Trial_Wavefunction wf (alpha,beta,omega,number_of_particles,Jastrow);
 	QuantumDots QD(omega,number_of_particles, Repulsion);
