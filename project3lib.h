@@ -68,6 +68,7 @@ class QuantumDots{
 
 		//Configuration functions
 		void Set_Wavefunction(Trial_Wavefunction wf);
+		void update_omega(double w);
 
 		//Local energy function
 		double local_energy_function(mat r,int analytical_local_energy);
@@ -104,6 +105,10 @@ class Investigate{
 		QuantumDots system;
 
 		mat energies,variances, relative_energy_difference;
+
+		//variables for the find parameters function
+		vec alpha_optimal, beta_optimal, energy_optimal, variance_optimal, omegas;
+		int number_of_omegas;
 	public:
 
 		//Constructor
@@ -111,6 +116,7 @@ class Investigate{
 
 		//Solve functions
 		void find_minimum(int MCS, int jastrow, int analytical_local_energy,int importance_sampling, int analytical_quantum_force, double delta_t=0.1);
+		void find_parameters(int MCS, vec omegas_input, int jastrow);
 		void compare_analytical_numerical(int MCS, int jastrow);
 
 		//Print functions
@@ -119,6 +125,7 @@ class Investigate{
 		void print_relative_energy_difference_to_file(string filename);
 		void print_alpha_meshgrid_to_file(string filename);
 		void print_beta_meshgrid_to_file(string filename);
+		void print_optimals_to_file(string filename);
 };
 
 

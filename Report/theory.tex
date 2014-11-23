@@ -573,8 +573,7 @@ Starting with a position $x$ choose a new trial position  $x_p$ by
 \eqs x_p = x + \Delta x \eqf
 
 Where $\Delta x$ is a random step according to some rule (see subsections).
-Then generate a probability criteria $s$, a random number between zero and one. 
-If 
+Then generate a probability criteria $s \in [0,1]$.
 
 \eqs \frac{P(x_p)}{P(x)} = \frac{aP(x_p)}{aP(x)} = \frac{\tilde{P}(x_p)}{\tilde{P}(x)} \equiv w \geq s 
 \label{eq:metropolis_prob_crit}\eqf
@@ -604,6 +603,9 @@ Where $r$ is a random number between $0$ and $1$ and $\Delta x_0$ is a predefine
 The step length $\Delta x_0$ is affecting the effectiveness of the algorithm in two contradicting ways. 
 A small step length increases the probability of each suggested move $x_p$ being accepted, but weakens the ergodicity\footnote{The way in which the walker is able to reach all positions within a finite number of steps.}
 of the method. 
+
+Since we have no physical understanding of the system when using the brute force Metropolis algorithm, we model our probability criteria $s$ as a uniform random number between $0$ and $1$. 
+
 Increasing the acceptance probability reduces the amount of times we need to evaluate the probability ratio $w$, but also increses the amount of Monte Carlo simulations needed in order to get a representative collection of $x_i$'s. 
 It can be argued that a good balance between these two aspects is to achieve an acceptance ratio 
 (i.e. the ratio between accepted and rejected moves) of around $0.5$. 
@@ -630,6 +632,20 @@ Doing this, and invoking the Fokker-Planck and Langevin equations
 \eqf
 
 Where $D$ is the diffusion term, $F(x)$ is a drift term which is responsible for pulling the particle towards regions where the PDF is important and $\eta$ is a gaussian random number.
+
+The way the metropolis algorithm relies as we have seen on accepting and rejecting proposed moves in a domain. 
+Where the probability criteria in the brute force method was just a uniform random number between $0$ and $1$, the physics behind the system now applies to this criteria as well. 
+It affects the criteria in the following way, the probability criteria $s$ is now given by 
+
+\eqs
+s = \frac{G(x_p,x,\delta t)}{G(x,x_p,\delta t)} s_0
+\eqf
+
+Where $s_0$ is a random unifor number between $0$ and $1$ and $G(a,b,\delta t)$ is the so-called greenfunction given by 
+
+\eqs
+G(a,b,\delta t) = \frac{1}{(4\pi D \delta t)^{3N/2}} \exp \left (  -(a-b-D\delta t F(b))^2/4D\delta t \right )
+\eqf
 
 Using this approach is what we will call the "Metropolis algorithm with importance sampling".
 
@@ -712,3 +728,18 @@ We can rewrite this, as in section \ref{sec:closed_form_local_energy}
 Expressions we can find both from numerical differenciation and the close form expressions in equations \ref{eq:nabla_formulas}.
 In this report, we will use both these approaches and compare the CPU time needed. 
 
+
+\subsection{Parallelization}
+
+Parallelization is a way of exploiting the multiple CPU's you find in modern computers. 
+The idea behind is that tasks that are not dependent on each other and can be done in any order may be divided into so-called threads, and each thread can its own task, see figure \ref{fig:parallelization}. 
+
+\begin{figure}[h!]
+	\centering 
+	\includegraphics[scale=3]{theory/parallelization.jpg}
+	\caption{Flow chart of a parallelization process. The red and blue section are codes which do not depend on each other and can be parallelized. The image is downloaded from \href{http://www.embedded.com/design/mcus-processors-and-socs/4204441/How-to-analyze-C-code-for-parallelization}{http://www.embedded.com/.../parallelization}, 22.11.14.}
+	\label{fig:parallelization}
+\end{figure}
+
+Using a library such as OpenMP (used in this project) makes use of all four CPU's if told to split the work into four different threads. 
+Such an approach is easy to implement to this problem, because we can calculate $\langle E_L \rangle$ for different trial parameters at the same time. 

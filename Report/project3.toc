@@ -19,32 +19,33 @@
 \contentsline {paragraph}{\numberline {2.2.2.1}Brute force Metropolis}{12}{paragraph.2.2.2.1}
 \contentsline {paragraph}{\numberline {2.2.2.2}Importance sampling}{13}{paragraph.2.2.2.2}
 \contentsline {paragraph}{\numberline {2.2.2.3}The metropolis algorithm for our wavefunction}{13}{paragraph.2.2.2.3}
-\contentsline {section}{\numberline {3}Experimental}{15}{section.3}
-\contentsline {subsection}{\numberline {3.1}Benchmarks and verification}{15}{subsection.3.1}
-\contentsline {subsubsection}{\numberline {3.1.1}Benchmarks for the brute force approach, no repulsion or jastrow factor}{15}{subsubsection.3.1.1}
-\contentsline {subsubsection}{\numberline {3.1.2}Benchmark for the brute force approach, with repulsion and jastrow factor}{16}{subsubsection.3.1.2}
-\contentsline {subsubsection}{\numberline {3.1.3}Comparation of different methods}{16}{subsubsection.3.1.3}
+\contentsline {subsection}{\numberline {2.3}Parallelization}{15}{subsection.2.3}
+\contentsline {section}{\numberline {3}Experimental}{16}{section.3}
+\contentsline {subsection}{\numberline {3.1}Benchmarks and verification}{16}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Benchmarks for the brute force approach, no repulsion or jastrow factor}{16}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Benchmark for the brute force approach, with repulsion and jastrow factor}{17}{subsubsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.3}Comparison of different methods}{17}{subsubsection.3.1.3}
 \contentsline {subsection}{\numberline {3.2}Optimizations and differences}{17}{subsection.3.2}
-\contentsline {subsubsection}{\numberline {3.2.1}Jastrow factor}{17}{subsubsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2}Importance sampling}{17}{subsubsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.3}Results from the different methods}{17}{subsubsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.4}Timely differences between methods}{17}{subsubsection.3.2.4}
-\contentsline {subsection}{\numberline {3.3}Applications}{17}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Energies and variances}{17}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}The virial theorem }{17}{subsubsection.3.3.2}
-\contentsline {section}{\numberline {4}Results and discussion}{17}{section.4}
-\contentsline {subsection}{\numberline {4.1}Benchmarks and verification}{17}{subsection.4.1}
-\contentsline {subsubsection}{\numberline {4.1.1}Benchmarks for the brute force approach, no repulsion or jastrow factor}{17}{subsubsection.4.1.1}
-\contentsline {subsubsection}{\numberline {4.1.2}Benchmark for the brute force approach, with repulsion and jastrow factor}{18}{subsubsection.4.1.2}
-\contentsline {subsubsection}{\numberline {4.1.3}Comparation of different methods}{18}{subsubsection.4.1.3}
-\contentsline {subsection}{\numberline {4.2}Optimizations and differences}{19}{subsection.4.2}
-\contentsline {subsubsection}{\numberline {4.2.1}Jastrow factor}{19}{subsubsection.4.2.1}
-\contentsline {subsubsection}{\numberline {4.2.2}Importance sampling}{19}{subsubsection.4.2.2}
-\contentsline {subsubsection}{\numberline {4.2.3}Results from the different methods}{19}{subsubsection.4.2.3}
-\contentsline {subsubsection}{\numberline {4.2.4}Timely differences between methods}{19}{subsubsection.4.2.4}
-\contentsline {subsection}{\numberline {4.3}Applications}{19}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Energies and variances}{19}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}The virial theorem }{19}{subsubsection.4.3.2}
-\contentsline {section}{\numberline {5}Conclusion}{19}{section.5}
-\contentsline {section}{Appendix \numberline {A}Reference to the questions posed in the project instructions}{21}{Appendix.1.A}
-\contentsline {section}{Appendix \numberline {B}Codes}{22}{Appendix.1.B}
+\contentsline {subsubsection}{\numberline {3.2.1}Test cases}{17}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}Jastrow factor}{18}{subsubsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.3}Importance sampling}{18}{subsubsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.4}Timely differences between methods}{18}{subsubsection.3.2.4}
+\contentsline {subsection}{\numberline {3.3}Applications}{18}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Energies and variances}{18}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}The virial theorem }{18}{subsubsection.3.3.2}
+\contentsline {section}{\numberline {4}Results and discussion}{18}{section.4}
+\contentsline {subsection}{\numberline {4.1}Benchmarks and verification}{18}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Benchmarks for the brute force approach, no repulsion or jastrow factor}{18}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Benchmark for the brute force approach, with repulsion and jastrow factor}{19}{subsubsection.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.3}Comparison of different methods}{20}{subsubsection.4.1.3}
+\contentsline {subsection}{\numberline {4.2}Optimizations and differences}{21}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {4.2.1}Test cases}{21}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2}Jastrow factor}{21}{subsubsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.3}Importance sampling}{21}{subsubsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.4}Timely differences between methods}{21}{subsubsection.4.2.4}
+\contentsline {subsection}{\numberline {4.3}Applications}{21}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Energies and variances}{21}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.2}The virial theorem }{21}{subsubsection.4.3.2}
+\contentsline {section}{\numberline {5}Conclusion}{21}{section.5}
+\contentsline {section}{Appendix \numberline {A}Reference to the questions posed in the project instructions}{23}{Appendix.1.A}
+\contentsline {section}{Appendix \numberline {B}Codes}{24}{Appendix.1.B}

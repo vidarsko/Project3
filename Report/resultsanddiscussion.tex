@@ -71,7 +71,39 @@ It also shows that the code has implemented the oscillator frequency $\omega$ co
 
 \subsubsection{Benchmark for the brute force approach, with repulsion and jastrow factor}
 
-\subsubsection{Comparation of different methods}
+A plot of the energies and $log_{10}$ of the variances after the investigation is shown in figure \ref{fig:N2_rep}.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=\textwidth]{results/N2_rep.jpg}
+	\caption{Plot of the expectations of the local energy and $log_{10}$ of variances after the VMC simulations with two electrons, with repulsion and jastrow factor. 
+	Each point was based on $10^6$ simulations. 
+	The figure gives an overview of how the energies vary as function of $\alpha$ and $\beta$.
+	The lowest energy $E= 3.00022$ where $\alpha = 0.98$ and $\beta = 0.42$.}
+	\label{fig:N2_rep}
+\end{figure}
+
+It is not easy to see from the figure what is the lowest energy, but manipulating the figure in matlab revealed the smallest test state energy, which is given in table \ref{tab:N2_rep}.
+
+\begin{table}[h!]
+		\centering 
+	\begin{tabular}{l}
+		\toprule
+		The lowest energy $E=3.00022$ and $\textrm{Variance} = 0.001568$ at $\alpha = 0.98$ and $\beta = 0.42$. \\
+		\bottomrule
+	\end{tabular}
+	\caption{The lowest energy found from the VMC study of the two electron case with repulsion and Jastrow factor.}
+	\label{tab:N2_rep}
+\end{table}
+
+The lowest energy was also found in the region where the variance was lowest. 
+It seems thus that the value obtained in this VMC calculation was very close to the real lowest eigenstate. 
+Very close, however, does not mean that we have found \textit{the} eigenstate. 
+As we saw in the previous section, when we hit the real eigenstate, the variance dropped rapidly to sizes in order of magnitude $10^{-12}-10^{-13}$ which was not the case here. 
+
+
+
+\subsubsection{Comparison of different methods}
 
 The results from calculation $\langle E \rangle$ for the different method combinations and problem/wave function parameters are shown in table \ref{tab:methods_E}.
 
@@ -79,32 +111,64 @@ The results from calculation $\langle E \rangle$ for the different method combin
 	\centering
 	\begin{tabular}{l @{ } l @{ } l @{ } l @{ } l @{ } l @{ } l  @{ } l  @{ } l  @{ } l }
 	\toprule
-	  & \multicolumn{3}{c}{Problem/Wavefunction parameters} \\
+	  & \multicolumn{3}{c}{Problem and Wavefunction parameters} \\
 	 Method parameters $~~~~$ & (2, 1, Jf, 0, 1, Ef) $~$ & (12, 0.5, Jf, 0, 1.5, En) $~$ & (6, 0.82, Jo, 0.22, 3, En)  \\
 	\midrule
 	(BF, NLE) & 				(2.000, 6e-13)		&		(92.10, 67.54)		&		(54.74, 28.11)			\\
-	\shaderow (BF, ALE) &	(2.000, 0)			&		(92.18, 161.4)		&		(54.72, 28.19)		\\
+	\shaderow (BF, ALE)	 &		(2.000, 0)			&		(92.18, 161.4)		&		(54.72, 28.19)		\\
 	(IS, NLE,NQF) & 			(2.000, 6e-14)		&		(92.15, 66.43)		&		(54.72, 27.33)				 \\
-	\shaderow(IS, NLE, AQF) & (2.000, 1e-13) 		&		(92.06, 54.49)		&		(54.72, 27.32)						\\
-	(IS, ALE, NQF) &			(2.000, 0)			&		()					&		(54.76, 27.35)					\\
-	\shaderow (IS, ALE, AQF) &(2.000, 0) 			&		()					&		(54.74, 27.44)	 				\\
+	\shaderow(IS, NLE, AQF) &	(2.000, 1e-13) 		&		(92.06, 54.49)		&		(54.72, 27.32)						\\
+	(IS, ALE, NQF) &			(2.000, 0)			&		(92.13, 143.2)		&		(54.76, 27.35)					\\
+	\shaderow (IS, ALE, AQF) &	(2.000, 0) 			&		(92.12, 76.24)		&		(54.74, 27.44)	 				\\
 	\bottomrule
 	\end{tabular}
-	\caption{A table of the expectation value and variance (Energy,Variance) of the local energy obatined with different Problem/Wavefunction parameters (N,$\alpha$, Jn/Jf, $\beta$, $\omega$, En/Ef). For explanation of abbreviations, see section \ref{sec:exp_methods_E}.
+	\caption{A table of the expectation value and variance (Energy, Variance) of the local energy obatined with different Problem/Wavefunction parameters (N,$\alpha$, Jn/Jf, $\beta$, $\omega$, En/Ef). For explanation of abbreviations, see section \ref{sec:exp_methods_E}.
 	For all trials, $10^6$ VMC calculations were performed and for the importance sampling methods, a timestep of $\delta t = 0.1$ was used.}
 	\label{tab:methods_E}
 \end{table}
 
+These are very strong results. 
+Firstly, we have verified the nummerical brute force method against known benchmarks and seen that they are correct,
+thus, it seems that the other methods are working properly!
+Secondly, the different methods used very different ways to obtain the results. 
+That the results are almost the same is a strong indication that all the methods are doing the same thing and working correctly. 
 
-\subsection{Optimizations and differences}
+\subsection{Optimizations and differences} \label{sec:res_opt_and_diff}
+
+\subsubsection{Test cases}
+
+The results from finding the optimal parameters for $\alpha$ and $\beta$ for the different test cases are given in table \ref{tab:test_cases}.
+
+\begin{table}[h!]
+	\centering 
+	\begin{tabular}{c  c c  c  c  c  c }
+	\toprule
+	 Test cases: 			& \multicolumn{2}{c}{$\omega=0.01$} & \multicolumn{2}{c}{$\omega=0.28$} & \multicolumn{2}{c}{$\omega=1$} \\
+	 Optimal parameters  	& No Jast. & 	Jast. & No Jast. & 	Jast. & No Jast. & Jast. \\
+	 \midrule
+	 $\alpha$& 	0.0 & 	0.9 & 	0.6 & 	1.0 	& 0.8	& 1\\
+	 $\beta$ & 	- & 	0.07 & 	- & 	0.25 & -  & 0.42\\
+	 \midrule
+	 Energy (a.u.) & 				0.081 &		0.074 &	 1.14  &	1.00022 & 3.15 & 2.9999 \\
+	 Variance & 					1.5e-3 &	1.27e-5	 & 0.42 &	 9.9e-4 & 2.02 & 2.7e-3 \\
+	 \bottomrule
+	\end{tabular}
+	\caption{The optimal parameters with and without Jastrow factor (Jast.).}
+	\label{tab:test_cases}
+\end{table}
 
 \subsubsection{Jastrow factor}
 
 \subsubsection{Importance sampling}
 
-\subsubsection{Results from the different methods}
-
 \subsubsection{Timely differences between methods}
+
+
+
+
+
+
+
 
 
 

@@ -317,6 +317,10 @@ void QuantumDots::Set_Wavefunction(Trial_Wavefunction wf){
 	*/
 	Wave_function = wf;
 }
+void QuantumDots::update_omega(double w){
+	omega = w;
+}
+
 
 
 double QuantumDots::local_energy_function(mat r, int analytical_local_energy){
@@ -882,6 +886,15 @@ void Investigate::find_minimum(int MCS,  int jastrow, int analytical_local_energ
 	//Time mark
 	clock_t start = clock();
 
+	//progress bar
+	
+	cout << '|';
+	for (int ai = 0; ai<alpha_dim; ai++){
+		cout << '-';
+	}
+	cout << '|' << endl << '|' << flush;
+
+	
 	for (int ai = 0; ai<alpha_dim; ai++){
 		counter += 1;
 		#pragma omp parallel for num_threads(4)
@@ -908,20 +921,64 @@ void Investigate::find_minimum(int MCS,  int jastrow, int analytical_local_energ
 			variances(bi,ai) = abs(expectation_values(1) - expectation_values(0)*expectation_values(0));
 			
 		}
-	progress = counter/(double)alpha_dim;
+		cout << '-' << flush;	
 
-	//Time stamp
-	clock_t now = clock();
-	int factor = beta_dim;
-	if (beta_dim>4){
-		factor = 4;
+		/*
+		//TIME
+		progress = counter/(double)alpha_dim;
+		//Time stamp
+		clock_t now = clock();
+		int factor = beta_dim;
+		if (beta_dim>4){
+			factor = 4;
+		}
+
+		cout << 100*progress << " %, " << "\t Time elapsed: " << (now-start)/(60*factor*(double)CLOCKS_PER_SEC) << " min ";
+		double rate = (now-start)/((double)CLOCKS_PER_SEC*factor*progress);
+		cout << "\t Time remaining: " << rate*(1-progress)/(double)60 << " min " << endl;
+		*/
+
 	}
+	cout << '|' << endl;
+	
+}
 
-	cout << 100*progress << " %, " << "\t Time elapsed: " << (now-start)/(3600*factor*(double)CLOCKS_PER_SEC) << " hours ";
-	double rate = (now-start)/((double)CLOCKS_PER_SEC*factor*progress);
-	cout << "\t Time remaining: " << rate*(1-progress)/(double)3600 << " hours " << endl;
+void Investigate::find_parameters(int MCS, vec omegas_input, int jastrow){
+	/*
+	Function that finds the optimal parameteres for a range of omegas. 
+	Uses the brute force approach with analytical local energy.
+	Input:
+		- MCS 						- Number of Monte Carlo simulations to be performed for each energy
+		- vec omegas 				- Vector of omegas for which the parameters should be found
+		- double resolution			- the resolution for the parameters
+		- int jastrow 				- To have the jastrow factor or not
+	Saves the optimal parameters in 
+		-vec alpha_optimal
+		-vec beta_optimal
+		-vec energy_optimal
+		-vec variance_optimal
+	*/
+	omegas = omegas_input;
+
+	number_of_omegas = omegas.n_elem;
+	alpha_optimal = zeros(number_of_omegas);
+	beta_optimal = zeros(number_of_omegas);
+	energy_optimal = zeros(number_of_omegas);
+	variance_optimal=zeros(number_of_omegas);
+
+	for (int index=0; index < number_of_omegas; index++){
+		cout << "Progress: " << (index)/(double)number_of_omegas*100 << " %" << endl;
+		system.update_omega(omegas(index));
+		find_minimum(MCS,jastrow,1,0,0);
+		uword alpha_index,beta_index;
+		energy_optimal(index) = energies.min(beta_index,alpha_index);
+		alpha_optimal(index) = alpha_0 + alpha_index*alpha_step;
+		beta_optimal(index) = beta_0 + beta_index*beta_step;
+		variance_optimal(index) = variances(beta_index,alpha_index);
 	}
 }
+
+
 
 void Investigate::compare_analytical_numerical(int MCS, int jastrow){
 	/*
@@ -1042,6 +1099,26 @@ void Investigate::print_beta_meshgrid_to_file(string filename){
 	output.close();
 }
 
+void Investigate::print_optimals_to_file(string filename){
+	/*
+	Prints to file in the following manner
+	omega0	alpha0 	beta0 	energy0 	variance0
+	*/
+	ofstream output;
+	const char* name = filename.c_str();
+	output.open(name);
+	for (int index=0; index<number_of_omegas;index++){
+		output << omegas(index) << ',';
+		output << alpha_optimal(index)<<',';
+		output << beta_optimal(index)<<',';
+		output << energy_optimal(index)<<',';
+		output << variance_optimal(index)<<',';
+		if (index != number_of_omegas-1){
+			output<< '\n';
+		}
+	}
+	output.close();
+}
 
 
 
