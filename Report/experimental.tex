@@ -56,22 +56,29 @@ All these methods should output the same result for the expectation value of the
 \subsection{Optimizations and differences} \label{sec:exp_opt_and_diff}
 
 In this section, the different optimization methods, such as the jastrow factor, analytical expressions and importance sampling, was investigated. 
-The investigation of these issues was based upon six test cases with two electrons for which the optimal parameters were found, the procedure is explained in the following section.
+The investigation of these issues was based upon twelve test cases with two electrons for which the optimal parameters were found, the procedure is explained in the following section.
 Since we have verified the validity of the different methods in section \ref{sec:exp_benchmarks}, we could use whatever method we wanted to run sample the energies. 
 For this section, if nothing else is written, the standard method is the brute force approach with analytical expressions for the local energy. 
 
 \subsubsection{Test cases}
 
-The six test cases for this section was $\omega = 0.01, 0.28, 1.0$, with repulsion but with and without Jastrow factor.
-For each test case, the optimal parameters of $\alpha$ and $\beta$ was found by first doing a high resolution (step: 0.2) sweep and after finding a region of interest, incresing the resolution (step: 0.01) over a smaller area. 
-Then the parameters yielding the smallest energy was logged. 
-The configuration files for each run was logged \footnote{/Logs/test\_cases/, 22.11.14}. 
+The twelve test cases for this section was $\omega = 0.01, 0.1, 0.28, 0.5, 0.75, 1.0$, with repulsion but with and without Jastrow factor.
+For each test case, the optimal parameters of $\alpha$ and $\beta$ was found by calculating the energies for $\alpha$ and $\beta$ in range $[0,1.2]$ with a resolution of $0.01$ with $10^5$ MC simulations.
+Then the parameters yielding the smallest energy was logged\footnote{/Logs/find\_parameters2/, 22.11.14}. 
 
 \subsubsection{Jastrow factor}
 
-When the repulsion part is present, we expect the jastrow factor to 
+When the repulsion part is present, we expect the jastrow factor to improve the correlation (interaction) between the electrons, giving us a better (i.e. lower) estimate of the energy. 
+We can measure the correlation by seeing how the lowest energy estimate changes with the jastrow factor relative to without the Jastrow factor. 
 
 \subsubsection{Importance sampling}
+
+Using importance sampling introduces the depence on $\delta t$ when evaluating $\langle E_L \rangle$, as discussed in section \ref{sec:theory_importance_sampling}.
+The dependence of the importance sampling method on $\delta t$ was investigated\footnote{Logs/importance\_sampling/, 24.11.14} 
+for $10^3 - 10^6$ monte carlo simulations and $\delta_t \in [10^{-6}, 10^2]$. 
+Trial wave function parameters were chosen to be $\alpha = 0.72$ and $\beta = 0.24$\footnote{Which is not close to an eigenstate of the system for which we found optimal parameters in section \ref{sec:N2_rep}. This is important because if the parameters are such that we are close to an eigenstate, $E_L$ will not vary much from point to point, which reduces the importance of good sampling.}.
+For every time step $\delta t$, a brute force evaluation of the energy was also performed to compare the different methods. 
+
 
 \subsubsection{Timely differences between methods}
 
@@ -95,6 +102,6 @@ When the repulsion part is present, we expect the jastrow factor to
 
 \subsection{Applications}
 
-\subsubsection{Energies and variances}
+\subsubsection{Properties of the approximated wavefunctions}
 
 \subsubsection{The virial theorem }

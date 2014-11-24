@@ -524,7 +524,7 @@ Such a simple Monte Carlo simulation can give the result as shown in figure \ref
 
 \begin{figure}[h!]
         \centering 
-        \includegraphics[width=\textwidth]{Monte_Carlo_Illustration.jpg}
+        \includegraphics[width=\textwidth]{theory/Monte_Carlo_Illustration.jpg}
         \caption{The results from a very simple Monte Carlo simulation of 
         estimating the circle constant $\pi$. 
         The precision increases with the number of points.}
@@ -612,7 +612,7 @@ It can be argued that a good balance between these two aspects is to achieve an 
 
 This is called the "Brute Force Metropolis algorithm". 
 
-\paragraph{Importance sampling}
+\paragraph{Importance sampling}\label{sec:theory_importance_sampling}
 
 If our current position $x$ is in a region where the probability distribution is important, i.e. has a large value, a small step $\Delta x$ would be favorable. 
 This is because we want to sample many points in this region, which is what a small step allows. 

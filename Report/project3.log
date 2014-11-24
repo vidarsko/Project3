@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.12)  22 NOV 2014 16:19
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.12)  24 NOV 2014 12:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1048,7 +1048,7 @@ LaTeX Info: Redefining \Ref on input line 99.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<forside.jpg, id=205, 1806.75pt x 1804.7425pt>
+<forside.jpg, id=209, 1806.75pt x 1804.7425pt>
 File: forside.jpg Graphic file (type jpg)
  <use forside.jpg>
 Package pdftex.def Info: forside.jpg used on input line 120.
@@ -1145,7 +1145,7 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `math shift' on input line 270.
 
-[7] <theory/psi_levels.jpg, id=337, 835.62187pt x 411.03563pt>
+[7] <theory/psi_levels.jpg, id=342, 835.62187pt x 411.03563pt>
 File: theory/psi_levels.jpg Graphic file (type jpg)
 
 <use theory/psi_levels.jpg>
@@ -1161,19 +1161,20 @@ Overfull \hbox (6.1458pt too wide) in paragraph at lines 445--459
  [][] 
  []
 
-[10] <Monte_Carlo_Illustration.jpg, id=377, 762.85pt x 235.88126pt>
-File: Monte_Carlo_Illustration.jpg Graphic file (type jpg)
+[10] <theory/Monte_Carlo_Illustration.jpg, id=382, 762.85pt x 235.88126pt>
+File: theory/Monte_Carlo_Illustration.jpg Graphic file (type jpg)
 
-<use Monte_Carlo_Illustration.jpg>
-Package pdftex.def Info: Monte_Carlo_Illustration.jpg used on input line 527.
+<use theory/Monte_Carlo_Illustration.jpg>
+Package pdftex.def Info: theory/Monte_Carlo_Illustration.jpg used on input line
+ 527.
 (pdftex.def)             Requested size: 418.25368pt x 129.32837pt.
 
 Overfull \hbox (6.79999pt too wide) in paragraph at lines 527--530
  [][] 
  []
 
-[11 <./Monte_Carlo_Illustration.jpg>] [12] [13] (./algorithm.tex) [14]
-<theory/parallelization.jpg, id=456, 91.7829pt x 53.9616pt>
+[11 <./theory/Monte_Carlo_Illustration.jpg>] [12] [13] (./algorithm.tex)
+[14] <theory/parallelization.jpg, id=461, 91.7829pt x 53.9616pt>
 File: theory/parallelization.jpg Graphic file (type jpg)
 
 <use theory/parallelization.jpg>
@@ -1190,7 +1191,10 @@ d /Logs/N6[]norep[]bruteforce[]num/test[]investigate.cpp,
  []
 
 [16 <./theory/parallelization.jpg>] [17]) (./resultsanddiscussion.tex
-<results/N2_norep.jpg, id=500, 513.92pt x 222.8325pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<results/N2_norep.jpg, id=509, 513.92pt x 222.8325pt>
 File: results/N2_norep.jpg Graphic file (type jpg)
 
 <use results/N2_norep.jpg>
@@ -1207,17 +1211,17 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[18] <results/N2_rep.jpg, id=513, 513.92pt x 385.44pt>
+<results/N2_rep.jpg, id=515, 513.92pt x 385.44pt>
 File: results/N2_rep.jpg Graphic file (type jpg)
-
-<use results/N2_rep.jpg>
-Package pdftex.def Info: results/N2_rep.jpg used on input line 78.
+ <use results/N2_rep.jpg>
+Package pdftex.def Info: results/N2_rep.jpg used on input line 87.
 (pdftex.def)             Requested size: 418.25368pt x 313.69266pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 78--82
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 87--91
  [][] 
  []
 
+[18]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -1228,37 +1232,91 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[20 <./results/N2_rep.jpg>]) [21] (./project3.bbl
+[20 <./results/N2_rep.jpg>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<results/correlations_jastrow.jpg, id=553, 552.0625pt x 286.06876pt>
+File: results/correlations_jastrow.jpg Graphic file (type jpg)
+
+<use results/correlations_jastrow.jpg>
+Package pdftex.def Info: results/correlations_jastrow.jpg used on input line 21
+3.
+(pdftex.def)             Requested size: 418.25368pt x 216.7423pt.
+
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 213--215
+ [][] 
+ []
+
+[21]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 242.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 242.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<results/importance_sampling.jpg, id=564, 518.93875pt x 431.6125pt>
+File: results/importance_sampling.jpg Graphic file (type jpg)
+
+<use results/importance_sampling.jpg>
+Package pdftex.def Info: results/importance_sampling.jpg used on input line 269
+.
+(pdftex.def)             Requested size: 418.25368pt x 347.88528pt.
+
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 269--270
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[22] [23 <./results/correlations_jastrow.jpg>] [24 <./results/importance_sampli
+ng.jpg>] [25]) [26] (./project3.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 4--9
 []\OT1/cmr/m/n/10 Morten Hjorth-Jensen.  Ad-di-tional slides for monte carlo pr
 oject.
  []
 
-) [22
+) [27
 
-] [23
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 234.
- [24
+] [28
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 234.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 235.
+ [29
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 235.
  (./project3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 234.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 234.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 235.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 235.
 Package rerunfilecheck Info: File `project3.out' has not changed.
-(rerunfilecheck)             Checksum: 2FEDE6DE7BA927A90E2422D289BF0695;4181.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 234.
+(rerunfilecheck)             Checksum: C799701DDD060C3A41D2EC0C8383271A;4333.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 235.
  ) 
 Here is how much of TeX's memory you used:
- 14080 strings out of 493304
- 206018 string characters out of 6139871
- 361211 words of memory out of 5000000
- 17125 multiletter control sequences out of 15000+600000
+ 14133 strings out of 493304
+ 207091 string characters out of 6139871
+ 367432 words of memory out of 5000000
+ 17159 multiletter control sequences out of 15000+600000
  16516 words of font info for 63 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 41i,21n,44p,559b,683s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,21n,44p,610b,683s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dis
@@ -1268,26 +1326,28 @@ public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmitt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
-i5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist
-/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti1
-0.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fon
-ts/type1/public/cm-super/sfrm1000.pfb>
-Output written on project3.pdf (24 pages, 1037504 bytes).
+i5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fon
+ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/publi
+c/cm-super/sfrm1000.pfb>
+Output written on project3.pdf (29 pages, 1121696 bytes).
 PDF statistics:
- 688 PDF objects out of 1000 (max. 8388607)
- 620 compressed objects within 7 object streams
- 183 named destinations out of 1000 (max. 500000)
- 431 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 753 PDF objects out of 1000 (max. 8388607)
+ 675 compressed objects within 7 object streams
+ 197 named destinations out of 1000 (max. 500000)
+ 449 words of extra memory for PDF output out of 10000 (max. 10000000)
 

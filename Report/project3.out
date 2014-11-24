@@ -30,7 +30,7 @@
 \BOOKMARK [3][-]{subsubsection.3.2.3}{Importance sampling}{subsection.3.2}% 30
 \BOOKMARK [3][-]{subsubsection.3.2.4}{Timely differences between methods}{subsection.3.2}% 31
 \BOOKMARK [2][-]{subsection.3.3}{Applications}{section.3}% 32
-\BOOKMARK [3][-]{subsubsection.3.3.1}{Energies and variances}{subsection.3.3}% 33
+\BOOKMARK [3][-]{subsubsection.3.3.1}{Properties of the approximated wavefunctions}{subsection.3.3}% 33
 \BOOKMARK [3][-]{subsubsection.3.3.2}{The virial theorem }{subsection.3.3}% 34
 \BOOKMARK [1][-]{section.4}{Results and discussion}{}% 35
 \BOOKMARK [2][-]{subsection.4.1}{Benchmarks and verification}{section.4}% 36
@@ -42,9 +42,10 @@
 \BOOKMARK [3][-]{subsubsection.4.2.2}{Jastrow factor}{subsection.4.2}% 42
 \BOOKMARK [3][-]{subsubsection.4.2.3}{Importance sampling}{subsection.4.2}% 43
 \BOOKMARK [3][-]{subsubsection.4.2.4}{Timely differences between methods}{subsection.4.2}% 44
-\BOOKMARK [2][-]{subsection.4.3}{Applications}{section.4}% 45
-\BOOKMARK [3][-]{subsubsection.4.3.1}{Energies and variances}{subsection.4.3}% 46
-\BOOKMARK [3][-]{subsubsection.4.3.2}{The virial theorem }{subsection.4.3}% 47
-\BOOKMARK [1][-]{section.5}{Conclusion}{}% 48
-\BOOKMARK [1][-]{Appendix.1.A}{Appendix Reference to the questions posed in the project instructions}{}% 49
-\BOOKMARK [1][-]{Appendix.1.B}{Appendix Codes}{}% 50
+\BOOKMARK [3][-]{subsubsection.4.2.5}{Discussion: code efficiency and time constraints}{subsection.4.2}% 45
+\BOOKMARK [2][-]{subsection.4.3}{Applications}{section.4}% 46
+\BOOKMARK [3][-]{subsubsection.4.3.1}{Properties of the approximated wavefunctions}{subsection.4.3}% 47
+\BOOKMARK [3][-]{subsubsection.4.3.2}{The virial theorem }{subsection.4.3}% 48
+\BOOKMARK [1][-]{section.5}{Conclusion}{}% 49
+\BOOKMARK [1][-]{Appendix.1.A}{Appendix Reference to the questions posed in the project instructions}{}% 50
+\BOOKMARK [1][-]{Appendix.1.B}{Appendix Codes}{}% 51

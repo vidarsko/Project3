@@ -31,7 +31,7 @@
 \contentsline {subsubsection}{\numberline {3.2.3}Importance sampling}{18}{subsubsection.3.2.3}
 \contentsline {subsubsection}{\numberline {3.2.4}Timely differences between methods}{18}{subsubsection.3.2.4}
 \contentsline {subsection}{\numberline {3.3}Applications}{18}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Energies and variances}{18}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.1}Properties of the approximated wavefunctions}{18}{subsubsection.3.3.1}
 \contentsline {subsubsection}{\numberline {3.3.2}The virial theorem }{18}{subsubsection.3.3.2}
 \contentsline {section}{\numberline {4}Results and discussion}{18}{section.4}
 \contentsline {subsection}{\numberline {4.1}Benchmarks and verification}{18}{subsection.4.1}
@@ -41,11 +41,12 @@
 \contentsline {subsection}{\numberline {4.2}Optimizations and differences}{21}{subsection.4.2}
 \contentsline {subsubsection}{\numberline {4.2.1}Test cases}{21}{subsubsection.4.2.1}
 \contentsline {subsubsection}{\numberline {4.2.2}Jastrow factor}{21}{subsubsection.4.2.2}
-\contentsline {subsubsection}{\numberline {4.2.3}Importance sampling}{21}{subsubsection.4.2.3}
-\contentsline {subsubsection}{\numberline {4.2.4}Timely differences between methods}{21}{subsubsection.4.2.4}
-\contentsline {subsection}{\numberline {4.3}Applications}{21}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Energies and variances}{21}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}The virial theorem }{21}{subsubsection.4.3.2}
-\contentsline {section}{\numberline {5}Conclusion}{21}{section.5}
-\contentsline {section}{Appendix \numberline {A}Reference to the questions posed in the project instructions}{23}{Appendix.1.A}
-\contentsline {section}{Appendix \numberline {B}Codes}{24}{Appendix.1.B}
+\contentsline {subsubsection}{\numberline {4.2.3}Importance sampling}{22}{subsubsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.4}Timely differences between methods}{25}{subsubsection.4.2.4}
+\contentsline {subsubsection}{\numberline {4.2.5}Discussion: code efficiency and time constraints}{25}{subsubsection.4.2.5}
+\contentsline {subsection}{\numberline {4.3}Applications}{26}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Properties of the approximated wavefunctions}{26}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.2}The virial theorem }{26}{subsubsection.4.3.2}
+\contentsline {section}{\numberline {5}Conclusion}{26}{section.5}
+\contentsline {section}{Appendix \numberline {A}Reference to the questions posed in the project instructions}{28}{Appendix.1.A}
+\contentsline {section}{Appendix \numberline {B}Codes}{29}{Appendix.1.B}

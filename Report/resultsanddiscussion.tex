@@ -2,7 +2,7 @@
 
 \subsection{Benchmarks and verification} \label{sec:res_benchmarks}
 
-\subsubsection{Benchmarks for the brute force approach, no repulsion or jastrow factor}
+\subsubsection{Benchmarks for the brute force approach, no repulsion or jastrow factor} \label{sec:N2N6_norep}
 Table \ref{tab:N2_norep} shows the results from the brute force simulation of the two electron - no repulsion case. 
 A plot of the results is shown in figure \ref{fig:N2_norep}. 
 
@@ -69,7 +69,16 @@ The table shows that we are able to produce the results we anticipated.
 What little there is of variance at $\alpha=1$ is probably due the numerical evaluation of the local energy, which has been confirmed in retrospect by using the analytical expression for the local energy. 
 It also shows that the code has implemented the oscillator frequency $\omega$ correctly. 
 
-\subsubsection{Benchmark for the brute force approach, with repulsion and jastrow factor}
+
+
+
+
+
+
+
+
+
+\subsubsection{Benchmark for the brute force approach, with repulsion and jastrow factor}\label{sec:N2_rep}
 
 A plot of the energies and $log_{10}$ of the variances after the investigation is shown in figure \ref{fig:N2_rep}.
 
@@ -143,25 +152,188 @@ The results from finding the optimal parameters for $\alpha$ and $\beta$ for the
 	\centering 
 	\begin{tabular}{c  c c  c  c  c  c }
 	\toprule
-	 Test cases: 			& \multicolumn{2}{c}{$\omega=0.01$} & \multicolumn{2}{c}{$\omega=0.28$} & \multicolumn{2}{c}{$\omega=1$} \\
-	 Optimal parameters  	& No Jast. & 	Jast. & No Jast. & 	Jast. & No Jast. & Jast. \\
+	 Test cases: 			& \multicolumn{2}{c}{$\omega=0.01$} & \multicolumn{2}{c}{$\omega=0.10$} & \multicolumn{2}{c}{$\omega=0.28$} \\
+	 Optimal parameters  & No Jast. & 	Jast. & 	No Jast. & 	Jast &		No Jast. & 	Jast. \\
 	 \midrule
-	 $\alpha$& 	0.0 & 	0.9 & 	0.6 & 	1.0 	& 0.8	& 1\\
-	 $\beta$ & 	- & 	0.07 & 	- & 	0.25 & -  & 0.42\\
+	 $\alpha$& 				0.30 & 		0.91 & 		0.56	&	0.93	&	0.60 & 		0.96 		\\
+	 $\beta$ & 				- & 		0.07 & 		-		&	0.18	&	- & 		0.26 	\\
 	 \midrule
-	 Energy (a.u.) & 				0.081 &		0.074 &	 1.14  &	1.00022 & 3.15 & 2.9999 \\
-	 Variance & 					1.5e-3 &	1.27e-5	 & 0.42 &	 9.9e-4 & 2.02 & 2.7e-3 \\
+	 Energy (a.u.) & 		1.03e-1 &	7.40e-2 &	5.25e-1	&	4.41e-1	&	1.14  &		1.02 \\
+	 Variance & 			1.12e-2 &	1.48e-5	& 	1.53e-1	&	2.76e-4	&	9.43e-1 & 	7.05e-4 	\\
+	\bottomrule
+	\toprule
+	 Test cases: 			& \multicolumn{2}{c}{$\omega=0.50$} & \multicolumn{2}{c}{$\omega=0.75$} & \multicolumn{2}{c}{$\omega=1$} \\
+	 Optimal parameters  & No Jast. & 	Jast. & 	No Jast. & 	Jast. & 	No Jast. & Jast. \\
+	 \midrule
+	 $\alpha$& 				0.70 & 		0.97 & 		0.74 & 		0.98 	& 	0.72	& 	0.97 	\\
+	 $\beta$ & 				- & 		0.32 & 		- & 		0.38 & 		-  		& 	0.42 	\\
+	 \midrule
+	 Energy (a.u.) & 		1.80 &		1.66 &		2.50  &		2.34 & 		3.15 & 		3.00	\\
+	 Variance & 			1.25 &		1.01e-3	& 	1.69 & 		1.35e-3 & 	2.03 & 		2.7e-3 	\\
 	 \bottomrule
 	\end{tabular}
-	\caption{The optimal parameters with and without Jastrow factor (Jast.).}
+	\caption{The optimal parameters with and without Jastrow factor (Jast.).
+			 Results were produced by calculating the energy for every $\alpha$ and $\beta$ in the interval $[0,1.2]$ with 	a step length of $0.01$ and $10^5$ MC simulation.
+			 The estimates with the Jastrow factor seem to be better than those without, though the importance seem to decrease with increasing oscillator frequency $\omega$ (see section \ref{sec:res_jastrow}). }
 	\label{tab:test_cases}
 \end{table}
 
-\subsubsection{Jastrow factor}
+The result for $\omega =1$ with jastrow factor is almost in perfect agreement with what was found in section \ref{sec:N2_rep}, even though the method of finding the optimal parameters was different. 
+Since only $10^5$ MC simulations were used here, I think this high correspondance is a lucky coincidence, but it does show that the results obtained are reliable, and for the purposes of this section, they are probably good enough. 
+
+Another approach to get these parameters would be to do a simular approach as in section \ref{sec:N2_rep} for each case. 
+This proved to be too time-consuming, and an automated approach such as the one used here could be run overnight, which was done here. 
+For a further discussion on code efficiency and time constraints, see section \ref{sec:ce_tc}.
+
+
+
+\subsubsection{Jastrow factor}\label{sec:res_jastrow}
+
+The relative change in energy (i.e. correlation) due to the Jastrow factor for the test cases is given in table \ref{tab:correlations_jastrow}.
+
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{ccccccc}
+	\toprule
+	$\omega$	& 0.01 & 0.10 & 0.28 & 0.50 & 0.75 & 1 \\
+	\midrule
+	Correlation $C = \frac{E_{NJ} - E_{J}}{E_{NJ}}$ & 0.282 & 0.160 & 0.105 & 0.078 & 0.064 & 0.048 \\
+	\bottomrule
+	\end{tabular}
+	\caption{The correlation introduced by the Jastrow factor for the optimal parameters $\alpha$ and $\beta$ as a function of $\omega$. 
+	We see that the correlation factor is less important for high oscillator potentials.
+	"NJ" means no Jastrow-factor and "J" means with Jastrow factor.}
+	\label{tab:correlations_jastrow}
+\end{table}
+
+A plot of the values in table \ref{tab:correlations_jastrow} is given in figure \ref{fig:correlations_jastrow}. 
+
+\begin{figure}[h!]
+	\centering 
+	\includegraphics[width=\textwidth]{results/correlations_jastrow.jpg}
+	\caption{Plot of the correlation introduced by the Jastrow factor for the optimal parameters $\alpha$ and $\beta$ as a function of $\omega$. 
+	From the left figure one may suspect a curve of the shape $C = C_0 \exp(-k\omega)$ but the right hand plot of $\textrm{ln}(C)$ against $\omega$ does not look very linear which weakens this hypothesis.}
+	\label{fig:correlations_jastrow}
+\end{figure}
+
+Our first observation is that the Jastrow factor does indeed better our estimation of the ground state energy. 
+We already knew from section \ref{sec:N2_rep} that the including the jastrow factor gave us a very good estimate of the ground state energy when $\omega = 1$, and from table \ref{tab:test_cases}  we see that the ratio between variance and energy estimate is almost constant ($\sim 5 \times 10^{-4}$) in the case with the Jastrow factor as opposed to the case without the Jastrow factor. 
+
+Our second observation from both the table and the figure is that the correlations get smaller as the oscillator frequency increases. 
+
+From the left hand plot in the figure, one might suspect that the correlation decreases exponentially as a function of $\omega$. 
+To test this, a plot of $\textrm{ln}(C)$ against $\omega$ has been included in the right hand plot. 
+If this hypothesis was true, the result should be a straight line, but alas, it is not. 
+It is therefore probably some other rule governing the relation between $C$ and $\omega$. 
+
+
+
+
 
 \subsubsection{Importance sampling}
 
-\subsubsection{Timely differences between methods}
+The results from evaluation $\langle E_L \rangle$ as a function of Monte Carlo simulations and time steps $\delta t$ are given in table \ref{tab:importance_sampling} and figure \ref{fig:importance_sampling}.
+
+\begin{table}[h!]
+	\centering 
+	\begin{tabular}{l @{ } l @{ } l @{ } l @{ } l @{ } l @{ } l @{ } l @{ } l @{ } l }
+	\toprule
+	\multicolumn{9}{l}{Energies obtained with the brute force method} \\
+	MCS \textbackslash  $\delta t = \quad$ & $10^{-6}~~~$ & $10^{-5}~~~$  & $10^{-4}~~~$  & $10^{-3} ~~~$  & $ 10^{-2} ~~~$ & $ 10^{-1} ~~~$  & $ 1 \qquad $  & $ 10 ~~~~$  & $ 10^{2}$ \\
+	\midrule
+	$10^3$ & 3.26 &  3.21 & 3.16 & 3.24 &  3.35 &  3.29 & 3.36 &  3.11 &  3.25\\
+	\shaderow $10^4$ &  3.21 &   3.22 &    3.22 &   3.27 &  3.25 &  3.26 & 3.24 &   3.22 &  3.26 \\
+	$10^5$ & 3.23 &    3.24 &   3.21 &  3.22 &  3.24 &  3.23 & 3.24 &   3.24 &  3.23 \\
+	\shaderow $10^6$ & 3.23 &   3.23 &   3.23 &  3.23 &   3.24 &  3.24 & 3.24 &   3.24 &  3.24 \\
+	\bottomrule
+	\toprule
+	\multicolumn{9}{l}{Energies obtained with importance sampling} \\
+	MCS \textbackslash  $\delta t = \quad$ & $10^{-6}~~~$ & $10^{-5}~~~$  & $10^{-4}~~~$  & $10^{-3} ~~~$  & $ 10^{-2} ~~~$ & $ 10^{-1} ~~~$  & $ 1 ~~~~$  & $ 10 ~~~~$  & $ 10^{2}$ \\
+	\midrule
+	$10^3$ & 7.78 &   2.13 &   4.49 &  4.01 &  3.25 &  3.21 &   3.28 &  3.23 &  2.86 \\
+	\shaderow $10^4$ &  3.95 &   2.74 &   2.42 &   3.19 &  3.33 &  3.29 &   3.21 &   3.18 &   4.02 \\
+	$10^5$ & 2.46 &  3.58 &   3.22 &   3.26 &  3.21 &   3.23 &  3.20 &   3.07 &   5.40 \\
+	\shaderow $10^6$ & 3.99 &   3.41 &  3.13 &  3.22 &  3.24 &  3.22 &  3.20 &  4.60 &  2.60 \\
+	\bottomrule
+	\end{tabular}
+	\caption{Energies obtained with the brute force method and the importance sampling method as function of number of  		Monte Carlo simulations (MCS) and time step $\delta t$. 
+			Brute force energy estimates do naturally not vary with $\delta t$ since the latter do not play a role in the brute force method. 
+			The different energies obtained with the brute force method are thus only repetitions of the same simulation.
+			Importance sampling seem to be stable around $\delta t = 10^{-2}$.}
+	\label{tab:importance_sampling}
+\end{table}
+
+
+\begin{figure}[h!]
+	\centering 
+	\includegraphics[width=\textwidth]{results/importance_sampling.jpg}
+	\caption{Plot of the energies evaluated by the brute force method and the metropolis method as a function of number of Monte Carlo simulations (MCS) and time step $\delta t$.}
+	\label{fig:importance_sampling}
+\end{figure}
+
+We see from the results that the reliability of using importance sampling depends greatly on the time step chosen. 
+The results seem to coincide with the brute force method when $\delta t \approx 10^-2 - 10^-2$.
+This is natural because if $\delta t$ is too small, the steps in the metropolis algorithm does also become very small. 
+It then takes a large number of Monte Carlo simulations for the metropolis walker to move across a representative  selection of points. 
+This is illustrated by the figure by noticing that as the number of monte carlo simulations gets larger, a greater range of $\delta t$'s converges to the proper solution. 
+When $\delta t$ gets too large, the step length gets too large and we have little control over how the energy estimates will behave. 
+
+The energy estimates by the brute force method does not vary with $\delta t$. 
+This is natural because $\delta t$ plays no role in the evaluation of $\langle E_L \rangle$ with the brute force method. 
+The different energies obtained for different $\delta t$'s are thus just repetitions of the same measurement, and serve thus only as a illustration of the uncertainty in the evaluation of $\langle E_L \rangle$. 
+For the purposes of this project, it seems that the brute force method serves as a stable and reliable method for calculating $\langle E_L \rangle$ with good precision only with a $10^3$ Monte Carlo simulations. 
+For more complex problems, it may be that importance sampling, with its foundation in the physical system, attributes to greater precision in producing results, but for the problems discussed here, it seems that it only introduces a new uncertainty in whether the time step $\delta t$ has been chosen correctly. 
+
+
+
+
+
+
+
+
+
+
+
+\subsubsection{Timely differences between methods} \label{sec:timely_diff}
+
+\subsubsection{Discussion: code efficiency and time constraints}\label{sec:ce_tc}
+
+The code upon which this project is built has a lot of potential for improvement. 
+Lots of the methods developed in this project has been programmed to the point at which the worked, and time constraints have cut short further improvements with regards to code efficacy.
+Examples of things that could have improved general code efficacy are things as 
+
+\begin{itemize}
+	\item \textbf{Reducing the amount of times a variable is calculated}:
+	Although this aspect have been in the back of my mind while programming, I'm sure that a thorough review of the code would reveal a lot of potential. 
+	\item \textbf{Avoiding too many divisions}: 
+	Divisions in a computer is normally more slow than multiplication\footnote{Source: \href{http://streamcomputing.eu/blog/2012-07-16/how-expensive-is-an-operation-on-a-cpu/}{http://streamcomputing.eu/}}. Replacing recurrent divisions by clever multiplication might have improved code efficiency.
+	\item \textbf{Reduce usage of complicated functions such as $\sin$, $\exp$ etc}:
+	Although I have put some thought into this while designing the code, there are probably some places where a lot of CPU time could be saved. 
+\end{itemize}
+
+There are also things in this specific project that could have improved code efficiency. Examples are
+
+\begin{itemize}
+	\item \textbf{More efficient ratio calcuations}:
+	In the Metropolis algorithm used in this project, a ratio of the wavefunctions squared was evaluated. 
+	But since we only move \textit{one} particle at a time, a lot of the so-called \textit{co-factors} in the Slater determinant cancel\footnote{Page 81, \cite{master}.} and reduces the number of expressions we need to calculate. 
+	\item \textbf{Reusage of some expressions}:
+	In the calculation of the analytical local energy, the terms needed for the analytical quantum force was also calculated. Implementing this into the code so that if the analytical expression for the local energy was evaluated \textit{and} importance sampling was used with analytical quantum force, the expressions would reused and not calulated twice. 
+	There might also be other such examples of expressions which are evaluated multiple times in this code.
+	\item \textbf{Better usage of OpenMP parallelization}:
+	An interesting question is how much time it takes for OpenMP to communicate between the different threads.
+	If this would prove itself a significant issue, then a better implementation of parallelization could have saved some time. 
+\end{itemize}
+
+Finally there is the matter of method for finding the optimal parameters $\alpha$ and $\beta$. 
+In this project, I used a very brute force method for which I could only spare $10^5$ MC simulations for each energy in order for the process not to take days. 
+A better algorithm for finding the optimal $\alpha$ and $\beta$ was not in the scope of this project, but I believe it could seriously improve the efficacy of the process.
+
+But all things considered, I am happy to have paid the price of a slow running code in exchange for having been able to implement lots of different methods for solving the problems discussed in this project. 
+Even though the weak efficiency is probably affecting the precision of the result in the next section in a negative manner, the results are still correct within a certain margin of error.
+Also, the code is not going anywhere, so if I later want to improve upon it and implement better algorithms for finding $\alpha$ and $\beta$ I am free to do so, even I don't have time to do so before the deadline of this project. 
+
+
 
 
 
@@ -177,6 +349,6 @@ The results from finding the optimal parameters for $\alpha$ and $\beta$ for the
 
 \subsection{Applications}
 
-\subsubsection{Energies and variances}
+\subsubsection{Properties of the approximated wavefunctions} \label{sec:prop_of_app}
 
 \subsubsection{The virial theorem }
