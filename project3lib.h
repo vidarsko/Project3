@@ -109,15 +109,26 @@ class Investigate{
 		//variables for the find parameters function
 		vec alpha_optimal, beta_optimal, energy_optimal, variance_optimal, omegas;
 		int number_of_omegas;
+
+		//Variables for the analyze_importance_function
+		mat imp_dt, imp_MCS, imp_energies, brute_energies; 
+
+		//Variables for the compare_times function
+		mat times, MCS_times;
+
+
 	public:
 
 		//Constructor
 		Investigate(double a0, double as, double am, double b0, double bs, double bm, QuantumDots sys);
+		Investigate(QuantumDots sys);
 
 		//Solve functions
 		void find_minimum(int MCS, int jastrow, int analytical_local_energy,int importance_sampling, int analytical_quantum_force, double delta_t=0.1);
 		void find_parameters(int MCS, vec omegas_input, int jastrow);
 		void compare_analytical_numerical(int MCS, int jastrow);
+		void analyze_importance_sampling(double alpha, double beta, int jastrow);
+		void compare_times(double alpha, double beta, int jastrow);
 
 		//Print functions
 		void print_energies_to_file(string filename);
@@ -126,6 +137,8 @@ class Investigate{
 		void print_alpha_meshgrid_to_file(string filename);
 		void print_beta_meshgrid_to_file(string filename);
 		void print_optimals_to_file(string filename);
+		void print_importance_analysis_to_files(string filenamebase);
+		void print_times_to_file(string filenamebase);
 };
 
 

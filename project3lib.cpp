@@ -533,11 +533,14 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 
 
 	//Find delta_r which gives around 0.5 acceptance rate: limits and number of test can be discussed. But 1000 works fine for now
+	//Please note that this is actually already 25000 iterations, too much? 
+	//Reduced to min(1/10 of MCS iterations,1000) 25.11.14 and verified that this gave almost the same acceptance rate and results.
+
 	double wavefunction_squared = Wave_function.call_squared(r);
 	for (double delta_ri = 0.2; delta_ri < 5; delta_ri += 0.1){
 		counter = 0;
 		total_counter = 0;
-		for (int iter = 0; iter < 1000; iter ++){
+		for (int iter = 0; iter < min(M/10,1000); iter ++){
 			//Choose particle to be moved
 			int i = rand() % number_of_particles; 
 			//Update step
@@ -601,7 +604,7 @@ vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical
 	}
 
 	//Uncomment if investigating ratio vs delta_r
-	ratio = counter/(double)(M-1);
+	//ratio = counter/(double)(M-1);
 	//cout << endl << "---- Acceptance rate: " << ratio;
 	//cout << ", Step length: " << delta_r <<  "----" << endl;
 
@@ -838,7 +841,7 @@ void QuantumDots::print_numberofparticles_to_terminal(void){
 
 //********************Investigation class **************************//
 
-//Constructor
+//Constructors
 Investigate::Investigate(double a0, double as, double am, double b0, double bs, double bm, QuantumDots sys){
 	alpha_0 = a0; alpha_step = as; alpha_max = am;
 	beta_0  = b0; beta_step  = bs; beta_max  = bm;
@@ -848,6 +851,10 @@ Investigate::Investigate(double a0, double as, double am, double b0, double bs, 
 
 	system = sys;
 }
+Investigate::Investigate(QuantumDots sys){
+	system = sys;
+}
+
 
 //Solve functions
 void Investigate::find_minimum(int MCS,  int jastrow, int analytical_local_energy, int importance_sampling, int analytical_quantum_force, double delta_t){
@@ -1025,6 +1032,145 @@ void Investigate::compare_analytical_numerical(int MCS, int jastrow){
 	cout << counter/(double)tot_counter*100 << " %" << endl;
 	}
 }
+void Investigate::analyze_importance_sampling(double alpha, double beta, int jastrow){
+	/*
+	Function that investigates the energies found with importance sampling against those found with 
+	a brute force approach against both time interval dt and number of monte carlo simulations.
+	Both with analytical expressions for the local energy and quantum force (for imp sampling).
+	Input:
+		- double alpha, beta 	- Trial wavefunction parameters
+		- int jastrow 			- Whether to include the jastrow factor or not
+	
+	Saves the result in three matrices:
+		- imp_dt 	 		- Time interval meshgrid
+		- imp_MC 			- Monte Carlo simulations meshgrid
+		- imp_energies		- Energies meshgrid for the importance sampling
+		- brute_energies 	- Energies meshgrid for the brute force method
+
+		Format:
+					dt = 1e-6 	1e-5 	1e-4 	1e-3 	1e-2 	1e-1 	1 	10 	100
+		MCS= 1e3 	E 			E 		... 									E
+		MCS= 1e4 	E 			E 		... 									E
+		MCS= 1e5 	...															...
+		MCS= 1e6 	...															...
+		MCS= 1e7 	E 			E 		... 									E
+	*/
+	//Initialization
+	imp_dt = zeros(4,9);
+	imp_MCS = zeros(4,9);
+	imp_energies = zeros(4,9);
+	brute_energies = zeros(4,9);
+
+	Trial_Wavefunction wf (alpha,beta,system.omega,system.number_of_particles,jastrow);
+	system.Set_Wavefunction(wf);
+
+	//Loops over MCS first
+	for (int MCS_index = 0; MCS_index < 4; MCS_index ++){
+		int MCS = pow(10,MCS_index+3);
+
+		#pragma omp parallel for 
+		for (int dt_index = 0; dt_index < 9; dt_index ++){
+			double dt = pow(10,dt_index-6);
+
+			vec expect_brute = system.Brute_Force_Metropolis_Expectation_Values(MCS,1);
+			vec expect_imp = system.Importance_Sampling_Metropolis_Expectation_Values(MCS,dt,1,1);
+
+			brute_energies(MCS_index,dt_index) = expect_brute(0);
+			imp_energies(MCS_index,dt_index) = expect_imp(0);
+			imp_dt(MCS_index,dt_index) = dt;
+			imp_MCS(MCS_index,dt_index) = MCS;
+		}
+		cout << "MCS = " << MCS << endl; 
+	}
+
+}
+
+void Investigate::compare_times(double alpha, double beta, int jastrow){
+	/*
+	Program that compares the time used by the different algorithms to find the expectaiton value of the local energy.
+	For different number of MCS (monte carlo simulations.) 
+	Parallelization is not implemented since this was not demanded by the exercises.
+	Input:
+		- double alpha,beta 	- 	Parameters of the wavefunction used. 
+		- int jastrow 			- Jastrow factor on or off
+
+	Saves the time (in seconds) used in a matrix "times" of the following form 
+	MCS-> 			10^3 	3*10^3	10^4 	3*10^4 	...		10^6
+	Method 
+	(BF,NLE)		t 		t 		... 					t
+	(BF,ALE) 		t 		t 		...						t
+	(IS,NLE,NQF)	...										...
+	(IS,NLE,AQF)	...										...
+	(IS,ALE,NQF)	...										...
+	(IS,ALE,AQF)	t 		t 		... 					t
+
+	And also the MCS meshgrid in "MCS_times"
+	*/
+	times = zeros(6,8);
+	MCS_times = zeros(6,8);
+
+	//Filling the MCS_times_matrix
+	MCS_times(0,0) = pow(10,3); MCS_times(0,1) = 3*pow(10,3);
+	MCS_times(0,2) = pow(10,4); MCS_times(0,3) = 3*pow(10,4);
+	MCS_times(0,4) = pow(10,5); MCS_times(0,5) = 3*pow(10,5);
+	MCS_times(0,6) = pow(10,6); MCS_times(0,7) = 3*pow(10,6);
+	for (int i=1;i<6;i++){
+		MCS_times.row(i) = MCS_times.row(0);
+	}
+
+	//Time variables:
+	clock_t start, end;
+	vec expect;
+
+	Trial_Wavefunction wf (alpha,beta,system.omega,system.number_of_particles,jastrow);
+	system.Set_Wavefunction(wf);
+
+	for (int MCS_index = 0; MCS_index<8; MCS_index++){
+		int MCS = MCS_times(0,MCS_index);
+		cout << "MCS: " << MCS << endl;
+
+		//(BF,NLE)
+		start = clock();
+		expect = system.Brute_Force_Metropolis_Expectation_Values(MCS,0);
+		end = clock();
+		times(0,MCS_index) = (end-start)/(double)CLOCKS_PER_SEC;
+
+		//(BF,ALE)
+		start = clock();
+		expect = system.Brute_Force_Metropolis_Expectation_Values(MCS,1);
+		end = clock();
+		times(1,MCS_index) = (end-start)/(double)CLOCKS_PER_SEC;
+
+		//(IS,NLE,NQF)
+		start = clock();
+		expect = system.Importance_Sampling_Metropolis_Expectation_Values(MCS,0.1,0,0);
+		end = clock();
+		times(2,MCS_index) = (end-start)/(double)CLOCKS_PER_SEC;
+
+		//(IS,NLE,AQF)
+		start = clock();
+		expect = system.Importance_Sampling_Metropolis_Expectation_Values(MCS,0.1,0,1);
+		end = clock();
+		times(3,MCS_index) = (end-start)/(double)CLOCKS_PER_SEC;
+
+		//(IS,ALE,NQF)
+		start = clock();
+		expect = system.Importance_Sampling_Metropolis_Expectation_Values(MCS,0.1,1,0);
+		end = clock();
+		times(4,MCS_index) = (end-start)/(double)CLOCKS_PER_SEC;
+
+		//(IS,ALE,AQF)
+		start = clock();
+		expect = system.Importance_Sampling_Metropolis_Expectation_Values(MCS,0.1,1,1);
+		end = clock();
+		times(5,MCS_index) = (end-start)/(double)CLOCKS_PER_SEC;
+	}
+}
+
+
+
+
+
 
 
 
@@ -1120,31 +1266,89 @@ void Investigate::print_optimals_to_file(string filename){
 	output.close();
 }
 
+void Investigate::print_importance_analysis_to_files(string filenamebase){
+	/*
+	Prints the results from the importance analysis to four csv-files:
+	filenamebase_MCS_meshgrid, filenamebase_dt_meshgrid
+	filenamebase_brute_energies, filenamebase_imp_energies,
+	*/
+	string 	fnb_MCS = filenamebase, 				fnb_dt = filenamebase, 				fnb_BE=filenamebase, 					fnb_IE=filenamebase;
+			fnb_MCS.append("_MCS_meshgrid.csv"); 	fnb_dt.append("_dt_meshgrid.csv");	fnb_BE.append("_brute_energies.csv"); 	fnb_IE.append("_imp_energies.csv");
+
+	const char* fnb_MCS_name = fnb_MCS.c_str();
+	const char* fnb_dt_name = fnb_dt.c_str();
+	const char* fnb_BE_name = fnb_BE.c_str();
+	const char* fnb_IE_name = fnb_IE.c_str();
+
+	ofstream MCS_out, dt_out, BE_out, IE_out;
+	MCS_out.open(fnb_MCS_name);
+	dt_out.open(fnb_dt_name);
+	BE_out.open(fnb_BE_name);
+	IE_out.open(fnb_IE_name);
+
+	//Loops over MCS first
+	for (int MCS_index = 0; MCS_index < 4; MCS_index ++){
+		for (int dt_index = 0; dt_index < 9; dt_index ++){
+			MCS_out << imp_MCS(MCS_index,dt_index) ;
+			dt_out << imp_dt(MCS_index,dt_index) ;
+			BE_out << brute_energies(MCS_index,dt_index) ;
+			IE_out << imp_energies(MCS_index,dt_index) ;
+
+			if (dt_index != 8){
+				MCS_out << ',';
+				dt_out << ',';
+				BE_out << ',';
+				IE_out << ',';
+			}
+		}
+		if (MCS_index != 4){
+				MCS_out << '\n';
+				dt_out << '\n';
+				BE_out << '\n';
+				IE_out << '\n';
+		}
+	}
+	MCS_out.close();
+	dt_out.close();
+	BE_out.close();
+	IE_out.close();
+}	
 
 
+void Investigate::print_times_to_file(string filenamebase){
+	/*
+	Prints the result from the time analysis to two CSV-files
+	filenamebase_times.csv and filenamebase_MCS.csv
+	*/
+	string 	fnb_MCS = filenamebase, 				fnb_times = filenamebase;			
+			fnb_MCS.append("_MCS.csv"); 			fnb_times.append("_times.csv");	
 
+	const char* fnb_MCS_name = fnb_MCS.c_str();
+	const char* fnb_times_name = fnb_times.c_str();
 
+	ofstream MCS_out, times_out;	
+	MCS_out.open(fnb_MCS_name);
+	times_out.open(fnb_times_name);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	//Loop over methods
+	for (int method_index = 0; method_index<6; method_index++){
+		for (int MCS_index = 0; MCS_index<8; MCS_index++){
+			MCS_out << MCS_times(method_index,MCS_index);
+			times_out << times(method_index,MCS_index);
+			if (MCS_index != 7){
+				MCS_out << ',';
+				times_out << ',';
+			}
+		}
+		if (method_index != 5){
+				MCS_out << '\n';
+				times_out << '\n';
+		}
+	}
+	
+	MCS_out.close();
+	times_out.close();
+}
 
 
 

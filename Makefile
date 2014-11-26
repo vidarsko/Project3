@@ -10,6 +10,8 @@ CXXFLAGSCOMP = -larmadillo -O2 -c -fopenmp -pg
 #file = test_investigate
 #file = find_parameters
 file = long_run
+#file = importance_analysis
+#file = times
 
 # ****************************************************
 # Targets needed to bring the executable up to date

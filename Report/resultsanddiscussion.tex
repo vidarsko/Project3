@@ -32,7 +32,7 @@ A plot of the results is shown in figure \ref{fig:N2_norep}.
 
 \begin{figure}[h!]
 	\centering 	
-	\includegraphics[width=\textwidth]{results/N2_norep.jpg}
+	\includegraphics[width=\textwidth]{results/N2_norep.eps}
 	\caption{Plot of the values given in table \ref{tab:N2_norep}, the brute force VMC simulation of the two-electron no repulsion or Jastrow factor case. 
 	Some of the first values of $\alpha$ has been omitted to make the graph more informative.}
 	\label{fig:N2_norep}
@@ -84,7 +84,7 @@ A plot of the energies and $log_{10}$ of the variances after the investigation i
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=\textwidth]{results/N2_rep.jpg}
+	\includegraphics[width=\textwidth]{results/N2_rep.eps}
 	\caption{Plot of the expectations of the local energy and $log_{10}$ of variances after the VMC simulations with two electrons, with repulsion and jastrow factor. 
 	Each point was based on $10^6$ simulations. 
 	The figure gives an overview of how the energies vary as function of $\alpha$ and $\beta$.
@@ -125,7 +125,7 @@ The results from calculation $\langle E \rangle$ for the different method combin
 	\midrule
 	(BF, NLE) & 				(2.000, 6e-13)		&		(92.10, 67.54)		&		(54.74, 28.11)			\\
 	\shaderow (BF, ALE)	 &		(2.000, 0)			&		(92.18, 161.4)		&		(54.72, 28.19)		\\
-	(IS, NLE,NQF) & 			(2.000, 6e-14)		&		(92.15, 66.43)		&		(54.72, 27.33)				 \\
+	(IS, NLE, NQF) & 			(2.000, 6e-14)		&		(92.15, 66.43)		&		(54.72, 27.33)				 \\
 	\shaderow(IS, NLE, AQF) &	(2.000, 1e-13) 		&		(92.06, 54.49)		&		(54.72, 27.32)						\\
 	(IS, ALE, NQF) &			(2.000, 0)			&		(92.13, 143.2)		&		(54.76, 27.35)					\\
 	\shaderow (IS, ALE, AQF) &	(2.000, 0) 			&		(92.12, 76.24)		&		(54.74, 27.44)	 				\\
@@ -210,7 +210,7 @@ A plot of the values in table \ref{tab:correlations_jastrow} is given in figure 
 
 \begin{figure}[h!]
 	\centering 
-	\includegraphics[width=\textwidth]{results/correlations_jastrow.jpg}
+	\includegraphics[width=\textwidth]{results/correlations_jastrow.eps}
 	\caption{Plot of the correlation introduced by the Jastrow factor for the optimal parameters $\alpha$ and $\beta$ as a function of $\omega$. 
 	From the left figure one may suspect a curve of the shape $C = C_0 \exp(-k\omega)$ but the right hand plot of $\textrm{ln}(C)$ against $\omega$ does not look very linear which weakens this hypothesis.}
 	\label{fig:correlations_jastrow}
@@ -220,6 +220,16 @@ Our first observation is that the Jastrow factor does indeed better our estimati
 We already knew from section \ref{sec:N2_rep} that the including the jastrow factor gave us a very good estimate of the ground state energy when $\omega = 1$, and from table \ref{tab:test_cases}  we see that the ratio between variance and energy estimate is almost constant ($\sim 5 \times 10^{-4}$) in the case with the Jastrow factor as opposed to the case without the Jastrow factor. 
 
 Our second observation from both the table and the figure is that the correlations get smaller as the oscillator frequency increases. 
+This is a counter-intuitive result.
+Normally one would expect the repulsion between the electrons to be more important the closer together the electrons are.
+One can try to explain the phenomenon by looking at another, equivalent expression of the expectation value of the local energy.
+
+\eqs
+\langle E_L \rangle = \langle K \rangle + \langle V_{HO} \rangle + \langle V_{ER} \rangle 
+\eqf
+
+Where $\langle K \rangle$ is the expection value of the kinetic energy, $\langle V_{HO} \rangle$ that of the harmonic oscillator potential and $\langle V_{ER} \rangle$ that of the electron repulsion potential.
+It seems that as $\omega$ increases, all these values increase, but the relative size of $\langle V_{ER} \rangle $ does not increase as much as $\langle V_{HO} \rangle$, so for large $\omega$, the role played by $\langle V_{ER} \rangle$ gets smaller and smaller.
 
 From the left hand plot in the figure, one might suspect that the correlation decreases exponentially as a function of $\omega$. 
 To test this, a plot of $\textrm{ln}(C)$ against $\omega$ has been included in the right hand plot. 
@@ -230,7 +240,7 @@ It is therefore probably some other rule governing the relation between $C$ and 
 
 
 
-\subsubsection{Importance sampling}
+\subsubsection{Importance sampling} \label{sec:res_importance_sampling}
 
 The results from evaluation $\langle E_L \rangle$ as a function of Monte Carlo simulations and time steps $\delta t$ are given in table \ref{tab:importance_sampling} and figure \ref{fig:importance_sampling}.
 
@@ -266,7 +276,7 @@ The results from evaluation $\langle E_L \rangle$ as a function of Monte Carlo s
 
 \begin{figure}[h!]
 	\centering 
-	\includegraphics[width=\textwidth]{results/importance_sampling.jpg}
+	\includegraphics[width=\textwidth]{results/importance_sampling.eps}
 	\caption{Plot of the energies evaluated by the brute force method and the metropolis method as a function of number of Monte Carlo simulations (MCS) and time step $\delta t$.}
 	\label{fig:importance_sampling}
 \end{figure}
@@ -295,6 +305,79 @@ For more complex problems, it may be that importance sampling, with its foundati
 
 
 \subsubsection{Timely differences between methods} \label{sec:timely_diff}
+
+Table \ref{tab:res_times} shows the time used by the different methods for the two different test cases.
+A plot of the times used are given in figure \ref{fig:res_times}. 
+
+\begin{table}[h!]
+	\centering 
+	\begin{tabular}{l @{ } l @{ } l @{ } l @{ } l @{ } l @{ } l @{ } l @{ } l }
+	\toprule
+	\multicolumn{9}{l}{2 electrons with repulsion and Jastrow factor, $\alpha = 0.77$ and $\beta = 0.22$.} \\
+	Method \textbackslash $MCS = ~~~$ & $10^3~~~~~~~$ & $3\times 10^3~~$ & $10^4~~~~~~~$ & $3\times 10^4~~$ & $10^5~~~~~~~$ & $3\times 10^5~~$ & $10^6~~~~$ & $3\times 10^6$ \\
+	\midrule
+	(BF, NLE) & 1.87e-2 & 4.11e-2 & 1.36e-1 & 2.59e-1 & 7.14e-1 & 2.10 & 6.53 & 19.5 \\
+	\shaderow (BF,ALE) & 9.75e-3 & 2.86e-2 & 9.45e-2 & 1.43e-1 & 3.08e-1 & 7.80e-1 & 2.44 & 7.39 \\
+	(IS, NLE, NQF) & 1.81e-2 & 5.52e-2 & 1.82e-1 & 5.46e-1 & 1.82 & 5.45 & 18.1 & 54.4 \\
+	\shaderow (IS, NLE, AQF) & 1.30e-2 & 3.88e-2 & 1.30e-1 & 3.89e-1 & 1.29 & 3.88 & 12.9 & 38.8 \\
+	(IS, ALE, NQF) & 1.12e-2 & 3.22e-2 & 1.08e-1 & 3.19e-1 & 1.06 & 3.18 & 10.7 & 31.9 \\
+	\shaderow (IS, ALE, AQF) & 5.30e-3 & 1.59e-2 & 5.28e-2 & 1.59e-1 & 5.30e-1 & 1.59 & 5.30 & 15.9 \\
+	\bottomrule
+	\toprule
+	\multicolumn{9}{l}{6 electrons with repulsion and Jastrow factor, $\alpha = 0.49$ and $\beta = 0.39$.} \\
+	Method \textbackslash $MCS = ~~~$ & $10^3~~~~~~~$ & $3\times 10^3~~$ & $10^4~~~~~~~$ & $3\times 10^4~~$ & $10^5~~~~~~~$ & $3\times 10^5~~$ & $10^6~~~~$ & $3\times 10^6$ \\
+	\midrule
+	(BF, NLE) &  1.44e-1 & 3.85e-1 & 1.25 & 3.06 & 10.0 & 28.4 & 94.3 & 283 \\
+	\shaderow (BF,ALE) &  4.75e-2 & 1.47e-1 & 4.89e-1 & 7.79e-1 & 1.86 & 4.80 & 14.8 & 46.2 \\
+	(IS, NLE, NQF) & 2.91e-1 & 8.73e-1 & 2.91 & 8.71 & 29.1 & 87.1 & 290 & 870 \\
+	\shaderow (IS, NLE, AQF) & 1.91e-1 & 5.71e-1 & 1.90 & 5.70 & 19.0 & 56.9 & 190 & 570 \\
+	(IS, ALE, NQF) & 1.40e-1 & 4.20e-1 & 1.40 & 4.19 & 14.0 & 42.0 & 140 & 420 \\
+	\shaderow (IS, ALE, AQF) & 3.97e-2 & 1.20e-1 & 3.98e-1 & 1.19 & 4.05 & 11.9 & 39.7 & 120 \\
+	\bottomrule
+	\end{tabular}
+	\caption{Time (in seconds) used by the different methods as a function of Monte Carlo simulations (MCS).
+			See section \ref{sec:exp_methods_E} for method abreviations.
+			The CPU-time spent using analytical expression is dramatically reduced. }
+	\label{tab:res_times}
+\end{table}
+
+
+\begin{figure}[h!]
+	\centering 
+	\includegraphics[width=\textwidth]{results/times.eps}
+	\caption{$\textrm{log}_{10}$ of the time (in seconds) used by the different methods relative to the brute force, numerical local energy method as a function of $\textrm{log}_{10}$ of Monte Carlo simulations.}
+	\label{fig:res_times}
+\end{figure}
+
+From the result we see that the relative difference in the time spent by the different methods stabilize after $\sim 10^5$ Monte Carlo simulations. 
+After this point, the brute force metropolis algorithm with the analytical expression for the local energy is the most time efficient method, both for $N=2$ and $N=6$. 
+To begin with, at $10^3$ Monte Carlo simulations, importance sampling with analytical expressions is the fastest method.
+This is because the brute force method needs to run a couple of simulations without sampling to begin with in order to achieve the wanted acceptance rate of $0.5$ whereas the importance sampling method can begin straight away sampling points. 
+But as the number of Monte Carlo simulations increase however, this head start gets relatively smaller. 
+
+We also see that whenever analytical expressions is used instead of numerical ones, the efficiency is increased. 
+From the figure we see that when using importance sampling, the implementation of the analytical local energy produces a greater increase in efficiency than implementing analytical expressions of the quantum force.
+And only when implementing both analytical expressions for the local energy \textit{and} the quantum force is the importance sampling method superior to the brute force, numerical local energy method. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \subsubsection{Discussion: code efficiency and time constraints}\label{sec:ce_tc}
 

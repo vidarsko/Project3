@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.12)  24 NOV 2014 12:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.12)  26 NOV 2014 11:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1161,20 +1161,35 @@ Overfull \hbox (6.1458pt too wide) in paragraph at lines 445--459
  [][] 
  []
 
-[10] <theory/Monte_Carlo_Illustration.jpg, id=382, 762.85pt x 235.88126pt>
-File: theory/Monte_Carlo_Illustration.jpg Graphic file (type jpg)
+[10]
+Package epstopdf Info: Source file: <theory/Monte_Carlo_Illustration.eps>
+(epstopdf)                    date: 2014-11-26 10:29:07
+(epstopdf)                    size: 2640997 bytes
+(epstopdf)             Output file: <theory/Monte_Carlo_Illustration-eps-conver
+ted-to.pdf>
+(epstopdf)                    date: 2014-11-26 10:29:14
+(epstopdf)                    size: 108620 bytes
+(epstopdf)             Command: <repstopdf --outfile=theory/Monte_Carlo_Illustr
+ation-eps-converted-to.pdf theory/Monte_Carlo_Illustration.eps>
+(epstopdf)             \includegraphics on input line 527.
+Package epstopdf Info: Output file is already uptodate.
 
-<use theory/Monte_Carlo_Illustration.jpg>
-Package pdftex.def Info: theory/Monte_Carlo_Illustration.jpg used on input line
- 527.
-(pdftex.def)             Requested size: 418.25368pt x 129.32837pt.
+<theory/Monte_Carlo_Illustration-eps-converted-to.pdf, id=382, 475.7775pt x 166
+.6225pt>
+File: theory/Monte_Carlo_Illustration-eps-converted-to.pdf Graphic file (type p
+df)
+ <use theory/Monte_Carlo_Illustration-eps-converted-to.pdf>
+Package pdftex.def Info: theory/Monte_Carlo_Illustration-eps-converted-to.pdf u
+sed on input line 527.
+(pdftex.def)             Requested size: 418.25368pt x 146.48332pt.
 
 Overfull \hbox (6.79999pt too wide) in paragraph at lines 527--530
  [][] 
  []
 
-[11 <./theory/Monte_Carlo_Illustration.jpg>] [12] [13] (./algorithm.tex)
-[14] <theory/parallelization.jpg, id=461, 91.7829pt x 53.9616pt>
+[11 <./theory/Monte_Carlo_Illustration-eps-converted-to.pdf>] [12] [13]
+(./algorithm.tex) [14]
+<theory/parallelization.jpg, id=478, 91.7829pt x 53.9616pt>
 File: theory/parallelization.jpg Graphic file (type jpg)
 
 <use theory/parallelization.jpg>
@@ -1194,12 +1209,23 @@ d /Logs/N6[]norep[]bruteforce[]num/test[]investigate.cpp,
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<results/N2_norep.jpg, id=509, 513.92pt x 222.8325pt>
-File: results/N2_norep.jpg Graphic file (type jpg)
+Package epstopdf Info: Source file: <results/N2_norep.eps>
+(epstopdf)                    date: 2014-11-26 10:18:44
+(epstopdf)                    size: 8900 bytes
+(epstopdf)             Output file: <results/N2_norep-eps-converted-to.pdf>
+(epstopdf)                    date: 2014-11-26 10:19:12
+(epstopdf)                    size: 6806 bytes
+(epstopdf)             Command: <repstopdf --outfile=results/N2_norep-eps-conve
+rted-to.pdf results/N2_norep.eps>
+(epstopdf)             \includegraphics on input line 35.
+Package epstopdf Info: Output file is already uptodate.
+<results/N2_norep-eps-converted-to.pdf, id=529, 410.53375pt x 178.6675pt>
+File: results/N2_norep-eps-converted-to.pdf Graphic file (type pdf)
 
-<use results/N2_norep.jpg>
-Package pdftex.def Info: results/N2_norep.jpg used on input line 35.
-(pdftex.def)             Requested size: 418.25368pt x 181.35356pt.
+<use results/N2_norep-eps-converted-to.pdf>
+Package pdftex.def Info: results/N2_norep-eps-converted-to.pdf used on input li
+ne 35.
+(pdftex.def)             Requested size: 418.25368pt x 182.02577pt.
 
 Overfull \hbox (6.79999pt too wide) in paragraph at lines 35--37
  [][] 
@@ -1208,93 +1234,155 @@ Overfull \hbox (6.79999pt too wide) in paragraph at lines 35--37
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+[18]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<results/N2_rep.jpg, id=515, 513.92pt x 385.44pt>
-File: results/N2_rep.jpg Graphic file (type jpg)
- <use results/N2_rep.jpg>
-Package pdftex.def Info: results/N2_rep.jpg used on input line 87.
-(pdftex.def)             Requested size: 418.25368pt x 313.69266pt.
+Package epstopdf Info: Source file: <results/N2_rep.eps>
+(epstopdf)                    date: 2014-11-26 10:14:47
+(epstopdf)                    size: 96834 bytes
+(epstopdf)             Output file: <results/N2_rep-eps-converted-to.pdf>
+(epstopdf)                    date: 2014-11-26 10:15:52
+(epstopdf)                    size: 22557 bytes
+(epstopdf)             Command: <repstopdf --outfile=results/N2_rep-eps-convert
+ed-to.pdf results/N2_rep.eps>
+(epstopdf)             \includegraphics on input line 87.
+Package epstopdf Info: Output file is already uptodate.
+<results/N2_rep-eps-converted-to.pdf, id=548, 410.53375pt x 309.155pt>
+File: results/N2_rep-eps-converted-to.pdf Graphic file (type pdf)
+
+<use results/N2_rep-eps-converted-to.pdf>
+Package pdftex.def Info: results/N2_rep-eps-converted-to.pdf used on input line
+ 87.
+(pdftex.def)             Requested size: 418.25368pt x 314.96597pt.
 
 Overfull \hbox (6.79999pt too wide) in paragraph at lines 87--91
  [][] 
  []
 
-[18]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+[19 <./results/N2_norep-eps-converted-to.pdf>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[19 <./results/N2_norep.jpg>]
+[20 <./results/N2_rep-eps-converted-to.pdf>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[20 <./results/N2_rep.jpg>]
+[21]
+Package epstopdf Info: Source file: <results/correlations_jastrow.eps>
+(epstopdf)                    date: 2014-11-26 10:11:46
+(epstopdf)                    size: 9416 bytes
+(epstopdf)             Output file: <results/correlations_jastrow-eps-converted
+-to.pdf>
+(epstopdf)                    date: 2014-11-26 10:12:26
+(epstopdf)                    size: 7057 bytes
+(epstopdf)             Command: <repstopdf --outfile=results/correlations_jastr
+ow-eps-converted-to.pdf results/correlations_jastrow.eps>
+(epstopdf)             \includegraphics on input line 213.
+Package epstopdf Info: Output file is already uptodate.
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+<results/correlations_jastrow-eps-converted-to.pdf, id=592, 441.65pt x 228.855p
+t>
+File: results/correlations_jastrow-eps-converted-to.pdf Graphic file (type pdf)
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<results/correlations_jastrow.jpg, id=553, 552.0625pt x 286.06876pt>
-File: results/correlations_jastrow.jpg Graphic file (type jpg)
-
-<use results/correlations_jastrow.jpg>
-Package pdftex.def Info: results/correlations_jastrow.jpg used on input line 21
-3.
-(pdftex.def)             Requested size: 418.25368pt x 216.7423pt.
+ <use results/correlations_jastrow-eps-converted-to.pdf>
+Package pdftex.def Info: results/correlations_jastrow-eps-converted-to.pdf used
+ on input line 213.
+(pdftex.def)             Requested size: 418.25368pt x 216.74052pt.
 
 Overfull \hbox (6.79999pt too wide) in paragraph at lines 213--215
  [][] 
  []
 
-[21]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 242.
+[22]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 252.
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+ (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 242.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 252.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<results/importance_sampling.jpg, id=564, 518.93875pt x 431.6125pt>
-File: results/importance_sampling.jpg Graphic file (type jpg)
+Package epstopdf Info: Source file: <results/importance_sampling.eps>
+(epstopdf)                    date: 2014-11-26 10:09:56
+(epstopdf)                    size: 15305 bytes
+(epstopdf)             Output file: <results/importance_sampling-eps-converted-
+to.pdf>
+(epstopdf)                    date: 2014-11-26 10:10:21
+(epstopdf)                    size: 12625 bytes
+(epstopdf)             Command: <repstopdf --outfile=results/importance_samplin
+g-eps-converted-to.pdf results/importance_sampling.eps>
+(epstopdf)             \includegraphics on input line 279.
+Package epstopdf Info: Output file is already uptodate.
 
-<use results/importance_sampling.jpg>
-Package pdftex.def Info: results/importance_sampling.jpg used on input line 269
-.
-(pdftex.def)             Requested size: 418.25368pt x 347.88528pt.
+<results/importance_sampling-eps-converted-to.pdf, id=603, 410.53375pt x 277.03
+5pt>
+File: results/importance_sampling-eps-converted-to.pdf Graphic file (type pdf)
+ <use results/importance_sampling-eps-converted-to.pdf>
+Package pdftex.def Info: results/importance_sampling-eps-converted-to.pdf used 
+on input line 279.
+(pdftex.def)             Requested size: 418.25368pt x 282.24223pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 269--270
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 279--280
  [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[22] [23 <./results/correlations_jastrow.jpg>] [24 <./results/importance_sampli
-ng.jpg>] [25]) [26] (./project3.bbl
+[23 <./results/correlations_jastrow-eps-converted-to.pdf>]
+
+LaTeX Warning: Text page 24 contains only floats.
+
+[24 <./results/importance_sampling-eps-converted-to.pdf>]
+Package epstopdf Info: Source file: <results/times.eps>
+(epstopdf)                    date: 2014-11-26 10:50:00
+(epstopdf)                    size: 182094 bytes
+(epstopdf)             Output file: <results/times-eps-converted-to.pdf>
+(epstopdf)                    date: 2014-11-26 10:50:03
+(epstopdf)                    size: 20246 bytes
+(epstopdf)             Command: <repstopdf --outfile=results/times-eps-converte
+d-to.pdf results/times.eps>
+(epstopdf)             \includegraphics on input line 347.
+Package epstopdf Info: Output file is already uptodate.
+
+<results/times-eps-converted-to.pdf, id=631, 407.5225pt x 457.71pt>
+File: results/times-eps-converted-to.pdf Graphic file (type pdf)
+
+<use results/times-eps-converted-to.pdf>
+Package pdftex.def Info: results/times-eps-converted-to.pdf used on input line 
+347.
+(pdftex.def)             Requested size: 418.25368pt x 469.78436pt.
+
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 347--348
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[25] [26 <./results/times-eps-converted-to.pdf>] [27]) [28] (./project3.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 4--9
 []\OT1/cmr/m/n/10 Morten Hjorth-Jensen.  Ad-di-tional slides for monte carlo pr
 oject.
  []
 
-) [27
+) [29
 
-] [28
+] [30
 
 ]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 235.
- [29
+ [31
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 235.
@@ -1302,18 +1390,14 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 235.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 235.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 235.
 Package rerunfilecheck Info: File `project3.out' has not changed.
-(rerunfilecheck)             Checksum: C799701DDD060C3A41D2EC0C8383271A;4333.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
+(rerunfilecheck)             Checksum: 9B9AD2E5A5950AC113E4EBA04F02C7A8;4343.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 235.
  ) 
 Here is how much of TeX's memory you used:
- 14133 strings out of 493304
- 207091 string characters out of 6139871
- 367432 words of memory out of 5000000
- 17159 multiletter control sequences out of 15000+600000
+ 14148 strings out of 493304
+ 207748 string characters out of 6139871
+ 363976 words of memory out of 5000000
+ 17166 multiletter control sequences out of 15000+600000
  16516 words of font info for 63 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  41i,21n,44p,610b,683s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1344,10 +1428,10 @@ exmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-d
 ist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/publi
 c/cm-super/sfrm1000.pfb>
-Output written on project3.pdf (29 pages, 1121696 bytes).
+Output written on project3.pdf (31 pages, 1124733 bytes).
 PDF statistics:
- 753 PDF objects out of 1000 (max. 8388607)
- 675 compressed objects within 7 object streams
- 197 named destinations out of 1000 (max. 500000)
- 449 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 840 PDF objects out of 1000 (max. 8388607)
+ 744 compressed objects within 8 object streams
+ 204 named destinations out of 1000 (max. 500000)
+ 454 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -18,7 +18,7 @@
 \BOOKMARK [4][-]{paragraph.2.2.2.1}{Brute force Metropolis}{subsubsection.2.2.2}% 18
 \BOOKMARK [4][-]{paragraph.2.2.2.2}{Importance sampling}{subsubsection.2.2.2}% 19
 \BOOKMARK [4][-]{paragraph.2.2.2.3}{The metropolis algorithm for our wavefunction}{subsubsection.2.2.2}% 20
-\BOOKMARK [2][-]{subsection.2.3}{Parallelization}{section.2}% 21
+\BOOKMARK [3][-]{subsubsection.2.2.3}{Parallelization}{subsection.2.2}% 21
 \BOOKMARK [1][-]{section.3}{Experimental}{}% 22
 \BOOKMARK [2][-]{subsection.3.1}{Benchmarks and verification}{section.3}% 23
 \BOOKMARK [3][-]{subsubsection.3.1.1}{Benchmarks for the brute force approach, no repulsion or jastrow factor}{subsection.3.1}% 24
