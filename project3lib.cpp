@@ -348,7 +348,6 @@ double QuantumDots::local_energy_function(mat r, int analytical_local_energy){
 		for (int i=0;i<number_of_particles;i++){
 			scaled_laplacians += LSP(Wave_function,r,i);
 		}
-
 		result = V - 0.5*scaled_laplacians;
 	}
 	else{
@@ -392,6 +391,22 @@ double QuantumDots::Potential (mat r){
 	}
 	//cout << "Potiential: " << V << endl;
 	return V;
+}
+
+double QuantumDots::Analytical_kinetic_energy(mat r){
+	/*
+	Function that returns the local kinetic energy of the wavefunction.
+	input: 
+		- mat r 			- The position to be evaluated
+	output:
+		- double T 			- The local kinetic energy. 
+	*/
+	double T = 0;
+	for (int i=0;i<number_of_particles;i++){
+		T += LSP(Wave_function,r,i);
+	}
+	T *= -0.5;
+	return T;
 }
 
 double QuantumDots::LSP(Trial_Wavefunction wf, mat r, int i){
@@ -504,6 +519,24 @@ double QuantumDots::numerical_sum_laplacians(Trial_Wavefunction wf,mat r, double
 	result /= (h*h);
 	return result; 
 }	
+double QuantumDots::Average_distance(mat r){
+	/*
+	Function that returns the average distance between column vectors in a matrix. 
+	Input:
+		- mat r  	- The position matrix
+	Output:
+		- double Average_distance.
+	*/
+	double AD = 0;
+	for (int i = 0; i< number_of_particles; i++){
+		for (int j=0; j<i; j++){
+			AD += norm(r.col(j)-r.col(i));
+		}
+	}
+	AD /= (double)number_of_particles;
+	return AD;
+}
+
 
 //Monte Carlo Simulation functions
 vec QuantumDots::Brute_Force_Metropolis_Expectation_Values(int M, int analytical_local_energy){
@@ -711,6 +744,134 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 
 	
 
+	return expectation_values;
+}	
+vec QuantumDots::Metropolis_interesting_quantities(int M){
+	/*
+	Function that uses the Monte Carlo Metropolis algorithm to 
+	find the the expectation value the energy, variance, average distance, potential_energy and kinetic_energy
+	Input:
+		- int M 				 					- Number of Monte Carlo simulations
+	Output: 
+		- vec expectation_values (5)- Expectation values in the order given above
+	*/
+	//Extract relevant data 
+	int number_of_particles = Wave_function.number_of_particles;
+
+	//Initial position
+	mat r = randn<mat>(2,number_of_particles);
+
+	//Initialization
+	int counter;
+	int total_counter;
+	double ratio;
+
+	//Initial delta_r, will be modified to achieve 0.5 acceptance rate
+	double delta_r;
+	double acceptance_rate=2;
+
+
+	//Find delta_r which gives around 0.5 acceptance rate: limits and number of test can be discussed. But 1000 works fine for now
+	//Please note that this is actually already 25000 iterations, too much? 
+	//Reduced to min(1/10 of MCS iterations,1000) 25.11.14 and verified that this gave almost the same acceptance rate and results.
+	double wavefunction_squared = Wave_function.call_squared(r);
+	for (double delta_ri = 0.2; delta_ri < 5; delta_ri += 0.1){
+		counter = 0;
+		total_counter = 0;
+		for (int iter = 0; iter < min(M/10,1000); iter ++){
+			//Choose particle to be moved
+			int i = rand() % number_of_particles; 
+			//Update step
+			vec delta_vec_r = delta_ri * randn<vec>(2);
+			mat r_p = r;
+			r_p.col(i) = r_p.col(i) + delta_vec_r;
+			double w = Wave_function.call_squared(r_p)/wavefunction_squared;
+			double s = randu();
+			if (w >= s){
+				r = r_p;
+				wavefunction_squared = Wave_function.call_squared(r);
+				counter += 1;	
+			}
+			total_counter += 1;
+		}
+		double acceptance_rate_test = counter/(double)total_counter;
+		if (abs(acceptance_rate_test-0.5) < abs(acceptance_rate-0.5)){
+			acceptance_rate = acceptance_rate_test;
+			delta_r = delta_ri;
+		}
+	}
+
+	//Re-initialization before the real MCS
+	counter = 0;
+	total_counter = 0;
+	r = randn<mat>(2,number_of_particles);
+	wavefunction_squared = Wave_function.call_squared(r);
+
+	double potential_energy = Potential(r);
+	double cumulative_PE = 0;
+
+	double kinetic_energy = Analytical_kinetic_energy(r);
+	double cumulative_KE = 0;
+
+	double local_energy = potential_energy + kinetic_energy;
+	double cumulative_local_energy = 0; 
+	double cumulative_local_energy_squared = 0;
+
+	double average_distance = Average_distance(r);
+	double cumulative_AD = 0;
+	
+	
+	while(total_counter < M){
+		//Choose particle to be moved:
+		int i = rand() % number_of_particles; 
+
+		//Update step
+		vec delta_vec_r = delta_r * randn<vec>(2);
+
+		
+		//Only coordenate move, x or y
+		//int xory = rand() % 2;
+		//delta_vec_r(xory,0) = 0;
+		
+	
+		mat r_p = r;
+		r_p.col(i) = r_p.col(i) + delta_vec_r;
+		double w = Wave_function.call_squared(r_p)/wavefunction_squared;
+		double s = randu();
+
+		if (w >= s){
+			r = r_p;
+			wavefunction_squared = Wave_function.call_squared(r);
+			counter += 1;
+				potential_energy = Potential(r);
+				kinetic_energy = Analytical_kinetic_energy(r);
+				local_energy = potential_energy + kinetic_energy;
+				average_distance = Average_distance(r);
+
+		}
+		cumulative_PE += potential_energy;
+		cumulative_KE += kinetic_energy;
+		cumulative_AD += average_distance;
+		cumulative_local_energy += local_energy;
+		cumulative_local_energy_squared += local_energy*local_energy;
+		total_counter += 1;
+		if (total_counter%100000==0){
+			cout << "Progress: " << total_counter/(double)M*100  << " % " << endl;
+		}
+	}
+
+	//Uncomment if investigating ratio vs delta_r
+	//ratio = counter/(double)(M-1);
+	//cout << endl << "---- Acceptance rate: " << ratio;
+	//cout << ", Step length: " << delta_r <<  "----" << endl;
+
+	//Create matrix for storing expectation values
+	vec expectation_values = zeros(5);
+	expectation_values(0) = cumulative_local_energy/M;
+	expectation_values(1) = cumulative_local_energy_squared/M;
+	expectation_values(2) = cumulative_AD/M;
+	expectation_values(3) = cumulative_PE/M;
+	expectation_values(4) = cumulative_KE/M;
 	return expectation_values;
 }	
 
@@ -1166,6 +1327,35 @@ void Investigate::compare_times(double alpha, double beta, int jastrow){
 		times(5,MCS_index) = (end-start)/(double)CLOCKS_PER_SEC;
 	}
 }
+void Investigate::interesting_quantities(double alpha, double beta){
+	/*
+	Function that takes two trial function parameters alpha and beta and computes, 
+	using the brute force metropolis algorithm with analytical expression for the local energy
+	and  10^7 MCS, 
+	several interesting quantities that are saved in the variables: 
+	IQ_energy 				- The expectation value of the hamilton operator
+	IQ_variance, 			- The variance of the local energy
+	IQ_average_distance		- expectation value of the distance between each electron 
+	IQ_potential_energy		- the expectation value of the potential
+	IQ_kinetic_energy		- The expectation value of the kinetic energy
+	
+	Input: 	
+		- double alpha, beta 	- Trial wavefunction parameters
+	*/
+
+	int MCS = pow(10,7);
+
+	Trial_Wavefunction wf(alpha, beta,system.omega,system.number_of_particles,1);
+	system.Set_Wavefunction(wf);
+
+	vec IQ = system.Metropolis_interesting_quantities(MCS);
+	IQ_energy = IQ(0);
+	IQ_variance = IQ(1)-IQ_energy*IQ_energy;
+	IQ_average_distance = IQ(2);
+	IQ_potential_energy = IQ(3);
+	IQ_kinetic_energy = IQ(4);
+}
+
 
 
 
@@ -1350,6 +1540,36 @@ void Investigate::print_times_to_file(string filenamebase){
 	times_out.close();
 }
 
+void Investigate::print_interesting_quantities_to_file(string filename){
+	/*
+	Function that prints the interesting quantities to file. 
+	Input:
+		- string filename 	-  The name of the file to which the information is to be printed.
+	*/
+	ofstream output;
+	const char* name = filename.c_str();
+	output.open(name);
+	output << "Interesting quantities of the wavefunction: " << endl;
+	output << "----------"<< endl << endl;
+
+	output << "Parameters: " << endl;
+	output << "alpha: " << system.Wave_function.alpha << endl;
+	output << "beta: " << system.Wave_function.beta << endl;
+	output << "omega: " << system.omega << endl;
+	output << "Number of particles " << system.number_of_particles << endl;
+	output << "Number of MCS: 10^7" << endl;
+	output << "Jastrow_factor: on" << endl;
+	output << "----------" << endl << endl;
+
+	output << "Expectation values: " << endl;
+	output << "Energy:  " << IQ_energy<< endl;
+	output << "Variance: " << IQ_variance<< endl;
+	output << "Average distance: " << IQ_average_distance<< endl;
+	output << "Potential energy: " << IQ_potential_energy<< endl;
+	output << "Kinetic energy: " << IQ_kinetic_energy<< endl;
+
+	output.close();
+}
 
 
 

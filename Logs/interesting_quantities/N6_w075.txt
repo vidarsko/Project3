@@ -1,0 +1,18 @@
+Interesting quantities of the wavefunction: 
+----------
+
+Parameters: 
+alpha: 0.9
+beta: 0.5
+omega: 0.75
+Number of particles 6
+Number of MCS: 10^7
+Jastrow_factor: on
+----------
+
+Expectation values: 
+Energy:  16.1324
+Variance: 0.0841688
+Average distance: 6.69752
+Potential energy: 13.5274
+Kinetic energy: 2.605

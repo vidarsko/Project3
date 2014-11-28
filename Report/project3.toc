@@ -32,21 +32,21 @@
 \contentsline {subsubsection}{\numberline {3.2.4}Timely differences between methods}{18}{subsubsection.3.2.4}
 \contentsline {subsection}{\numberline {3.3}Applications}{18}{subsection.3.3}
 \contentsline {subsubsection}{\numberline {3.3.1}Properties of the approximated wavefunctions}{18}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}The virial theorem }{18}{subsubsection.3.3.2}
-\contentsline {section}{\numberline {4}Results and discussion}{18}{section.4}
-\contentsline {subsection}{\numberline {4.1}Benchmarks and verification}{18}{subsection.4.1}
-\contentsline {subsubsection}{\numberline {4.1.1}Benchmarks for the brute force approach, no repulsion or jastrow factor}{18}{subsubsection.4.1.1}
-\contentsline {subsubsection}{\numberline {4.1.2}Benchmark for the brute force approach, with repulsion and jastrow factor}{19}{subsubsection.4.1.2}
-\contentsline {subsubsection}{\numberline {4.1.3}Comparison of different methods}{21}{subsubsection.4.1.3}
-\contentsline {subsection}{\numberline {4.2}Optimizations and differences}{21}{subsection.4.2}
-\contentsline {subsubsection}{\numberline {4.2.1}Test cases}{21}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {3.3.2}The virial theorem }{19}{subsubsection.3.3.2}
+\contentsline {section}{\numberline {4}Results and discussion}{19}{section.4}
+\contentsline {subsection}{\numberline {4.1}Benchmarks and verification}{19}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Benchmarks for the brute force approach, no repulsion or jastrow factor}{19}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Benchmark for the brute force approach, with repulsion and jastrow factor}{20}{subsubsection.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.3}Comparison of different methods}{20}{subsubsection.4.1.3}
+\contentsline {subsection}{\numberline {4.2}Optimizations and differences}{22}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {4.2.1}Test cases}{22}{subsubsection.4.2.1}
 \contentsline {subsubsection}{\numberline {4.2.2}Jastrow factor}{22}{subsubsection.4.2.2}
-\contentsline {subsubsection}{\numberline {4.2.3}Importance sampling}{23}{subsubsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.3}Importance sampling}{24}{subsubsection.4.2.3}
 \contentsline {subsubsection}{\numberline {4.2.4}Timely differences between methods}{25}{subsubsection.4.2.4}
-\contentsline {subsubsection}{\numberline {4.2.5}Discussion: code efficiency and time constraints}{27}{subsubsection.4.2.5}
+\contentsline {subsubsection}{\numberline {4.2.5}Discussion: code efficiency and time constraints}{26}{subsubsection.4.2.5}
 \contentsline {subsection}{\numberline {4.3}Applications}{28}{subsection.4.3}
 \contentsline {subsubsection}{\numberline {4.3.1}Properties of the approximated wavefunctions}{28}{subsubsection.4.3.1}
 \contentsline {subsubsection}{\numberline {4.3.2}The virial theorem }{28}{subsubsection.4.3.2}
 \contentsline {section}{\numberline {5}Conclusion}{28}{section.5}
-\contentsline {section}{Appendix \numberline {A}Reference to the questions posed in the project instructions}{30}{Appendix.1.A}
-\contentsline {section}{Appendix \numberline {B}Codes}{31}{Appendix.1.B}
+\contentsline {section}{Appendix \numberline {A}Reference to the questions posed in the project instructions}{31}{Appendix.1.A}
+\contentsline {section}{Appendix \numberline {B}Codes}{32}{Appendix.1.B}

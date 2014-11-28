@@ -75,12 +75,15 @@ class QuantumDots{
 
 		//Help functions for the local energy
 		double Potential(mat r);
+		double Analytical_kinetic_energy(mat r);
 		double numerical_sum_laplacians(Trial_Wavefunction wf,mat r,double h=1e-4);
 		double LSP(Trial_Wavefunction wf, mat r, int i);
+		double Average_distance(mat r);
 
 		//Metropolis functions
 		vec Brute_Force_Metropolis_Expectation_Values(int M, int analytical_local_energy);
 		vec Importance_Sampling_Metropolis_Expectation_Values(int M, double delta_t, int analytical_local_energy, int analytical_quantum_force);
+		vec Metropolis_interesting_quantities(int M);
 
 		//Importance sampling help function
 		mat quantum_force(mat r, int analytical_quantum_force, double h=1e-6);
@@ -116,6 +119,9 @@ class Investigate{
 		//Variables for the compare_times function
 		mat times, MCS_times;
 
+		//Variables for the IQ-function
+		double IQ_energy, IQ_variance, IQ_average_distance, IQ_potential_energy, IQ_kinetic_energy;
+
 
 	public:
 
@@ -129,6 +135,7 @@ class Investigate{
 		void compare_analytical_numerical(int MCS, int jastrow);
 		void analyze_importance_sampling(double alpha, double beta, int jastrow);
 		void compare_times(double alpha, double beta, int jastrow);
+		void interesting_quantities(double alpha, double beta);
 
 		//Print functions
 		void print_energies_to_file(string filename);
@@ -139,6 +146,7 @@ class Investigate{
 		void print_optimals_to_file(string filename);
 		void print_importance_analysis_to_files(string filenamebase);
 		void print_times_to_file(string filenamebase);
+		void print_interesting_quantities_to_file(string filename);
 };
 
 
