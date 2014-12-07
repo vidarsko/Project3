@@ -1,3 +1,17 @@
-
 \section{Introduction}
-Quantum mechanics is an exciting field. 
+
+Quantum theory is often thought of as "the most precisely tested and most successful theory in the history of science"\footnote{\url{http://www.4physics.com/phy_demo/QM_Article/article.html}}, which is not a controversial statement. 
+Whereas the mathematical foundation upon which it is built is more or less the same today as it was 50 years ago, the computational power available to us has grown exponentially the last 30 years, allowing us to explore the mysteries of quantum systems within a couple of minutes of computational time. 
+The work presented in this paper demonstrates how computational power is an excellent tool to solve difficult quantum mechanical problems.
+
+In this project I have used the variational Monte Carlo method to find upper bounds on energies on a system of $2$, $6$ and $12$ electrons in a 2-dimensional harmonic oscillator trap, often called \textit{quantum dots}. 
+Three classes have been constructed in the c++-language which construct the problem and investigates the interesting properties using several CPU's in parallel. 
+The different methods presented in this report all managed to correctly solve the quantum mechanical problem, but the fastest method was almost $20$ times faster than the slowest method, illustrating that much computation time can be saved by smart programming. 
+This is very important since many challenges in physics today are very complex problems such as the $24$-dimensional integral solved in this report (for the 12-electron case).
+If we were to evaluate this integral with $10$ grid points for each dimension, this would mean a total of $10^{24}$ grid points, for which a standard computer CPU might require the age of the universe in order to finish calculation. 
+
+The simulations showed some expected results, for example the reproduction certain energy benchmarks, but also some other interesting features. 
+It turns out that the electron correlations (i.e. the importance of the electron repulsion) decreases with the strength of the harmonic oscillator.
+This is a strange result because normally, one would think that the electron repulsion to becomes \textit{more} important as the electrons are "squeezed" together, but in fact it is the opposite that is true. 
+Also, the virial theorem was verified for the non-repulsive harmonic oscillator, but shown to not hold when including the electron-repulsion part.
+It seems as if the electrons "freeze" in place when the oscillator potential gets too weak. 

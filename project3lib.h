@@ -75,6 +75,8 @@ class QuantumDots{
 
 		//Help functions for the local energy
 		double Potential(mat r);
+		double Harmonic_potential(mat r);
+		double Repulsive_potential(mat r);
 		double Analytical_kinetic_energy(mat r);
 		double numerical_sum_laplacians(Trial_Wavefunction wf,mat r,double h=1e-4);
 		double LSP(Trial_Wavefunction wf, mat r, int i);
@@ -120,7 +122,7 @@ class Investigate{
 		mat times, MCS_times;
 
 		//Variables for the IQ-function
-		double IQ_energy, IQ_variance, IQ_average_distance, IQ_potential_energy, IQ_kinetic_energy;
+		double IQ_energy, IQ_variance, IQ_average_distance, IQ_potential_energy, IQ_harmonic_potential, IQ_repulsive_potential, IQ_kinetic_energy;
 
 
 	public:

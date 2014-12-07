@@ -2,51 +2,52 @@
 \contentsline {section}{\numberline {1}Introduction}{4}{section.1}
 \contentsline {section}{\numberline {2}Theory}{4}{section.2}
 \contentsline {subsection}{\numberline {2.1}The physical system}{4}{subsection.2.1}
-\contentsline {subsubsection}{\numberline {2.1.1}The quantum mechanics and the variational principle}{4}{subsubsection.2.1.1}
-\contentsline {paragraph}{\numberline {2.1.1.1}The quantum mechanics}{4}{paragraph.2.1.1.1}
-\contentsline {paragraph}{\numberline {2.1.1.2}The variational principle}{4}{paragraph.2.1.1.2}
-\contentsline {paragraph}{\numberline {2.1.1.3}Finding the expectation value of $\mathaccentV {hat}05E{H}$}{5}{paragraph.2.1.1.3}
-\contentsline {paragraph}{\numberline {2.1.1.4}Verifying that we have found an eigenstate}{5}{paragraph.2.1.1.4}
-\contentsline {subsubsection}{\numberline {2.1.2}The test function $\Psi _T$}{6}{subsubsection.2.1.2}
-\contentsline {paragraph}{\numberline {2.1.2.1}The modified Slater determinant $\textrm {Det}_M(\phi _0, ... , \phi _{N-1})$}{7}{paragraph.2.1.2.1}
-\contentsline {paragraph}{\numberline {2.1.2.2}The Jastrow factor $\textrm {J} (\mathaccentV {vec}17Er_0, ... , \mathaccentV {vec}17Er_{N-1} )$}{7}{paragraph.2.1.2.2}
-\contentsline {paragraph}{\numberline {2.1.2.3}Motivation}{8}{paragraph.2.1.2.3}
-\contentsline {paragraph}{\numberline {2.1.2.4}Closed form expression of the local energy}{9}{paragraph.2.1.2.4}
-\contentsline {subsubsection}{\numberline {2.1.3}The virial theorem}{10}{subsubsection.2.1.3}
-\contentsline {subsection}{\numberline {2.2}The numerical foundation}{10}{subsection.2.2}
-\contentsline {subsubsection}{\numberline {2.2.1}Monte Carlo simulations}{10}{subsubsection.2.2.1}
-\contentsline {subsubsection}{\numberline {2.2.2}The Metropolis algorithm}{11}{subsubsection.2.2.2}
-\contentsline {paragraph}{\numberline {2.2.2.1}Brute force Metropolis}{12}{paragraph.2.2.2.1}
-\contentsline {paragraph}{\numberline {2.2.2.2}Importance sampling}{13}{paragraph.2.2.2.2}
-\contentsline {paragraph}{\numberline {2.2.2.3}The metropolis algorithm for our wavefunction}{13}{paragraph.2.2.2.3}
-\contentsline {subsubsection}{\numberline {2.2.3}Parallelization}{15}{subsubsection.2.2.3}
-\contentsline {section}{\numberline {3}Experimental}{16}{section.3}
-\contentsline {subsection}{\numberline {3.1}Benchmarks and verification}{16}{subsection.3.1}
-\contentsline {subsubsection}{\numberline {3.1.1}Benchmarks for the brute force approach, no repulsion or jastrow factor}{16}{subsubsection.3.1.1}
-\contentsline {subsubsection}{\numberline {3.1.2}Benchmark for the brute force approach, with repulsion and jastrow factor}{17}{subsubsection.3.1.2}
-\contentsline {subsubsection}{\numberline {3.1.3}Comparison of different methods}{17}{subsubsection.3.1.3}
-\contentsline {subsection}{\numberline {3.2}Optimizations and differences}{17}{subsection.3.2}
-\contentsline {subsubsection}{\numberline {3.2.1}Test cases}{17}{subsubsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2}Jastrow factor}{18}{subsubsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.3}Importance sampling}{18}{subsubsection.3.2.3}
-\contentsline {subsubsection}{\numberline {3.2.4}Timely differences between methods}{18}{subsubsection.3.2.4}
-\contentsline {subsection}{\numberline {3.3}Applications}{18}{subsection.3.3}
-\contentsline {subsubsection}{\numberline {3.3.1}Properties of the approximated wavefunctions}{18}{subsubsection.3.3.1}
-\contentsline {subsubsection}{\numberline {3.3.2}The virial theorem }{19}{subsubsection.3.3.2}
-\contentsline {section}{\numberline {4}Results and discussion}{19}{section.4}
-\contentsline {subsection}{\numberline {4.1}Benchmarks and verification}{19}{subsection.4.1}
-\contentsline {subsubsection}{\numberline {4.1.1}Benchmarks for the brute force approach, no repulsion or jastrow factor}{19}{subsubsection.4.1.1}
-\contentsline {subsubsection}{\numberline {4.1.2}Benchmark for the brute force approach, with repulsion and jastrow factor}{20}{subsubsection.4.1.2}
-\contentsline {subsubsection}{\numberline {4.1.3}Comparison of different methods}{20}{subsubsection.4.1.3}
-\contentsline {subsection}{\numberline {4.2}Optimizations and differences}{22}{subsection.4.2}
-\contentsline {subsubsection}{\numberline {4.2.1}Test cases}{22}{subsubsection.4.2.1}
-\contentsline {subsubsection}{\numberline {4.2.2}Jastrow factor}{22}{subsubsection.4.2.2}
-\contentsline {subsubsection}{\numberline {4.2.3}Importance sampling}{24}{subsubsection.4.2.3}
-\contentsline {subsubsection}{\numberline {4.2.4}Timely differences between methods}{25}{subsubsection.4.2.4}
-\contentsline {subsubsection}{\numberline {4.2.5}Discussion: code efficiency and time constraints}{26}{subsubsection.4.2.5}
-\contentsline {subsection}{\numberline {4.3}Applications}{28}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}Properties of the approximated wavefunctions}{28}{subsubsection.4.3.1}
-\contentsline {subsubsection}{\numberline {4.3.2}The virial theorem }{28}{subsubsection.4.3.2}
-\contentsline {section}{\numberline {5}Conclusion}{28}{section.5}
-\contentsline {section}{Appendix \numberline {A}Reference to the questions posed in the project instructions}{31}{Appendix.1.A}
-\contentsline {section}{Appendix \numberline {B}Codes}{32}{Appendix.1.B}
+\contentsline {subsubsection}{\numberline {2.1.1}Natural units}{4}{subsubsection.2.1.1}
+\contentsline {subsubsection}{\numberline {2.1.2}The quantum mechanics and the variational principle}{5}{subsubsection.2.1.2}
+\contentsline {paragraph}{\numberline {2.1.2.1}The quantum mechanics}{5}{paragraph.2.1.2.1}
+\contentsline {paragraph}{\numberline {2.1.2.2}The variational principle}{6}{paragraph.2.1.2.2}
+\contentsline {paragraph}{\numberline {2.1.2.3}Finding the expectation value of $\mathaccentV {hat}05E{H}$}{6}{paragraph.2.1.2.3}
+\contentsline {paragraph}{\numberline {2.1.2.4}Verifying that we have found an eigenstate}{7}{paragraph.2.1.2.4}
+\contentsline {subsubsection}{\numberline {2.1.3}The test function $\Psi _T$}{8}{subsubsection.2.1.3}
+\contentsline {paragraph}{\numberline {2.1.3.1}The modified Slater determinant $\textrm {Det}_M(\phi _0, ... , \phi _{N-1})$}{8}{paragraph.2.1.3.1}
+\contentsline {paragraph}{\numberline {2.1.3.2}The Jastrow factor $\textrm {J} (\mathaccentV {vec}17Er_0, ... , \mathaccentV {vec}17Er_{N-1} )$}{9}{paragraph.2.1.3.2}
+\contentsline {paragraph}{\numberline {2.1.3.3}Motivation}{9}{paragraph.2.1.3.3}
+\contentsline {paragraph}{\numberline {2.1.3.4}Closed form expression of the local energy}{10}{paragraph.2.1.3.4}
+\contentsline {subsubsection}{\numberline {2.1.4}The virial theorem}{11}{subsubsection.2.1.4}
+\contentsline {subsection}{\numberline {2.2}The numerical foundation}{12}{subsection.2.2}
+\contentsline {subsubsection}{\numberline {2.2.1}Monte Carlo simulations}{12}{subsubsection.2.2.1}
+\contentsline {subsubsection}{\numberline {2.2.2}The Metropolis algorithm}{12}{subsubsection.2.2.2}
+\contentsline {paragraph}{\numberline {2.2.2.1}Brute force Metropolis}{14}{paragraph.2.2.2.1}
+\contentsline {paragraph}{\numberline {2.2.2.2}Importance sampling}{14}{paragraph.2.2.2.2}
+\contentsline {paragraph}{\numberline {2.2.2.3}Application of the variational Monte Carlo method}{15}{paragraph.2.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.3}Parallelization}{17}{subsubsection.2.2.3}
+\contentsline {section}{\numberline {3}Experimental}{19}{section.3}
+\contentsline {subsection}{\numberline {3.1}Benchmarks and verification}{19}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Benchmarks for the brute force approach, no repulsion or Jastrow factor}{19}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Benchmark for the brute force approach, with repulsion and Jastrow factor}{19}{subsubsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.3}Comparison of different methods}{19}{subsubsection.3.1.3}
+\contentsline {subsection}{\numberline {3.2}Optimization and differences}{20}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}Test cases}{20}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}Jastrow factor}{20}{subsubsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.3}Importance sampling}{20}{subsubsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.4}Timely differences between methods}{21}{subsubsection.3.2.4}
+\contentsline {subsection}{\numberline {3.3}Applications}{21}{subsection.3.3}
+\contentsline {subsubsection}{\numberline {3.3.1}Properties of the approximated wave functions}{21}{subsubsection.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.2}The virial theorem }{21}{subsubsection.3.3.2}
+\contentsline {section}{\numberline {4}Results and discussion}{22}{section.4}
+\contentsline {subsection}{\numberline {4.1}Benchmarks and verification}{22}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Benchmarks for the brute force approach, no repulsion or Jastrow factor}{22}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Benchmark for the brute force approach, with repulsion and Jastrow factor}{23}{subsubsection.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.3}Comparison of different methods}{23}{subsubsection.4.1.3}
+\contentsline {subsection}{\numberline {4.2}Optimization and differences}{25}{subsection.4.2}
+\contentsline {subsubsection}{\numberline {4.2.1}Test cases}{25}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2}Jastrow factor}{25}{subsubsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.3}Importance sampling}{27}{subsubsection.4.2.3}
+\contentsline {subsubsection}{\numberline {4.2.4}Timely differences between methods}{28}{subsubsection.4.2.4}
+\contentsline {subsubsection}{\numberline {4.2.5}Discussion: code efficiency and time constraints}{31}{subsubsection.4.2.5}
+\contentsline {subsection}{\numberline {4.3}Applications}{32}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Properties of the approximated wave functions}{32}{subsubsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.2}The virial theorem }{33}{subsubsection.4.3.2}
+\contentsline {section}{\numberline {5}Conclusion}{35}{section.5}
+\contentsline {section}{Appendix \numberline {A}Reference to the questions posed in the project instructions}{37}{Appendix.1.A}
+\contentsline {section}{Appendix \numberline {B}Code}{38}{Appendix.1.B}

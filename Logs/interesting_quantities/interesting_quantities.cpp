@@ -96,4 +96,12 @@ int main(){
 	inv11.interesting_quantities(0.93, 	0.57);
 	inv11.print_interesting_quantities_to_file("N6_w100.txt");
 
+	// 				omega 	N 	R
+	QuantumDots QD12(0.01,	6, 	1 );
+	//
+	Investigate inv12(QD12);
+	//							alpha	beta
+	inv12.interesting_quantities(0.61, 	0.10);
+	inv12.print_interesting_quantities_to_file("N6_w001.txt");
+
 }

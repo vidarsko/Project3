@@ -392,6 +392,42 @@ double QuantumDots::Potential (mat r){
 	//cout << "Potiential: " << V << endl;
 	return V;
 }
+double QuantumDots::Harmonic_potential(mat r){
+	/*
+	Function that returns just the harmonic part of the potential
+	Input:
+		- mat r 			- The position to be evaluated
+	Output: 
+		- double result 	- The harmonic potential at this point
+	*/
+	double result = 0; 
+	for (int i = 0; i<number_of_particles;i++){
+		result += 0.5 * omega*omega*pow(norm(r.col(i)),2);
+	}
+	return result;
+}
+double QuantumDots::Repulsive_potential(mat r){
+	/*
+	Function that returns just the repulsive potential 
+	Input:
+		- mat r 			- The position to be evaluated
+	Output: 
+		- double result 	- THe repulsive potential at the point.
+	*/
+	double result = 0;
+	double r_ij = 0;
+	if (repulsion==1){
+		for (int j = 0; j<number_of_particles; j++){
+			for (int i = 0; i<j ; i++){
+				r_ij = norm(r.col(i)-r.col(j));
+				result += 1/r_ij;
+			}
+		} 
+	}
+
+	//cout << "Potiential: " << result << endl;
+	return result;
+}
 
 double QuantumDots::Analytical_kinetic_energy(mat r){
 	/*
@@ -408,6 +444,7 @@ double QuantumDots::Analytical_kinetic_energy(mat r){
 	T *= -0.5;
 	return T;
 }
+
 
 double QuantumDots::LSP(Trial_Wavefunction wf, mat r, int i){
 	/*
@@ -528,12 +565,14 @@ double QuantumDots::Average_distance(mat r){
 		- double Average_distance.
 	*/
 	double AD = 0;
+	int tmp_counter = 0;
 	for (int i = 0; i< number_of_particles; i++){
 		for (int j=0; j<i; j++){
 			AD += norm(r.col(j)-r.col(i));
+			tmp_counter += 1;
 		}
 	}
-	AD /= (double)number_of_particles;
+	AD /= (double)tmp_counter;
 	return AD;
 }
 
@@ -735,7 +774,7 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 	
 	//Uncomment if investigating ratio vs delta_r
 	ratio = counter/(double)total_counter;
-	//cout << "Acceptance rate: " << ratio << endl;
+	cout << "Acceptance rate: " << ratio << endl;
 
 	//Create matrix for storing expectation values
 	vec expectation_values = zeros(2);
@@ -749,11 +788,12 @@ vec QuantumDots::Importance_Sampling_Metropolis_Expectation_Values(int M, double
 vec QuantumDots::Metropolis_interesting_quantities(int M){
 	/*
 	Function that uses the Monte Carlo Metropolis algorithm to 
-	find the the expectation value the energy, variance, average distance, potential_energy and kinetic_energy
+	find the the expectation value the energy, variance, average distance, potential_energy, harmonic potential energy,
+	repulsive potential energy and kinetic_energy
 	Input:
 		- int M 				 					- Number of Monte Carlo simulations
 	Output: 
-		- vec expectation_values (5)- Expectation values in the order given above
+		- vec expectation_values (7)- Expectation values in the order given above
 	*/
 	//Extract relevant data 
 	int number_of_particles = Wave_function.number_of_particles;
@@ -807,7 +847,13 @@ vec QuantumDots::Metropolis_interesting_quantities(int M){
 	r = randn<mat>(2,number_of_particles);
 	wavefunction_squared = Wave_function.call_squared(r);
 
-	double potential_energy = Potential(r);
+	double harmonic_P = Harmonic_potential(r);
+	double cumulative_HP = 0;
+
+	double repulsive_P = Repulsive_potential(r);
+	double cumulative_RP = 0;
+
+	double potential_energy = harmonic_P + repulsive_P;
 	double cumulative_PE = 0;
 
 	double kinetic_energy = Analytical_kinetic_energy(r);
@@ -843,12 +889,16 @@ vec QuantumDots::Metropolis_interesting_quantities(int M){
 			r = r_p;
 			wavefunction_squared = Wave_function.call_squared(r);
 			counter += 1;
-				potential_energy = Potential(r);
+				harmonic_P = Harmonic_potential(r);
+				repulsive_P = Repulsive_potential(r);
+				potential_energy = harmonic_P + repulsive_P;
 				kinetic_energy = Analytical_kinetic_energy(r);
 				local_energy = potential_energy + kinetic_energy;
 				average_distance = Average_distance(r);
 
 		}
+		cumulative_HP += harmonic_P;
+		cumulative_RP += repulsive_P;
 		cumulative_PE += potential_energy;
 		cumulative_KE += kinetic_energy;
 		cumulative_AD += average_distance;
@@ -866,12 +916,14 @@ vec QuantumDots::Metropolis_interesting_quantities(int M){
 	//cout << ", Step length: " << delta_r <<  "----" << endl;
 
 	//Create matrix for storing expectation values
-	vec expectation_values = zeros(5);
+	vec expectation_values = zeros(7);
 	expectation_values(0) = cumulative_local_energy/M;
 	expectation_values(1) = cumulative_local_energy_squared/M;
 	expectation_values(2) = cumulative_AD/M;
 	expectation_values(3) = cumulative_PE/M;
-	expectation_values(4) = cumulative_KE/M;
+	expectation_values(4) = cumulative_HP/M;
+	expectation_values(5) = cumulative_RP/M;
+	expectation_values(6) = cumulative_KE/M;
 	return expectation_values;
 }	
 
@@ -1337,6 +1389,8 @@ void Investigate::interesting_quantities(double alpha, double beta){
 	IQ_variance, 			- The variance of the local energy
 	IQ_average_distance		- expectation value of the distance between each electron 
 	IQ_potential_energy		- the expectation value of the potential
+	IQ_harmonic_potential 	- The part of the potential due to harmonic oscillation
+	IQ_repulsive_potential 	- The part of the potential du to repulsion
 	IQ_kinetic_energy		- The expectation value of the kinetic energy
 	
 	Input: 	
@@ -1345,7 +1399,7 @@ void Investigate::interesting_quantities(double alpha, double beta){
 
 	int MCS = pow(10,7);
 
-	Trial_Wavefunction wf(alpha, beta,system.omega,system.number_of_particles,1);
+	Trial_Wavefunction wf(alpha, beta,system.omega,system.number_of_particles,system.repulsion);
 	system.Set_Wavefunction(wf);
 
 	vec IQ = system.Metropolis_interesting_quantities(MCS);
@@ -1353,7 +1407,9 @@ void Investigate::interesting_quantities(double alpha, double beta){
 	IQ_variance = IQ(1)-IQ_energy*IQ_energy;
 	IQ_average_distance = IQ(2);
 	IQ_potential_energy = IQ(3);
-	IQ_kinetic_energy = IQ(4);
+	IQ_harmonic_potential = IQ(4);
+	IQ_repulsive_potential = IQ(5);
+	IQ_kinetic_energy = IQ(6);
 }
 
 
@@ -1566,6 +1622,8 @@ void Investigate::print_interesting_quantities_to_file(string filename){
 	output << "Variance: " << IQ_variance<< endl;
 	output << "Average distance: " << IQ_average_distance<< endl;
 	output << "Potential energy: " << IQ_potential_energy<< endl;
+	output << "Harmonic potential: " << IQ_harmonic_potential << endl;
+	output << "Repulsive potential: " << IQ_repulsive_potential << endl;
 	output << "Kinetic energy: " << IQ_kinetic_energy<< endl;
 
 	output.close();

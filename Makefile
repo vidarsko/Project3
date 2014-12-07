@@ -12,7 +12,8 @@ CXXFLAGSCOMP = -larmadillo -O2 -c -fopenmp -pg
 #file = long_run
 #file = importance_analysis
 #file = times
-file = interesting_quantities
+#file = interesting_quantities
+file = IS_accept
 
 # ****************************************************
 # Targets needed to bring the executable up to date

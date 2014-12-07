@@ -1,0 +1,124 @@
+\section{Experimental}
+
+\subsection{Benchmarks and verification} \label{sec:exp_benchmarks}
+
+\subsubsection{Benchmarks for the brute force approach, no repulsion or jastrow factor}
+As discussed in section \ref{sec:motivation}, when $\omega = 1$, the trial wavefunction should be able to reproduce the exact solution $E=2$ (in atomic units) when we disregard the electron repulsion part of the Hamiltonian and don't include the Jastrow factor. 
+This benchmark was tested
+\footnote{/Logs/N2\_norep\_bruteforce\_num/test\_investigate.cpp, 21.11.14. See appendix, section \ref{sec:codes}.}
+with the brute force metropolis method by varying $\alpha$ from $0$ to $1.5$ with steps of $0.05$ using numerical diffrentiation of the wavefunction in the expression of the local energy. 
+$10^7$ Monte Carlo simulations were performed for each $\alpha$ with a step length $\Delta r$ suited to each case to get an acceptance rate of around $0.5$ (which is implemented in the code before any monte carlo simulation is begun).
+
+Then then the benchmarks for the $N=6$ and $N=12$ electron case was tested\footnote{/Logs/N12\_norep\_bruteforce\_num/test\_investigate.cpp and /Logs/N6\_norep\_bruteforce\_num/test\_investigate.cpp, 21.11.14. }
+, still with the brute force approach and $10^7$ monte carlo simulations for the $N=6$ case and $10^6$ for the $N=12$ case, but this time with a smaller interval around $\alpha=1$, ranging from $0.9$ to $1.1$ with steps of $0.05$. 
+In order to also verify the correct implementation of the oscillator frequency $\omega$, this was set to $1.5$, so the energies to reproduce are $10 \omega = 15$ a.u. and $28 \omega = 42$ a.u. 
+
+\subsubsection{Benchmark for the brute force approach, with repulsion and jastrow factor} \label{sec:exp_N2rep}
+
+The exact energy of the two electron state \textit{with} repulsion has been shown \cite{Taut} to be $3 \omega$. 
+To test this result, first a fast investigation of $\langle E_L\rangle$ was performed as function of $\alpha$ and $\beta$ to find the region in which the lowest energy is. 
+Then, a more detailed search\footnote{/Logs/N2\_rep\_jast\_num/test\_investigate.cpp, 21.11.14.} was made with $\alpha \in [0.9,1.1]$ and $\beta \in [0.35,0.45]$, both in steps of $0.01$ and $10^6$ MC simulations at each step. 
+The brute force approach with numerical evaluation of the local energy was used and $\omega$ was set to $1$.
+If the exact wavefunction were within our trial parameters, then we would thus expect to get the exact answer $3 \cdot 1 = 3$ a.u., but since this may not be the case we expect the lowest energy to be larger than this, according to section \ref{sec:variational_principle}.
+
+\subsubsection{Comparison of different methods} \label{sec:exp_methods_E}
+
+As described in the theory section, a variety of different methods for solving the VMC problem has been explained. 
+Firstly, there is a choice whether to use brute force (BF) or importance sampling (IS) when picking new trial positions in the metropolis algorithm.
+Secondly there is the the possibility of using numerical methods (NLE) or the analytical expressions (ALE) when evaluating the local energy. 
+In addition, if we're using importance sampling in the metropolis algorithm, there is a choice to whether or not we should 
+use numerical (NQF) or analytical (AQF) expressions for the quantum force. 
+All these methods should output the same result for the expectation value of the local energy, and to verify this an investigation\footnote{/Logs/compare\_methods/first\_example.cpp, second\_example.cpp, third\_example.cpp, 21.11.14.}
+ of $\langle E_L \rangle$ with the different methods were performed for three different, semi-random\footnote{Chosen randomly by me, that is.}
+, combination of problem and trial function parameters; (Number of electrons $N$, $\alpha$, Jastrow Factor on (Jn) or off (Jf), $\beta$, $\omega$, Electron repulsion on (En) or off (Ef)) with $10^6$ monte carlo simulations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Optimizations and differences} \label{sec:exp_opt_and_diff}
+
+In this section, the different optimization methods, such as the jastrow factor, analytical expressions and importance sampling, was investigated. 
+The investigation of these issues was based upon twelve test cases with two electrons for which the optimal parameters were found, the procedure is explained in the following section.
+Since we have verified the validity of the different methods in section \ref{sec:exp_benchmarks}, we could use whatever method we wanted to run sample the energies. 
+For this section, if nothing else is written, the standard method is the brute force approach with analytical expressions for the local energy. 
+
+\subsubsection{Test cases}\label{sec:exp_test_cases}
+
+The twelve test cases for this section was $\omega = 0.01, 0.1, 0.28, 0.5, 0.75, 1.0$, with repulsion but with and without Jastrow factor.
+For each test case, the optimal parameters of $\alpha$ and $\beta$ was found by calculating the energies for $\alpha$ and $\beta$ in range $[0,1.2]$ with a resolution of $0.01$ with $10^5$ MC simulations.
+Then the parameters yielding the smallest energy was logged\footnote{/Logs/find\_parameters2/, 22.11.14}. 
+
+\subsubsection{Jastrow factor}
+
+When the repulsion part is present, we expect the jastrow factor to improve the correlation (interaction) between the electrons, giving us a better (i.e. lower) estimate of the energy. 
+We can measure the correlation by seeing how the lowest energy estimate changes with the jastrow factor relative to without the Jastrow factor. 
+
+\subsubsection{Importance sampling}
+
+Using importance sampling introduces the depence on $\delta t$ when evaluating $\langle E_L \rangle$, as discussed in section \ref{sec:theory_importance_sampling}.
+The dependence of the importance sampling method on $\delta t$ was investigated\footnote{Logs/importance\_sampling/, 24.11.14.} 
+for $10^3 - 10^6$ monte carlo simulations and $\delta_t \in [10^{-6}, 10^2]$. 
+Trial wave function parameters were chosen to be $\alpha = 0.72$ and $\beta = 0.24$\footnote{Which is not close to an eigenstate of the system for which we found optimal parameters in section \ref{sec:res_N2_rep}. This is important because if the parameters are such that we are close to an eigenstate, $E_L$ will not vary much from point to point, which reduces the importance of good sampling.}.
+For every time step $\delta t$, a brute force evaluation of the energy was also performed to compare the different methods. 
+
+
+\subsubsection{Timely differences between methods}
+
+The time used by the different methods was investigated for $N=2$\footnote{/Logs/times1/, 25.11.14.} electrons and 
+$N=6$\footnote{/Logs/times2/, 25.11.14} with some arbitrarily chosen values of $\alpha$ and $\beta$. 
+The notation of the methods are described in section \ref{sec:exp_methods_E}. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Applications}
+
+\subsubsection{Properties of the approximated wavefunctions}
+
+Five interesting properties of the approximated wavefunctions found in section \ref{sec:res_test_cases} was investigated\footnote{Logs/interesting\_quantities, 29.11.14.} with $10^7$ Monte Carlo simulations.
+Another six test cases and wavefunctions with $6$ electrons found by using the same methodas described in section \ref{sec:exp_test_cases}\footnote{For the $\omega=0.01$ case, a manual search, as the one in section \ref{sec:exp_N2rep}, had to be made when the result from the automated search yielded negative energies. /Logs/N6w001/, 28.11.14.} .
+These five interesting properties were
+
+\begin{itemize}
+	\item The expectation value of the energy
+	\item The variance of the local energy
+	\item The expectation value of the average distance between electrons
+	\item The expectation value of the potential energy of the system 
+	\item The expectation value of the kinetic energy of the system
+\end{itemize}
+
+\subsubsection{The virial theorem }
+
+The interesting quantities from the last exercise was also found\footnote{/Logs/interesting\_quantities2, 29.11.14.} for the no repulsion, no jastrow factor case, for which the optimal parameter is $\alpha = 1$ as found in \ref{sec:res_N2N6_norep} in order to test the virial theorem for this case too. 

@@ -14,4 +14,4 @@ subplot(2,1,2)
 surf(beta,alpha,E);
 xlabel('beta')
 ylabel('alpha')
-zlabel('Energy (a.u.)')
+zlabel('Energy')

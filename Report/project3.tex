@@ -18,6 +18,15 @@
 
 \usepackage{empheq}
 \newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
+\newcommand{\kg}{~\textrm{kg}}
+\newcommand{\kgn}{~\textrm{kg}_0}
+\newcommand{\s}{~\textrm{s}}
+\newcommand{\sn}{~\textrm{s}_0}
+\newcommand{\m}{~\textrm{m}}
+\newcommand{\mn}{~\textrm{m}_0}
+\newcommand{\Jn}{~\textrm{J}_0}
+\newcommand{\Hz}{~\textrm{Hz}}
+\newcommand{\Hzn}{~\textrm{Hz}_0}
 
 % Document formatting
 \setlength{\parindent}{0mm}
@@ -138,8 +147,8 @@ Vidar \textsc{Skogvoll}
 \end{minipage}
 \begin{minipage}{0.4\textwidth}
 \begin{flushright} \large
-\emph{ } \\
- \textsc{ }
+\emph{ Candidate: } \\
+ \textsc{ 32}
 \end{flushright}
 \end{minipage}
 
@@ -153,7 +162,20 @@ Vidar \textsc{Skogvoll}
 \setcounter{page}{2}
 
 \begin{abstract}
-Here is a short summary of the project.
+Variational Monte Carlo has been implemented to find upper bounds on the energy of electrons in a harmonic oscillator trap. 
+The Metropolis algorithm was implemented, both in a brute force way and using importance sampling. 
+Numerical and analytical expressions was used for the energy functions and the quantum force.
+These different ways of solving the problem are referred to as "methods".  
+
+The brute force method with numerical expressions was verified for 2,6 and 12 electrons without electron repulsion against known benchmarks.
+Then the energy for the 2 electron case with repulsion was found to be $3.00022 \Jn$ (Unit: see section \ref{sec:theory_natural_units}), a value very close to the analytical solution of $3 \Jn$ credited to Taut \cite{Taut}. As a third verification, the different methods produced the same results when given the same problem parameters.
+
+Then some optimizations and computational aspects was looked at.
+The importance of the Jastrow factor was investigated and shown to decrease with oscillator strength. 
+Importance sampling yielded a large acceptance ratio and seemed stable around a time step of $\delta t = 10^{-2} \sn$. 
+As for time usage, the brute force method with analytical expressions was the fastest and proved almost 20 times faster than the least efficient method.
+
+Finally, some properties of the optimal wave functions was investigated and the virial theorem was tested for both with and without repulsion. The theorem held for the non-repulsion oscillator but not for the oscillator with electron repulsion. 
 \end{abstract}
 
 \hypersetup{linkcolor=black}
@@ -165,11 +187,12 @@ Here is a short summary of the project.
 
 \input{introduction}
 \input{theory}
+\clearpage
 \input{experimental}
+\clearpage
 \input{resultsanddiscussion}
+\input{conclusion}
 
-
-\section{Conclusion}
 
 \clearpage
 \bibliography{bibliography}{}
@@ -186,31 +209,32 @@ Since the format of this report does not correspond to the structure of the proj
 \begin{table}[h!]
         \begin{tabular}{lll}
         \toprule
-                        & Instruction           & Reference \\
+                        & Instruction           & Section[s] \\
         \midrule
-        a )             & If we only include ... the energy is 2 a.u. & Section \ref{sec:res_N2N6_norep} \\
-                        & Convince yourself that ... is simply 2$\omega$. & Section \ref{sec:motivation} \\
-                        & What is the total spin ...? Find arguments for why... & Section \ref{sec:motivation} \\
+        a )             & If we only include ... the energy is 2 a.u. &  \ref{sec:res_N2N6_norep} \\
+                        & Convince yourself that ... is simply 2$\omega$. &\ref{sec:motivation} \\
+                        & What is the total spin ...? Find arguments for why... &  \ref{sec:motivation} \\
         \midrule
-        b )             & Perform a Variational Monte Carlo calculation...    & Section \ref{sec:res_N2_rep}\\
-                        & You should parallize your program         & Sections \ref{sec:theory_parallelization} and \ref{sec:codes} \\
-                        & Find the energy minimum           & Section \ref{sec:res_N2_rep} \\
-                        & Compute also the mean distance    & Section \ref{sec:prop_of_app} \\
+        b )             & Perform a Variational Monte Carlo calculation...    & \ref{sec:res_N2_rep}\\
+                        & You should parallize your program.         & \ref{sec:theory_parallelization}, \ref{sec:codes} \\
+                        & Find the energy minimum.           & \ref{sec:res_N2_rep} \\
+                        & Compute also the mean distance...    &  \ref{sec:res_properties} \\
         \midrule
-        c)            & Introduce now importance ... eventual differences. & Sections \ref{sec:res_importance_sampling}, \ref{sec:res_methods_E} and \ref{sec:res_timely_diff}\\
+        c)            & Introduce now importance ... eventual differences. & \ref{sec:res_importance_sampling}, \ref{sec:res_methods_E}, \ref{sec:res_timely_diff}\\
         \midrule 
-        d)  &  How important are ... the Jastrow factor? & Section \ref{sec:res_jastrow}\\
+        d)  &  Compute the expectation ... and $\omega = 1.0$. & \ref{sec:res_properties}\\
+            &  How important are ... the Jastrow factor? & \ref{sec:res_jastrow}\\
         \midrule
-        e) & Compute...  for N = 6 electrons ...  and $\omega = 1.0$. & Section \ref{sec:prop_of_app} \\ 
-         &  Reproduce the unperturbed ... is switched off.  & Section \ref{sec:res_N2N6_norep} \\
-         &      Convince yourself ... for N = 6 is 10$\omega$ & Section \ref{sec:motivation} \\
-         & What is the expected total spin of the ground states? & Section \ref{sec:motivation} \\
+        e) & Compute...  for N = 6 electrons ...  and $\omega = 1.0$. & \ref{sec:res_properties} \\ 
+         &  Reproduce the unperturbed ... is switched off.  & \ref{sec:res_N2N6_norep} \\
+         &      Convince yourself ... for N = 6 is 10$\omega$. & \ref{sec:motivation} \\
+         & What is the expected total spin of the ground states? & \ref{sec:motivation} \\
 
         \midrule 
-        f) \\
+        f) & Use your optimal results ... comment your results. & \ref{sec:res_virial}\\
         \midrule
-        g) &  Find closed-form expressions ... & Section \ref{sec:closed_form_local_energy} \\
-           & compare the results ... for both N = 2 and N = 6 & Section \ref{sec:res_timely_diff} \\
+        g) &  Find closed-form expressions... & \ref{sec:closed_form_local_energy} \\
+           & compare the results ... for both N = 2 and N = 6 & \ref{sec:res_timely_diff} \\
         \bottomrule
         \end{tabular}
         \caption{Reference list over the posed questions and where to find the answer.}
@@ -221,19 +245,20 @@ Since the format of this report does not correspond to the structure of the proj
 \clearpage
 
 
-\section{Codes} \label{sec:codes}
+\section{Code} \label{sec:codes}
 All codes used in this exercise can be found at GitHub: \newline
 \url{https://github.com/vidarsko/Project3}. 
 
 The class structure of the code is given in the bullet points below
 
 \begin{itemize}
-    \item TrialWavefunction
-    \item QuantumDots
-    \item Investigate
+    \item \textbf{TrialWavefunction:} A class for storing parameters ($\alpha$, $\beta$, number of particles etc. ) of the trial wave function and all the functions (Hermite polynomials, $n_x(i)$ etc.) in order to call the function properly.
+    \item \textbf{QuantumDots:} A class in which the parameters ($\omega$, number of particles, repulsion on/off etc. ) of the system was stored. The different Monte Carlo methods were also part of this class and all the functions (local energy function, quantum force function etc.) needed to execute them properly. 
+    \item \textbf{Investigate:} A class with different investigation functions (for such things as finding the optimal parameters, comparing times etc.) made in order to easily run simulations for different input parameters. Most of the solve functions made use of parallelization. For example in order to find the expectation value of the energy for different trial wave function parameters at the same time. 
+    The parallelization was implemented using OpenMP in the simplest way through a parallelized "for"-loop. Using four threads, $100 \%$ of the CPU of my computer was used as opposed to $25\%$ when not using parallelization, suggesting that it worked properly.
 \end{itemize}
 
-Througout this report, reference to different codes are made as footnotes together with the date at which they were run. 
+Throughout this report, reference to different codes are made as footnotes together with the date at which they were run. 
 
 \end{appendices}
 \end{document}

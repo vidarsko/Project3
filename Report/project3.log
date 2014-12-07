@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.12)  28 NOV 2014 22:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.12)  7 DEC 2014 21:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -939,26 +939,27 @@ Package: titlesec 2011/12/15 v2.10.0 Sectioning titles
 ) (./project3.aux)
 \openout1 = `project3.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 99.
-LaTeX Font Info:    ... okay on input line 99.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 99.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 99.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 108.
+LaTeX Font Info:    ... okay on input line 108.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 108.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 108.
+
  (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 99.
+LaTeX Font Info:    ... okay on input line 108.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -992,7 +993,7 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: floatrow package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box45
-Package hyperref Info: Link coloring ON on input line 99.
+Package hyperref Info: Link coloring ON on input line 108.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1003,15 +1004,15 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 \c@section@level=\count158
 LaTeX Info: Redefining \Ref on input line 513.
 )
-LaTeX Info: Redefining \ref on input line 99.
-LaTeX Info: Redefining \pageref on input line 99.
-LaTeX Info: Redefining \nameref on input line 99.
+LaTeX Info: Redefining \ref on input line 108.
+LaTeX Info: Redefining \pageref on input line 108.
+LaTeX Info: Redefining \nameref on input line 108.
 
 (./project3.out) (./project3.out)
 \@outlinefile=\write3
 \openout3 = `project3.out'.
 
-LaTeX Info: Redefining \Ref on input line 99.
+LaTeX Info: Redefining \Ref on input line 108.
 \c@lstlisting=\count159
 
 *geometry* driver: auto-detecting
@@ -1048,17 +1049,17 @@ LaTeX Info: Redefining \Ref on input line 99.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-<forside.jpg, id=209, 1806.75pt x 1804.7425pt>
+<forside.jpg, id=213, 676.77844pt x 257.46187pt>
 File: forside.jpg Graphic file (type jpg)
  <use forside.jpg>
-Package pdftex.def Info: forside.jpg used on input line 120.
-(pdftex.def)             Requested size: 167.2989pt x 167.10129pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 138.
+Package pdftex.def Info: forside.jpg used on input line 129.
+(pdftex.def)             Requested size: 167.2989pt x 63.64244pt.
+LaTeX Font Info:    Try loading font information for U+msa on input line 147.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 138.
+LaTeX Font Info:    Try loading font information for U+msb on input line 147.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1074,94 +1075,102 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 [3] (./introduction.tex) (./theory.tex [4
 
-]
+] [5]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 71.
-
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 71.
-
-[5]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 192.
+(hyperref)                removing `math shift' on input line 112.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\Psi' on input line 192.
+(hyperref)                removing `math shift' on input line 112.
+
+[6] [7]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 239.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 192.
+(hyperref)                removing `\Psi' on input line 239.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 192.
+(hyperref)                removing `subscript' on input line 239.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 204.
+(hyperref)                removing `math shift' on input line 239.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 204.
+(hyperref)                removing `math shift' on input line 253.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\phi' on input line 204.
+(hyperref)                removing `subscript' on input line 253.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 204.
+(hyperref)                removing `\phi' on input line 253.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\phi' on input line 204.
+(hyperref)                removing `subscript' on input line 253.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 204.
+(hyperref)                removing `\phi' on input line 253.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 204.
-
-[6]
-
-Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 270.
+(hyperref)                removing `subscript' on input line 253.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 270.
+(hyperref)                removing `math shift' on input line 253.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 270.
+(hyperref)                removing `math shift' on input line 323.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 270.
+(hyperref)                removing `subscript' on input line 323.
 
-[7] <theory/psi_levels.jpg, id=342, 835.62187pt x 411.03563pt>
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 323.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 323.
+
+[8] <theory/psi_levels.jpg, id=372, 835.62187pt x 411.03563pt>
 File: theory/psi_levels.jpg Graphic file (type jpg)
 
 <use theory/psi_levels.jpg>
-Package pdftex.def Info: theory/psi_levels.jpg used on input line 320.
+Package pdftex.def Info: theory/psi_levels.jpg used on input line 375.
 (pdftex.def)             Requested size: 418.25368pt x 205.73682pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 320--323
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 375--378
  [][] 
  []
 
-[8 <./theory/psi_levels.jpg>] [9]
-Overfull \hbox (6.1458pt too wide) in paragraph at lines 445--459
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[9] [10 <./theory/psi_levels.jpg>]
+Overfull \hbox (6.1458pt too wide) in paragraph at lines 500--514
  [][] 
  []
 
-[10]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[11]
 Package epstopdf Info: Source file: <theory/Monte_Carlo_Illustration.eps>
 (epstopdf)                    date: 2014-11-26 10:29:07
 (epstopdf)                    size: 2640997 bytes
@@ -1171,89 +1180,92 @@ ted-to.pdf>
 (epstopdf)                    size: 108620 bytes
 (epstopdf)             Command: <repstopdf --outfile=theory/Monte_Carlo_Illustr
 ation-eps-converted-to.pdf theory/Monte_Carlo_Illustration.eps>
-(epstopdf)             \includegraphics on input line 527.
+(epstopdf)             \includegraphics on input line 590.
 Package epstopdf Info: Output file is already uptodate.
 
-<theory/Monte_Carlo_Illustration-eps-converted-to.pdf, id=382, 475.7775pt x 166
+<theory/Monte_Carlo_Illustration-eps-converted-to.pdf, id=409, 475.7775pt x 166
 .6225pt>
 File: theory/Monte_Carlo_Illustration-eps-converted-to.pdf Graphic file (type p
 df)
  <use theory/Monte_Carlo_Illustration-eps-converted-to.pdf>
 Package pdftex.def Info: theory/Monte_Carlo_Illustration-eps-converted-to.pdf u
-sed on input line 527.
+sed on input line 590.
 (pdftex.def)             Requested size: 418.25368pt x 146.48332pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 527--530
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 590--593
  [][] 
  []
 
-[11 <./theory/Monte_Carlo_Illustration-eps-converted-to.pdf>] [12] [13]
-(./algorithm.tex) [14]
-<theory/parallelization.jpg, id=478, 91.7829pt x 53.9616pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[12] [13 <./theory/Monte_Carlo_Illustration-eps-converted-to.pdf>] [14]
+(./algorithm.tex [15]) [16]
+<theory/parallelization.jpg, id=513, 91.7829pt x 53.9616pt>
 File: theory/parallelization.jpg Graphic file (type jpg)
 
 <use theory/parallelization.jpg>
-Package pdftex.def Info: theory/parallelization.jpg used on input line 739.
+Package pdftex.def Info: theory/parallelization.jpg used on input line 814.
 (pdftex.def)             Requested size: 275.348pt x 161.88437pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) (./experimental.tex [15]
-Overfull \hbox (13.54076pt too wide) in paragraph at lines 12--12
+) [17] [18 <./theory/parallelization.jpg>] (./experimental.tex
+Overfull \hbox (13.54076pt too wide) in paragraph at lines 11--11
 [][][]\OT1/cmr/m/n/8 /Logs/N12[]norep[]bruteforce[]num/test[]investigate.cpp an
 d /Logs/N6[]norep[]bruteforce[]num/test[]investigate.cpp,
  []
 
-[16 <./theory/parallelization.jpg>] [17]
+[19
 
-LaTeX Warning: Reference `sec:N2_rep' on page 18 undefined on input line 79.
-
-) (./resultsanddiscussion.tex [18]
+] [20]) [21] (./resultsanddiscussion.tex
 Package epstopdf Info: Source file: <results/N2_norep.eps>
-(epstopdf)                    date: 2014-11-26 10:18:44
-(epstopdf)                    size: 8900 bytes
+(epstopdf)                    date: 2014-12-07 15:00:14
+(epstopdf)                    size: 9400 bytes
 (epstopdf)             Output file: <results/N2_norep-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-11-26 10:19:12
-(epstopdf)                    size: 6806 bytes
+(epstopdf)                    date: 2014-12-07 15:00:26
+(epstopdf)                    size: 6877 bytes
 (epstopdf)             Command: <repstopdf --outfile=results/N2_norep-eps-conve
 rted-to.pdf results/N2_norep.eps>
-(epstopdf)             \includegraphics on input line 35.
+(epstopdf)             \includegraphics on input line 36.
 Package epstopdf Info: Output file is already uptodate.
 
-<results/N2_norep-eps-converted-to.pdf, id=548, 410.53375pt x 178.6675pt>
+<results/N2_norep-eps-converted-to.pdf, id=599, 410.53375pt x 178.6675pt>
 File: results/N2_norep-eps-converted-to.pdf Graphic file (type pdf)
 
 <use results/N2_norep-eps-converted-to.pdf>
 Package pdftex.def Info: results/N2_norep-eps-converted-to.pdf used on input li
-ne 35.
+ne 36.
 (pdftex.def)             Requested size: 418.25368pt x 182.02577pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 35--37
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 36--38
  [][] 
  []
 
-[19 <./results/N2_norep-eps-converted-to.pdf>]
+[22
+
+ <./results/N2_norep-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <results/N2_rep.eps>
-(epstopdf)                    date: 2014-11-26 10:14:47
-(epstopdf)                    size: 96834 bytes
+(epstopdf)                    date: 2014-12-07 15:04:31
+(epstopdf)                    size: 98406 bytes
 (epstopdf)             Output file: <results/N2_rep-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-11-26 10:15:52
-(epstopdf)                    size: 22557 bytes
+(epstopdf)                    date: 2014-12-07 15:04:36
+(epstopdf)                    size: 22848 bytes
 (epstopdf)             Command: <repstopdf --outfile=results/N2_rep-eps-convert
 ed-to.pdf results/N2_rep.eps>
-(epstopdf)             \includegraphics on input line 87.
+(epstopdf)             \includegraphics on input line 89.
 Package epstopdf Info: Output file is already uptodate.
 
-<results/N2_rep-eps-converted-to.pdf, id=567, 410.53375pt x 309.155pt>
+<results/N2_rep-eps-converted-to.pdf, id=617, 449.68pt x 338.26375pt>
 File: results/N2_rep-eps-converted-to.pdf Graphic file (type pdf)
 
 <use results/N2_rep-eps-converted-to.pdf>
 Package pdftex.def Info: results/N2_rep-eps-converted-to.pdf used on input line
- 87.
-(pdftex.def)             Requested size: 418.25368pt x 314.96597pt.
+ 89.
+(pdftex.def)             Requested size: 418.25368pt x 314.6388pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 87--91
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 89--93
  [][] 
  []
 
@@ -1263,13 +1275,11 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[20] [21 <./results/N2_rep-eps-converted-to.pdf>]
+[23]
 
-LaTeX Warning: Reference `sec:N2_rep' on page 22 undefined on input line 195.
+LaTeX Warning: Text page 24 contains only floats.
 
-
-LaTeX Warning: Reference `sec:N2_rep' on page 22 undefined on input line 198.
-
+[24 <./results/N2_rep-eps-converted-to.pdf>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -1282,65 +1292,62 @@ Package epstopdf Info: Source file: <results/correlations_jastrow.eps>
 (epstopdf)                    size: 7057 bytes
 (epstopdf)             Command: <repstopdf --outfile=results/correlations_jastr
 ow-eps-converted-to.pdf results/correlations_jastrow.eps>
-(epstopdf)             \includegraphics on input line 227.
+(epstopdf)             \includegraphics on input line 231.
 Package epstopdf Info: Output file is already uptodate.
 
-<results/correlations_jastrow-eps-converted-to.pdf, id=597, 441.65pt x 228.855p
+<results/correlations_jastrow-eps-converted-to.pdf, id=647, 441.65pt x 228.855p
 t>
 File: results/correlations_jastrow-eps-converted-to.pdf Graphic file (type pdf)
 
  <use results/correlations_jastrow-eps-converted-to.pdf>
 Package pdftex.def Info: results/correlations_jastrow-eps-converted-to.pdf used
- on input line 227.
+ on input line 231.
 (pdftex.def)             Requested size: 418.25368pt x 216.74052pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 227--229
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 231--233
  [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-LaTeX Warning: Reference `sec:N2_rep' on page 22 undefined on input line 234.
-
-[22] [23 <./results/correlations_jastrow-eps-converted-to.pdf>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 266.
+[25] [26 <./results/correlations_jastrow-eps-converted-to.pdf>]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 270.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 266.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 270.
 Package epstopdf Info: Source file: <results/importance_sampling.eps>
-(epstopdf)                    date: 2014-11-26 10:09:56
-(epstopdf)                    size: 15305 bytes
+(epstopdf)                    date: 2014-12-07 15:07:23
+(epstopdf)                    size: 16826 bytes
 (epstopdf)             Output file: <results/importance_sampling-eps-converted-
 to.pdf>
-(epstopdf)                    date: 2014-11-26 10:10:21
-(epstopdf)                    size: 12625 bytes
+(epstopdf)                    date: 2014-12-07 15:07:26
+(epstopdf)                    size: 12813 bytes
 (epstopdf)             Command: <repstopdf --outfile=results/importance_samplin
 g-eps-converted-to.pdf results/importance_sampling.eps>
-(epstopdf)             \includegraphics on input line 293.
+(epstopdf)             \includegraphics on input line 297.
 Package epstopdf Info: Output file is already uptodate.
 
-<results/importance_sampling-eps-converted-to.pdf, id=619, 410.53375pt x 277.03
+<results/importance_sampling-eps-converted-to.pdf, id=672, 410.53375pt x 277.03
 5pt>
 File: results/importance_sampling-eps-converted-to.pdf Graphic file (type pdf)
  <use results/importance_sampling-eps-converted-to.pdf>
 Package pdftex.def Info: results/importance_sampling-eps-converted-to.pdf used 
-on input line 293.
+on input line 297.
 (pdftex.def)             Requested size: 418.25368pt x 282.24223pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 293--294
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 297--299
  [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[24]
+[27]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -1352,110 +1359,130 @@ Package epstopdf Info: Source file: <results/times.eps>
 (epstopdf)                    size: 20246 bytes
 (epstopdf)             Command: <repstopdf --outfile=results/times-eps-converte
 d-to.pdf results/times.eps>
-(epstopdf)             \includegraphics on input line 361.
+(epstopdf)             \includegraphics on input line 382.
 Package epstopdf Info: Output file is already uptodate.
-<results/times-eps-converted-to.pdf, id=630, 407.5225pt x 457.71pt>
+<results/times-eps-converted-to.pdf, id=684, 407.5225pt x 457.71pt>
 File: results/times-eps-converted-to.pdf Graphic file (type pdf)
 
 <use results/times-eps-converted-to.pdf>
 Package pdftex.def Info: results/times-eps-converted-to.pdf used on input line 
-361.
+382.
 (pdftex.def)             Requested size: 418.25368pt x 469.78436pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 361--362
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 382--384
  [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[25 <./results/importance_sampling-eps-converted-to.pdf>] [26] [27 <./results/t
-imes-eps-converted-to.pdf>]
+[28 <./results/importance_sampling-eps-converted-to.pdf>] [29] [30 <./results/t
+imes-eps-converted-to.pdf>] [31
 
-LaTeX Warning: Reference `tab:interesting_quantitites' on page 28 undefined on 
-input line 445.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
+]
 Package epstopdf Info: Source file: <results/AD.eps>
-(epstopdf)                    date: 2014-11-28 22:49:07
-(epstopdf)                    size: 63445 bytes
+(epstopdf)                    date: 2014-12-07 15:08:59
+(epstopdf)                    size: 116407 bytes
 (epstopdf)             Output file: <results/AD-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-11-28 22:48:56
-(epstopdf)                    size: 9993 bytes
+(epstopdf)                    date: 2014-12-07 15:09:02
+(epstopdf)                    size: 10764 bytes
 (epstopdf)             Command: <repstopdf --outfile=results/AD-eps-converted-t
 o.pdf results/AD.eps>
-(epstopdf)             \includegraphics on input line 485.
-runsystem(repstopdf --outfile=results/AD-eps-converted-to.pdf results/AD.eps)..
-.executed safely (allowed).
+(epstopdf)             \includegraphics on input line 510.
+Package epstopdf Info: Output file is already uptodate.
 
-Package epstopdf Info: Result file: <results/AD-eps-converted-to.pdf>
-(epstopdf)                    date: 2014-11-28 22:49:12
-(epstopdf)                    size: 9966 bytes.
-<results/AD-eps-converted-to.pdf, id=684, 449.68pt x 211.79124pt>
+<results/AD-eps-converted-to.pdf, id=743, 423.5825pt x 184.69pt>
 File: results/AD-eps-converted-to.pdf Graphic file (type pdf)
 
 <use results/AD-eps-converted-to.pdf>
-Package pdftex.def Info: results/AD-eps-converted-to.pdf used on input line 485
+Package pdftex.def Info: results/AD-eps-converted-to.pdf used on input line 510
 .
-(pdftex.def)             Requested size: 418.25368pt x 196.99936pt.
+(pdftex.def)             Requested size: 418.25368pt x 182.37302pt.
 
-Overfull \hbox (6.79999pt too wide) in paragraph at lines 485--487
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 510--513
  [][] 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) [28] [29 <./results/AD-eps-converted-to.pdf>] (./project3.bbl
+[32]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+Package epstopdf Info: Source file: <results/virial.eps>
+(epstopdf)                    date: 2014-11-29 16:31:06
+(epstopdf)                    size: 113625 bytes
+(epstopdf)             Output file: <results/virial-eps-converted-to.pdf>
+(epstopdf)                    date: 2014-11-29 16:31:08
+(epstopdf)                    size: 11425 bytes
+(epstopdf)             Command: <repstopdf --outfile=results/virial-eps-convert
+ed-to.pdf results/virial.eps>
+(epstopdf)             \includegraphics on input line 576.
+Package epstopdf Info: Output file is already uptodate.
+<results/virial-eps-converted-to.pdf, id=753, 505.89pt x 215.80624pt>
+File: results/virial-eps-converted-to.pdf Graphic file (type pdf)
+
+<use results/virial-eps-converted-to.pdf>
+Package pdftex.def Info: results/virial-eps-converted-to.pdf used on input line
+ 576.
+(pdftex.def)             Requested size: 418.25368pt x 178.42432pt.
+
+Overfull \hbox (6.79999pt too wide) in paragraph at lines 576--578
+ [][] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+) (./conclusion.tex [33 <./results/AD-eps-converted-to.pdf>]
+
+LaTeX Warning: Text page 34 contains only floats.
+
+[34 <./results/virial-eps-converted-to.pdf>]) [35] (./project3.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 4--9
 []\OT1/cmr/m/n/10 Morten Hjorth-Jensen.  Ad-di-tional slides for monte carlo pr
 oject.
  []
 
-) [30
+) [36
 
-] [31
-
-]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 239.
- [32
+] [37
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 239.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 264.
+ [38
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 264.
  (./project3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 239.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 239.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 264.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 264.
 Package rerunfilecheck Info: File `project3.out' has not changed.
-(rerunfilecheck)             Checksum: 9B9AD2E5A5950AC113E4EBA04F02C7A8;4343.
-
-
-LaTeX Warning: There were undefined references.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 239.
+(rerunfilecheck)             Checksum: 77BE19F782D56ABFAE7803D51C2E3898;4419.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 264.
  ) 
 Here is how much of TeX's memory you used:
- 14167 strings out of 493304
- 208164 string characters out of 6139871
- 364744 words of memory out of 5000000
- 17179 multiletter control sequences out of 15000+600000
- 16516 words of font info for 63 fonts, out of 8000000 for 9000
+ 14222 strings out of 493304
+ 208905 string characters out of 6139871
+ 366413 words of memory out of 5000000
+ 17201 multiletter control sequences out of 15000+600000
+ 17762 words of font info for 68 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 41i,21n,44p,610b,683s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,21n,44p,652b,683s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/share/texli
 ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmitt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/s
-hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/te
-xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/t
+/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmitt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
+i5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/s
+hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/font
 s/type1/public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/
@@ -1463,18 +1490,19 @@ public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
-usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/tex
-live/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-su
-per/sfrm1000.pfb>
-Output written on project3.pdf (32 pages, 1144708 bytes).
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texl
+ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmtt8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
+c/amsfonts/symbols/msbm10.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfr
+m1000.pfb>
+Output written on project3.pdf (38 pages, 748797 bytes).
 PDF statistics:
- 874 PDF objects out of 1000 (max. 8388607)
- 772 compressed objects within 8 object streams
- 209 named destinations out of 1000 (max. 500000)
- 459 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 982 PDF objects out of 1000 (max. 8388607)
+ 867 compressed objects within 9 object streams
+ 235 named destinations out of 1000 (max. 500000)
+ 472 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,250 @@
+% REMEMBER TO SET LANGUAGE!
+\documentclass[a4paper,10pt,english]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+% Standard stuff
+\usepackage{amsmath,graphicx,babel,varioref,verbatim,amsfonts}
+% colors in text
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+% Hyper refs
+\usepackage[framestyle=none,framefit=yes,heightadjust=all,framearound=all]{floatrow}    
+\floatsetup[figure]{style=Boxed,framearound=all}
+\usepackage{fancyhdr}
+\usepackage[colorlinks]{hyperref}
+
+\usepackage[titletoc]{appendix}
+\usepackage{multirow}
+
+
+\usepackage{empheq}
+\newcommand*\widefbox[1]{\fbox{\hspace{2em}#1\hspace{2em}}}
+
+% Document formatting
+\setlength{\parindent}{0mm}
+\setlength{\parskip}{1.5mm}
+%\setcounter{section}{-1} Hvis du vil ha 0 som første avsnitt
+\numberwithin{figure}{subsection} 
+\numberwithin{table}{subsection}
+\numberwithin{equation}{subsection}
+
+%Color scheme for listings
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+
+%Listings configuration
+\usepackage{listings}
+\lstset{
+	backgroundcolor=\color{lbcolor},
+	tabsize=4,
+	rulecolor=,
+	language=python,
+        basicstyle=\scriptsize,
+        upquote=true,
+        aboveskip={1.5\baselineskip},
+        columns=fixed,
+	numbers=left,
+        showstringspaces=false,
+        extendedchars=true,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        frame=single,
+        showtabs=false,
+        showspaces=false,
+        showstringspaces=false,
+        identifierstyle=\ttfamily,
+        keywordstyle=\color[rgb]{0,0,1},
+        commentstyle=\color[rgb]{0.133,0.545,0.133},
+        stringstyle=\color[rgb]{0.627,0.126,0.941}
+        }
+        
+%User settings
+\newcounter{subproject}
+\renewcommand{\thesubproject}{\alph{subproject}}
+\newenvironment{subproj}{
+\begin{description}
+\item[\refstepcounter{subproject}(\thesubproject)]
+}{\end{description}}
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\include{equationtax}
+
+%Other
+\usepackage{geometry}
+\usepackage{booktabs}
+\newcommand{\shaderow}{\rowcolor{gray!20}[2pt][2pt]}
+\newcommand{\Det}{\textrm{Det}_M}
+\newcommand{\J}{\textrm{J}}
+\usepackage[boxed,linesnumbered,lined,algosection]{algorithm2e}
+\usepackage{caption}
+
+
+%Four layers?
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\setcounter{tocdepth}{4}
+
+
+%Lettering instead of numbering in different layers
+%\renewcommand{\labelenumi}{\alph{enumi}}
+%\renewcommand{\thesubsection}{\alph{subsection}}
+
+
+\begin{document}
+%Header
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{#1}{}}
+
+\pagestyle{fancy}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}}
+
+\fancyhf{}
+%Header
+%\rhead{\fancyplain{}{ NAVN PÅ PROSJEKT}} % predefined ()
+\lhead{\fancyplain{}{\rightmark }} % 1. sectionname, 1.1 subsection name etc
+\cfoot{\fancyplain{}{\thepage}}
+
+
+%Forside
+\begin{titlepage}
+\begin{center}
+
+% Upper part of the page. The '~' is needed because \\
+% only works if a paragraph has started.
+\includegraphics[width=0.4\textwidth]{forside.jpg}~\\[1cm]
+
+\textsc{\LARGE Project 3}\\[1.5cm]
+
+\textsc{\Large FYS3150 - Computational physics}\\[0.5cm]
+
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries Quantum dots \\[0.4cm] }
+
+\HRule \\[1.5cm]
+
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+\emph{Author:}\\
+Vidar \textsc{Skogvoll}
+\end{flushleft}
+\end{minipage}
+\begin{minipage}{0.4\textwidth}
+\begin{flushright} \large
+\emph{ Candidate: } \\
+ \textsc{ 32}
+\end{flushright}
+\end{minipage}
+
+\vfill
+
+% Bottom of the page
+{\large \today}
+
+\end{center}
+\end{titlepage}
+\setcounter{page}{2}
+
+\begin{abstract}
+In this project, the variational monte carlo approach has been implemented to find upper bounds on the energy of electrons in a harmonic oscillator trap (all in \textit{atomic units}, see section \ref{sec:theory}). 
+The method used to find these was the Metropolis algorithm, in both a brute force way and using importance sampling. 
+In addition, both numerical and analytical expressions was used altenately for the energy functions and the quantum force in the importance sampling method. 
+
+The brute force method with numerical expressions was verified against known benchmarks and
+all variations on the algorithm gave practically the same result when asked to perform the same integration. 
+The brute force approach with analytical expressions proved the most time efficient and importance sampling with numerical expressions the least efficient.
+
+The importance of electron correlation was also explored as a function of oscillator strength, and revealed that the correlation was higher for less steep oscillator potentials. 
+
+Finally, some properties of the optimal wavefunctions was investigated and the virial theorem was tested for both with and without repulsion. The theorem held for the non-repulsion oscillator but not for the oscillator with electron-electron repulsion.
+\end{abstract}
+
+\hypersetup{linkcolor=black}
+\tableofcontents 
+\hypersetup{linkcolor=red}
+\clearpage
+
+
+
+\input{introduction}
+\input{theory}
+\input{experimental}
+\input{resultsanddiscussion}
+\input{conclusion}
+
+
+\clearpage
+\bibliography{bibliography}{}
+\bibliographystyle{plain}
+
+\clearpage
+\begin{appendices}
+
+\section{Reference to the questions posed in the project instructions}
+
+Since the format of this report does not correspond to the structure of the project instructions, a reference list over the posed questions and where to find the answer is given below. 
+
+
+\begin{table}[h!]
+        \begin{tabular}{lll}
+        \toprule
+                        & Instruction           & Section[s] \\
+        \midrule
+        a )             & If we only include ... the energy is 2 a.u. &  \ref{sec:res_N2N6_norep} \\
+                        & Convince yourself that ... is simply 2$\omega$. &\ref{sec:motivation} \\
+                        & What is the total spin ...? Find arguments for why... &  \ref{sec:motivation} \\
+        \midrule
+        b )             & Perform a Variational Monte Carlo calculation...    & \ref{sec:res_N2_rep}\\
+                        & You should parallize your program.         & \ref{sec:theory_parallelization}, \ref{sec:codes} \\
+                        & Find the energy minimum.           & \ref{sec:res_N2_rep} \\
+                        & Compute also the mean distance...    &  \ref{sec:res_properties} \\
+        \midrule
+        c)            & Introduce now importance ... eventual differences. & \ref{sec:res_importance_sampling}, \ref{sec:res_methods_E}, \ref{sec:res_timely_diff}\\
+        \midrule 
+        d)  &  Compute the expectation ... and $\omega = 1.0$. & \ref{sec:res_properties}\\
+            &  How important are ... the Jastrow factor? & \ref{sec:res_jastrow}\\
+        \midrule
+        e) & Compute...  for N = 6 electrons ...  and $\omega = 1.0$. & \ref{sec:res_properties} \\ 
+         &  Reproduce the unperturbed ... is switched off.  & \ref{sec:res_N2N6_norep} \\
+         &      Convince yourself ... for N = 6 is 10$\omega$. & \ref{sec:motivation} \\
+         & What is the expected total spin of the ground states? & \ref{sec:motivation} \\
+
+        \midrule 
+        f) & Use your optimal results ... comment your results. & \ref{sec:res_virial}\\
+        \midrule
+        g) &  Find closed-form expressions... & \ref{sec:closed_form_local_energy} \\
+           & compare the results ... for both N = 2 and N = 6 & \ref{sec:res_timely_diff} \\
+        \bottomrule
+        \end{tabular}
+        \caption{Reference list over the posed questions and where to find the answer.}
+\end{table}
+
+
+
+\clearpage
+
+
+\section{Code} \label{sec:codes}
+All codes used in this exercise can be found at GitHub: \newline
+\url{https://github.com/vidarsko/Project3}. 
+
+The class structure of the code is given in the bullet points below
+
+\begin{itemize}
+    \item \textbf{TrialWavefunction:} A class for storing parameters ($\alpha$, $\beta$, number of particles etc. ) of the trial wavefunction and all the functions (Hermite polynomials, $n_x(i)$ etc.) in order to call the function properly.
+    \item \textbf{QuantumDots:} A class in which the parameters ($\omega$, number of particles, repulsion on/off etc. ) of the system was stored. The different Monte Carlo methods were also part of this class and all the functions (local energy function, quantum force function etc.) needed to execute them properly. 
+    \item \textbf{Investigate:} A class with different investigation functions (for such things as fincing the optimal parameters, comparing times etc.) made in order to easily run simulations for different input parameters. Most of the solve functions made use of parallelization. For example in order to find the expectation value of the energy for different trial wavefunction parameters at the same time. 
+    The parallelization was implemented using the OpenMP\footnote{\url{http://openmp.org/wp/}} in the simplest way through a parallelized "for"-loop. Using four threads, $100 \%$ of the CPU of my computer was used as opposed to $25\%$ when not using parallelization, suggesting that it worked properly.
+\end{itemize}
+
+Througout this report, reference to different codes are made as footnotes together with the date at which they were run. 
+
+\end{appendices}
+\end{document}

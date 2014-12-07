@@ -13,6 +13,8 @@ Jastrow_factor: on
 Expectation values: 
 Energy:  0.0740742
 Variance: 1.09286e-05
-Average distance: 14.6797
+Average distance: 29.3594
 Potential energy: 0.064338
+Harmonic potential: 0.0281887
+Repulsive potential: 0.0361494
 Kinetic energy: 0.00973616

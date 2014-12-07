@@ -1,10 +1,48 @@
-\section{Theory}
-Here is all the theory needed to understand the project.
+\section{Theory}\label{sec:theory}
+This section will provide the theory needed to understand the content of this report. 
 
 
 \subsection{The physical system}
-This is the section explaining the physics of the system. 
-Throughout the project, \textit{natural units} are used ($\hbar = 1$,$c=1$,$e=1$,$m_e=1$) and all energies are in so-called \textit{atomix units} a.u. 
+This section will explain the physics of the project. 
+
+\subsubsection{Natural units} \label{sec:theory_natural_units}
+Throughout the project, \textit{natural units}\footnote{\url{http://en.wikipedia.org/wiki/Natural_units}} are used with $\hbar = c = e = m_e = 1$. 
+Setting these constants equal to one automatically sets the length, energy and time scale of the system. 
+Three of these constants are given in SI-units by
+
+\eqs
+c = 3.00 \times 10^8 \frac{\m}{\s}
+\eqf
+\eqs
+\hbar = 1.05\times 10^{-34} \frac{\kg~\m^2}{\s}
+\eqf
+\eqs
+m_e = 9.11 \times 10^{-31} \kg
+\eqf
+
+Since these constants are set to $1$ we can deduce that the unit $\mn$ of length is given by 
+
+\eqs
+\mn = \frac{\hbar}{m_e c} = \frac{1.05\times 10^{-34} \frac{\kg~\m^2}{\s}}{9.11 \times 10^{-31} \kg \cdot 3.00 \times 10^8 \frac{\m}{\s}} = 3.84 \times  10^{-13} \m
+\eqf
+
+The unit of time $\sn$ can be equivalently shown to be
+
+\eqs
+\sn = \frac{\mn}{c} = \frac{3.84 \times  10^{-13} \m}{3.00 \times 10^8 \frac{\m}{\s}} = 1.28 \times 10^{-21} \s
+\eqf
+
+The unit of energy $\Jn$ becomes
+
+\eqs
+\Jn = \frac{\hbar}{\sn} = \frac{1.05 \times 10^{-34} \J \s}{1.28 \times 10^{-21} \s} = 8.20 \times 10^{-14} \J
+\eqf
+
+And finally, the unit of the oscillator frequency$\Hzn$ is thus
+
+\eqs
+\Hzn = \frac{1}{\sn} = 7.81 \times 10^{20} \Hz
+\eqf
 
 \subsubsection{The quantum mechanics and the variational principle} \label{sec:quantum_mechanics}
 
@@ -30,7 +68,7 @@ Our goal in this project is to find the ground eigenstate and energy of this mul
 
 \paragraph{The variational principle}\label{sec:variational_principle}
 
-We will approach this by constructing a real test function $\Psi_T(\vec r_0, \vec r_1, ... , \vec r_{N-1}, \alpha,\beta )$ dependent on two parameters $\alpha$ and $\beta$ and calculate the expextation value of the hamilton operator $\langle \hat{H} \rangle $. 
+We will approach this by constructing a real test function $\Psi_T(\vec r_0, \vec r_1, ... , \vec r_{N-1}, \alpha,\beta )$ dependent on two parameters $\alpha$ and $\beta$ and calculate the expectation value of the Hamiltonian operator $\langle \hat{H} \rangle $. 
 As we know, the orthonormal eigenstates $\Psi_i$ of the Hamiltonian forms a complete basis, so any state, including our test state $\Psi_T$, can be written as a linear combination of the eigenstates 
 
 \eqs
@@ -47,20 +85,23 @@ Inserting this expression into the equation for the expectation value of $\hat{H
 \]
 \eqs
 =
-\frac{\sum_i |c_i|^2 E_i }{\sum_i |c_i|}
+\frac{\sum_i |c_i|^2 E_i }{\sum_i |c_i|^2}
 \eqf
 
 The energy of the ground state $E_0$ is smaller than all other $E_i$'s so 
 
 \eqs
-\frac{\sum_i |c_i|^2 E_i }{\sum_i |c_i|} \geq \frac{\sum_i |c_i|^2 E_0 }{\sum_i |c_i|} = E_0 \frac{\sum_i |c_i|^2 }{\sum_i |c_i|} = E_0
+\frac{\sum_i |c_i|^2 E_i }{\sum_i |c_i|^2} \geq \frac{\sum_i |c_i|^2 E_0 }{\sum_i |c_i|^2} = E_0 \frac{\sum_i |c_i|^2 }{\sum_i |c_i|^2} = E_0
 \eqf
 \eqs
+\boxed{
 \langle H \rangle \geq E_0
+}
 \eqf
 
 This simple observation is called \textit{the variational principle} and is what we will use to narrow our search for the optimal parameters $\alpha$ and $\beta$.
-We will look for the parameters $\alpha$ and $\beta$ that gives us the smallest value of $\langle \hat{H} \rangle$ and this will be our estimate for the ground state energy.
+We will look for the parameters $\alpha$ and $\beta$ that gives us the smallest value of $\langle \hat{H} \rangle$ and this will be our estimate for the ground state energy. 
+The corresponding trial wave function will be our approximation for the ground state wave function of the system. 
 
 
 
@@ -81,19 +122,25 @@ We have
 If we rename probability density function of the particles 
 
 \eqs 
+\boxed{
 \frac{\Psi_T \Psi_T}{\int \Psi_T \Psi_T d\vec r} = P(\vec r)
+}
 \eqf
 
 And introduce the local energy 
 
 \eqs
+\boxed{
 E_L(\vec r) = \frac{1}{\Psi_T} \hat{H} \Psi_T
+}
 \eqf
 
 The integral becomes 
 
 \eqs
+\boxed{
 \langle \hat{H} \rangle = \int P(\vec r) E_L(\vec r) d\vec r = \langle E_L \rangle
+}
 \eqf
 
 Thus, to calculate the expectation value of $\hat{H}$ we can just calculate the expectation value of the local energy.
@@ -163,7 +210,7 @@ Naming this number $E$ gives
 \eqs
 \frac{1}{\Psi_T} \hat{H} \Psi_T = E 
 \eqf
-\eqs \hat{H}\Psi_T  = E \Psi_T  \eqf
+\eqs \boxed{\hat{H}\Psi_T  = E \Psi_T}  \eqf
 
 Which is nothing but the eigenvalue equation stating that $\Psi_T$ is an eigenstate of $\hat{H}$.
 This will serve as a test to see if the state we have found when minimizing the expectation value of $E_L$ is an eigenstate of the Hamilton operator. 
@@ -191,10 +238,12 @@ V_{E_L} = 0 \quad \textrm{if and only if} \quad \Psi_T \textrm{ is an eigenstate
 
 \subsubsection{The test function $\Psi_T$}
 
-We will in this project use the trial wavefunctions of $\vec r_i = \left ( \begin{matrix} x_i \\ y_i \\ \end{matrix}\right )$ given by 
+We will in this project use the trial wave functions of $\vec r_i = \left ( \begin{matrix} x_i \\ y_i \\ \end{matrix}\right )$ given by 
 
 \eqs
+\boxed{
 \Psi_T(\vec r_0, ... ,\vec r_{N-1})  = \Det(\phi_0,  ... , \phi_{N-1}) \cdot \textrm{J}(\vec r_0, ... , \vec r_{N-1} )
+}
 \label{eq:Trial_Wavefunction}
 \eqf
 
@@ -205,11 +254,10 @@ We will in this project use the trial wavefunctions of $\vec r_i = \left ( \begi
 
 $\Det(\phi_0,  ... , \phi_{N-1})$ is a modified \textit{Slater determinant} defined as 
 
-\[
-\Det(\phi_0,  ... , \phi_{N-1}) = |U| \cdot  |D| 
-\]
-\eqs
-\left |
+\eqs 
+\boxed{\begin{matrix}
+\Det(\phi_0,  ... , \phi_{N-1}) = |U| \cdot  |D|  \\ \\
+= \left |
 \begin{matrix}
 \phi_0(\vec r_0) & \phi_2(\vec r_0) & ... & \phi_{N-2}(\vec r_0) \\
 \phi_0(\vec r_2) & \phi_2(\vec r_2) & ... & \phi_{N-2}(\vec r_2) \\
@@ -224,24 +272,29 @@ $\Det(\phi_0,  ... , \phi_{N-1})$ is a modified \textit{Slater determinant} defi
        ...          &      ...       & ... & ... \\
 \phi_1(\vec r_{N-1}) & \phi_3(\vec r_{N-1}) & ... & \phi_{N-1}(\vec r_{N-1}) \\
 \end{matrix}
-\right |
+\right | \\
+\end{matrix}
+}
 \label{eq:Modified_Slater_Determinant}
 \eqf
 
-Where $\phi_i(\vec r_i)$ is a wavefunction resembling one of the eigenfunctions of the Hamilton operator for \textit{one} particle in a two dimensional harmonic oscillator, but parameterized by $\alpha$ in the following way:
+
+Where $\phi_i(\vec r_i)$ is a wave function resembling one of the eigenfunctions of the Hamilton operator for \textit{one} particle in a two dimensional harmonic oscillator, but parameterized by $\alpha$ in the following way:
 
 \eqs
+\boxed{
 \phi_i(\vec r_j) = H_{n_x} (\sqrt{\alpha \omega} x_j) H_{n_y} (\sqrt{\alpha \omega} y_j) \exp(-\alpha \omega (x^2 + y^2)/2) 
+}
 \eqf
 
-
-The reason for this modified version of the Slater determinant (whose real form can be explored elsewhere\footnote{\url{http://en.wikipedia.org/wiki/Slater_determinant}}) is that the spin parts of the wavefunctions are not incorporated in the expressions of $\phi_i(\vec r_j)$. 
-The result is that if we were to insert these into a regular Slater determinant we would get $0$, everytime. 
+Where $H_{n}(x)$ is the $n$th Hermite polynomial\footnote{\url{http://en.wikipedia.org/wiki/Hermite_polynomials}} of $x$.
+The reason for this modified version of the Slater determinant (whose real form can be explored elsewhere\footnote{\url{http://en.wikipedia.org/wiki/Slater_determinant}}) is that the spin parts of the wave functions are not incorporated in the expressions of $\phi_i(\vec r_j)$. 
+The result is that if we were to insert these into a regular Slater determinant we would get $0$, every time. 
 The modified Slater determinant $\Det$ avoids this issue while still conserving some of the most important properties of the Slater determinant. 
 
 
 $n_x(i)$ and $n_y(i)$ corresponds to the quantum numbers needed to "fill up" the system from the lowest energy levels twice (one for each spin configuration). 
-For $i<12$, the explicit depence of $n_x, n_y$ on $i$ is given in table \ref{tab:dependence_of_nx_on_i}.
+For $i<12$, the explicit dependence of $n_x, n_y$ on $i$ is given in table \ref{tab:dependence_of_nx_on_i}.
 
 
 \begin{table}[h!]
@@ -254,7 +307,7 @@ For $i<12$, the explicit depence of $n_x, n_y$ on $i$ is given in table \ref{tab
 	$n_y = $ & 0 & 0 & 0 & 0 & 1 & 1 & 0 & 0 & 1 & 1 & 2 & 2 \\
 	\bottomrule
 	\end{tabular}
-	\caption{The explicit dependence of $n_x$ and $n_y$ on $i$ in the construction of the trial wavefunctions.}
+	\caption{The explicit dependence of $n_x$ and $n_y$ on $i$ in the construction of the trial wave functions.}
 	\label{tab:dependence_of_nx_on_i}
 \end{table}
 
@@ -269,7 +322,7 @@ For $i<12$, the explicit depence of $n_x, n_y$ on $i$ is given in table \ref{tab
 
 \paragraph{The Jastrow factor $\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$} \label{sec:jastrow}
 
-$\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$ is a so-called \textit{Jastrow factor}, which represents the electron repulsion part of the wavefunction, defined as
+$\textrm{J} (\vec r_0, ... , \vec r_{N-1} )$ is a so-called \textit{Jastrow factor}, which represents the electron repulsion part of the wave function, defined as
 
 \eqs
 \boxed{
@@ -285,16 +338,18 @@ r_{ij} = |\vec r_i - \vec r_j|  \quad \textrm{and}
 \quad 
 a_{ij} = \left \{
 \begin{matrix}
-1/3  & \textrm{if spin(i) and spin(j) are parallell} \\
-1  & \textrm{if spin(i) and spin(j) are anti-parallell} \\
+1/3  & \textrm{if spin(i) and spin(j) are parallel} \\
+1  & \textrm{if spin(i) and spin(j) are anti-parallel} \\
 \end{matrix}
 \right .
 \end{matrix}
 }
 \eqf
 
-From the expression of the Jastrow factor, we see that it is zero whenever $r_{ij} = 0$ for any pair $i\neq j$. 
-This is what we want from such a factor, namely that the wavefunction is zero whenever there is no distance between two particles (i.e. $r_{ij} = 0$).
+When calculating the local energy for the perturbed potential, there arises a singularity when $r_{ij} \rightarrow 0$. 
+This is not physical, and the way the Jastrow factor is designed it cancels this singularity when taken the derivative of. 
+Therefore, we might expect the Jastrow factor to play a bigger role in the physical systems where the interaction (or often called correlation) between the electrons is bigger. 
+We will use the relative difference between the energy obtained with the Jastrow factor to that obtained without as a measure of the interaction between the electrons. 
 
 
 
@@ -312,13 +367,13 @@ This is what we want from such a factor, namely that the wavefunction is zero wh
 
 \paragraph{Motivation} \label{sec:motivation}
 
-The motivation of such a trial wavefunction is that it is partly made of the unperturbed harmonic oscillator ground states. 
+The motivation of such a trial wave function is that it resembles the unperturbed harmonic oscillator eigenstates. 
 See figure \ref{fig:psi_levels}. 
 
 \begin{figure}[h!]
 	\centering 
 	\includegraphics[width=\textwidth]{theory/psi_levels.jpg}
-	\caption{The wave function levels. The blue dots represent electrons filling up the states from $n_x = n_y = 0$ to the third lowest states. 
+	\caption{Harmonic oscillator eigenfunctions. The blue dots represent electrons filling up the states from $n_x = n_y = 0$ to the third lowest states. 
 	2 electrons fill up the lowest level, 6 electrons the two lowest levels and 12 electrons all three first energy levels.
 	The net spin of each level must be $0$ due to the Pauli Exclusion principle. }
 	\label{fig:psi_levels}
@@ -341,18 +396,18 @@ When using natural units.
 
 To have two electrons in the same state, their spin must be opposite due to the Pauli exclusion principle. 
 This means that the total spin of the $n_x = n_y = 0$ state is $0$. 
-It can be shown that the wavefunction given by equation \ref{eq:Trial_Wavefunction} when $N=2$ (i.e. two electrons) is given by the following equation
+It can be shown that the wave function given by equation \ref{eq:Trial_Wavefunction} when $N=2$ (i.e. two electrons) is given by the following equation
 
 \eqs
 \Psi_T (\vec r_0, \vec r_1) = \exp(-\alpha \omega (r_0^2 +r_1^2)/2) \cdot \J
 \eqf
 
-If we do not include the repulsion part of the system, there is no need to include the Jastrow Factor (for details, see section \ref{sec:jastrow}). 
+If we do not include the repulsion part of the system, there is no need to include the Jastrow factor. 
 It can be shown that this state is an eigenstate of the unperturbed harmonic oscillator with energy $2\omega $ when $\alpha = 1$. 
 This analogy can be extended to the $N=6$ and $N=12$ electron case as well. 
 When $N=6$ the unperturbed energy should be the sum of the energies in the first level (i.e. $2 \omega$) and the collective energies of the electrons in the second level states ($n_x=1,~n_y =0 \vee n_x=0,~n_y=1$) which is $4\cdot 2 \omega = 8\omega $, resulting in a total energy of $10 \omega$. 
 Equivalently, the energy for the $N=12$ electron case should be $28 \omega$.
-These energies will all serve as benchmarks and we should get the exact results when there is no repulsion, $\alpha = 1$ and the jastrow factor is omitted.
+These energies will all serve as benchmarks and we should get the exact results when there is no repulsion, $\alpha = 1$ and the Jastrow factor is omitted.
 
 
 
@@ -388,20 +443,20 @@ E_L(\vec r) = \frac{1}{\Psi_T} \hat{H} \Psi_T
 
 We need a lot of computational power. 
 This is mainly due to the fact that we need to compute the sum of the laplacian operators on each particle. 
-This is an easy task to do "brute force", but if we were able to find an analytical expression for the local energy, it would possibly simplify calculations by alot. 
+This is an easy task to do "brute force", but if we were able to find an analytical expression for the local energy, it could possibly simplify calculations by a lot. 
 Let's look at one of the terms in the laplacian sum, naming it $LSP$ (Laplacian sum part)
 
 \eqs
 LSP = \frac{1}{\Psi_T} \nabla_i^2  \Psi_T
 \eqf
 
-Inserting the trial wavefunction expression (equation \ref{eq:Trial_Wavefunction}) into the latter gives 
+Inserting the trial wave function expression (equation \ref{eq:Trial_Wavefunction}) into the latter gives 
 
 \eqs
 \frac{1}{\Psi_T} \nabla_i^2  \Psi_T = \frac{1}{\Det \J} \nabla_i^2 (\Det \J)
 \eqf
 
-The function $\Det$ is a product of two matrice-determinants $|U|$ and $|D|$ where $|U|$ handles all the particles assigned spin up and $|D|$ the ones assigned spin down. 
+The function $\Det$ is a product of two matrix-determinants $|U|$ and $|D|$ where $|U|$ handles all the particles assigned spin up and $|D|$ the ones assigned spin down. 
 Particle $i$ has either spin up or down, so let $|S_i|$ denote the matrix determinant which handles particle $i$ and $|S_{j\neq i}|$ denote the one that doesn't, then
 
 \eqs
@@ -455,7 +510,7 @@ The explicit formulas for $\phi_k$ for $k$ in the range $0$ to $11$ is given in 
 	\bottomrule
 \end{tabular}
 \caption{Table of derivatives of $\phi_k (\vec r_i)$ where $l=\sqrt{\alpha \omega}$.
-			The factor $e^{-\frac{1}{2} l^2 r^2}$ is ommitted from all expressions.
+			The factor $e^{-\frac{1}{2} l^2 r^2}$ is omitted from all expressions.
 			The formula for $k+1$ is the same as for $k$ if $k$ is even (e.g. $\phi_0 = \phi_1$).}
 \label{tab:phi_nabla}
 \end{table}
@@ -468,8 +523,17 @@ The explicit formulas for $\phi_k$ for $k$ in the range $0$ to $11$ is given in 
 
 
 
-\subsubsection{The virial theorem}
+\subsubsection{The virial theorem}\label{sec:theory_virial_theorem}
 
+The virial theorem proposes a proportionality between the expectation value of the total kinetic energy $\langle T \rangle$ and the expectation value of the total potential energy $\langle V \rangle$. 
+For a pure (unperturbed) harmonic oscillator this proportionality is given by 
+
+\eqs
+\langle T \rangle = \langle V \rangle
+\eqf
+
+Thus, if the virial theorem holds for any harmonic potential strength $\omega$, we would expect the ratio of $\langle T \rangle$ and $\langle V \rangle$ to remain constant as a function of $\omega$. 
+This has been investigated with and without repulsion in this report. 
 
 
 
@@ -508,17 +572,16 @@ The explicit formulas for $\phi_k$ for $k$ in the range $0$ to $11$ is given in 
 
 
 \subsection{The numerical foundation}
-This is the section explaining the numerical theory upon which the project is built. 
+This section will provide the theory of the numerical foundation upon which this project is done. 
 
 \subsubsection{Monte Carlo simulations}
 A Monte Carlo simulation is a way of solving a mathematical or physical problem by generating a random
-(or pseudorandom
-\footnote
-{No electronic random number generator of today is truly random. 
+(or pseudo random\footnote
+{Almost no electronic random number generator of today is truly random. 
 The sequence of numbers generated will repeat itself after a long period. 
-These periods however, are increadibly long and we will for this report 
+These periods however, are incredibly long and we will for this report 
 consider the random number generators to be truly random.})
-sequence of numbers and evaluating some quantity on the assumption that our the random sequence of numbers is representative of the domain from which the quantity is evaluated.
+sequence of numbers and evaluating some quantity on the assumption that the random sequence of numbers is representative of the domain of the physical system.
 An example is evaluating the area of the unit circle by randomly placing points in a $[-1,1] \times [-1,1] $ grid and find the fraction points whose distance to the origin is $\leq 1$ and multiply this fraction by the area of the grid (i.e. $4$).
 Such a simple Monte Carlo simulation can give the result as shown in figure \ref{fig:Monte_Carlo_Illustration}.
 
@@ -537,7 +600,7 @@ In this report, the method, through the Metropolis algorithm (see section \ref{s
 
 \subsubsection{The Metropolis algorithm} \label{sec:theory_metropolis}
 
-The Metropolis algorithm is a method which cleverly employs a stoichastic approach in order to quickly estimate certain mathematical objects.
+The Metropolis algorithm is a method which cleverly employs a stochastic approach in order to quickly estimate certain mathematical objects.
 The method is explained at lengths elsewhere\cite{lecturenotes}, but in this section we will look at an example which captures the main idea of the method.
 
 Suppose we have a PDF\footnote{Probability Distribution Function} $P(x)$ in a domain $[a,b]$ for which we want to calculate the expectation value $\langle g \rangle$ of some function $g(x)$. 
@@ -565,18 +628,22 @@ It can be shown mathematically that for large enough $N$, these two quantities $
 The problem with such an approach is that we need the precise expression for the PDF $P(x)$ and a robust algorithm for choosing random values from it. 
 With the Metropolis algorithm however, we can use this approach \textit{without} knowing the precise expression of the PDF and the relevant values from the domain come naturally. 
 
-The algorithm requires that we are able to calculate $\tilde{P}(x)$, an unnormalized version of $P(x)$ (i.e. some function $aP(x)$ proportional to $P(x)$). 
+The algorithm requires that we are able to calculate $\tilde{P}(x)$, an un-normalized version of $P(x)$ (i.e. some function $aP(x)$ proportional to $P(x)$). 
 This may seem like a very strong requirement, but in many applications, as in this project, this is a much easier task than to calculate the precise PDF. 
 The algorithm goes as follows. 
 Starting with a position $x$ choose a new trial position  $x_p$ by
 
-\eqs x_p = x + \Delta x \eqf
+\eqs \boxed{x_p = x + \Delta x} \eqf
 
 Where $\Delta x$ is a random step according to some rule (see subsections).
 Then generate a probability criteria $s \in [0,1]$.
+Now, if
 
-\eqs \frac{P(x_p)}{P(x)} = \frac{aP(x_p)}{aP(x)} = \frac{\tilde{P}(x_p)}{\tilde{P}(x)} \equiv w \geq s 
-\label{eq:metropolis_prob_crit}\eqf
+\eqs 
+\boxed{\frac{P(x_p)}{P(x)} = \frac{aP(x_p)}{aP(x)} = \frac{\tilde{P}(x_p)}{\tilde{P}(x)} \equiv w \geq s 
+\label{eq:metropolis_prob_crit}
+}
+\eqf
 
 We accept the trial position as our new $x$ and if not we reject it. 
 If we choose new values of $x_i$ in this manner, the collection of $x_i$'s will in fact reflect the PDF $P(x)$, which was what we needed in order to use equation \ref{eq:metropolis_integral}. 
@@ -596,7 +663,9 @@ The fact that for a large number $M$ of such steps, the values $x_i$ picked actu
 If we have no information about the physical nature of the system a reasonable way to model $\Delta x$ is the following
 
 \eqs
+\boxed{
 \Delta x = r \Delta x_0
+}
 \eqf
 
 Where $r$ is a random number between $0$ and $1$ and $\Delta x_0$ is a predefined step length. 
@@ -606,11 +675,12 @@ of the method.
 
 Since we have no physical understanding of the system when using the brute force Metropolis algorithm, we model our probability criteria $s$ as a uniform random number between $0$ and $1$. 
 
-Increasing the acceptance probability reduces the amount of times we need to evaluate the probability ratio $w$, but also increses the amount of Monte Carlo simulations needed in order to get a representative collection of $x_i$'s. 
+If the acceptance ratio is too low, then we are not moving away from the same point and the sampling becomes non-representative of the domain. 
+However, if we have a too small step length resulting in a large acceptance rate, the steps taken are so small that we are also staying too long in one place, and thus not getting a proper representation of the domain. 
 It can be argued that a good balance between these two aspects is to achieve an acceptance ratio 
 (i.e. the ratio between accepted and rejected moves) of around $0.5$. 
 
-This is called the "Brute Force Metropolis algorithm". 
+This method is what will be called the "Brute Force Metropolis algorithm". 
 
 \paragraph{Importance sampling}\label{sec:theory_importance_sampling}
 
@@ -618,39 +688,42 @@ If our current position $x$ is in a region where the probability distribution is
 This is because we want to sample many points in this region, which is what a small step allows. 
 In contrast, if the current position $x$ is in an unimportant region, we want a large step $\Delta x$ since we don't mind moving a bit farther from the region we're in. 
 The brute force approach produced a step independent of the PDF value in each point, which resulted in an optimal acceptance ratio of around $0.5$. 
-If we could introduce some sort of rule which adjusts the step $\Delta x$ according to the value of the PDF in the point we currently are, this could allow us to achieve an acceptance rate of around $0.9$ with the same ergodicity. 
+If we could introduce some sort of rule which adjusts the step $\Delta x$ according to the value of the PDF in the point we currently are, this could allow us to achieve a higher acceptance rate with the same ergodicity. 
 
 To make such a rule, we need to use our physical understanding of the system. 
 One way of doing so is to consider the points to move as a random walker would where the resulting probability is equal to the PDF we're treating.
-Doing this, and invoking the Fokker-Planck and Langevin equations
-\footnote{Once again we refer to the lecture notes \cite{lecturenotes} for a more detailed explanation.}
+Doing this, and invoking the Fokker-Planck and Langevin equations\footnote{Once again we refer to the lecture notes \cite{lecturenotes} for a more detailed explanation.}
 , it can be shown that the choice of $\Delta x$ is as follows
 
 \eqs
-\Delta x = DF(x) \delta t  + \eta 
+\boxed{
+\Delta x = DF(x) \delta t  + \eta }
 \label{eq:importance_raw}
 \eqf
 
-Where $D$ is the diffusion term, $F(x)$ is a drift term which is responsible for pulling the particle towards regions where the PDF is important and $\eta$ is a gaussian random number.
+Where $D$ is the diffusion term, $F(x)$ is a drift term which is responsible for pulling the particle towards regions where the PDF is important and $\eta$ is a Gaussian random number with a variance of $2D\delta t$.
 
-The way the metropolis algorithm relies as we have seen on accepting and rejecting proposed moves in a domain. 
-Where the probability criteria in the brute force method was just a uniform random number between $0$ and $1$, the physics behind the system now applies to this criteria as well. 
-It affects the criteria in the following way, the probability criteria $s$ is now given by 
+The metropolis algorithm relies, as we have seen, on accepting and rejecting proposed moves in a domain. 
+Where the probability criteria in the brute force method was just a uniform random number between $0$ and $1$, but now the physics behind the system applies to this criteria as well. 
+The probability criteria $s$ is now given by 
 
 \eqs
-s = \frac{G(x_p,x,\delta t)}{G(x,x_p,\delta t)} s_0
+\boxed{
+s = \frac{G(x_p,x,\delta t)}{G(x,x_p,\delta t)} s_0}
 \eqf
 
-Where $s_0$ is a random unifor number between $0$ and $1$ and $G(a,b,\delta t)$ is the so-called greenfunction given by 
+Where $s_0$ is a random uniform number between $0$ and $1$ and $G(a,b,\delta t)$ is the so-called Green-function given by 
 
 \eqs
+\boxed{
 G(a,b,\delta t) = \frac{1}{(4\pi D \delta t)^{3N/2}} \exp \left (  -(a-b-D\delta t F(b))^2/4D\delta t \right )
+}
 \eqf
 
 Using this approach is what we will call the "Metropolis algorithm with importance sampling".
 
 
-\paragraph{The metropolis algorithm for our wavefunction}
+\paragraph{Application of the variational Monte Carlo method}
 As discussed in section \ref{sec:quantum_mechanics} we need to solve the integral 
 
 \eqs \langle E_L \rangle = \int P(\vec r) E_L(\vec r) d\vec r \eqf
@@ -703,7 +776,7 @@ Which stems from the fact that the drift is caused by kinetic energy in front of
 F = 2 \frac{1}{\Psi_T}{\nabla_i \Psi_T}
 \eqf
 
-The formula for using importance sampling when choosing the trial position $\mathbf{r_p}$ for our wavefunction is thus
+The formula for using importance sampling when choosing the trial position $\mathbf{r_p}$ for our wave function is thus
 
 \eqs
 \boxed{
@@ -725,14 +798,16 @@ We can rewrite this, as in section \ref{sec:closed_form_local_energy}
 }
 \eqf
 
-Expressions we can find both from numerical differenciation and the close form expressions in equations \ref{eq:nabla_formulas}.
+Expressions we can find both from numerical differentiation and from closed form expressions (equations \ref{eq:nabla_formulas}).
 In this report, we will use both these approaches and compare the CPU time needed. 
+Using the variational principle of quantum mechanics along with this Monte Carlo approach is what is known as the \textit{variational Monte Carlo} method (or VMC for short). 
+As we shall see, this is a powerful tool for investigating quantum mechanical systems. 
 
 
 \subsubsection{Parallelization}\label{sec:theory_parallelization}
 
 Parallelization is a way of exploiting the multiple CPU's you find in modern computers. 
-The idea behind is that tasks that are not dependent on each other and can be done in any order may be divided into so-called threads, and each thread can its own task, see figure \ref{fig:parallelization}. 
+The idea behind is that tasks that are not dependent on each other and can be done in any order may be divided into so-called threads, and each thread can do its own task, see figure \ref{fig:parallelization}. 
 
 \begin{figure}[h!]
 	\centering 
@@ -741,5 +816,5 @@ The idea behind is that tasks that are not dependent on each other and can be do
 	\label{fig:parallelization}
 \end{figure}
 
-Using a library such as OpenMP (used in this project) makes use of all four CPU's if told to split the work into four different threads. 
+Using a library such as OpenMP\footnote{\url{http://openmp.org/wp/}} (used in this project) makes use of all four CPU's if told to split the work into four different threads. 
 Such an approach is easy to implement to this problem, because we can calculate $\langle E_L \rangle$ for different trial parameters at the same time. 

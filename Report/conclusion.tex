@@ -1,0 +1,19 @@
+\section{Conclusion}
+
+We have seen in this project how the Monte Carlo method is an efficient tool to find a correct upper bound of ground state energies. 
+The report shows how the implementation of different variations of the method has produced the same results, but in very different time scales as the most efficient method proved to be almost $20$ times faster than the least efficient one. 
+
+One of the most striking discoveries was how the mean distance between the electrons seemed to follow a very specific pattern, not dependent on how many electrons there were in the trap to begin with. 
+Further investigation of this property would be a fine project for another time. 
+
+
+Another striking discovery is how the importance of the electron-electron repulsion correlation varies as a function of the oscillator strength $\omega$. 
+Whereas one might expect the importance to get bigger as the electrons were "squeezed" together (i.e. strong oscillator potential), it turned out that this was not the case at all. 
+At large values of $\omega$, the repulsion correlation got less important and the dominant factor was the potential of the oscillator itself. 
+For smaller values of $\omega$ however, it seemed that the electron correlations got more important and the investigation of the virial theorem revealed that the kinetic energy "drowned" in comparison to the potential energy. 
+Since kinetic energy is a measure of how much the electrons are moving, this means that they became more stationary, localized, at small $\omega$'s. 
+One might say that the electrons "froze in place".
+This could be the introduction of more solid phase for the electrons, with perhaps many interesting qualities that could also make for a great continuation project.
+
+I am often baffled by the efficiency of computational methods when applied to problems where analytical math does not get us anywhere. 
+Finding the analytical solution to the 2-electron quantum dots problem was a great achievement credited to M. Taut \cite{Taut}, but in this project, less than $2000$ lines of code was needed to get almost the exact same value for the energy, which in my opinion, is quite astounding.
